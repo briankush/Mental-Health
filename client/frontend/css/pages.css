@@ -1,0 +1,260 @@
+.purpose-layout {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.core-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  grid-template-areas:
+    "mental social library"
+    "mental podcasts training"
+    "mental community community";
+  gap: var(--space-4);
+}
+
+.core-item[data-area="mental"] { grid-area: mental; }
+.core-item[data-area="social"] { grid-area: social; }
+.core-item[data-area="library"] { grid-area: library; }
+.core-item[data-area="podcasts"] { grid-area: podcasts; }
+.core-item[data-area="training"] { grid-area: training; }
+.core-item[data-area="community"] { grid-area: community; }
+
+.core-item {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.featured-week {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: var(--space-5);
+}
+
+.featured-side {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.bookclub-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.bookcover {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.podcast-layout {
+  display: grid;
+  grid-template-columns: 1fr 0.95fr;
+  gap: var(--space-5);
+}
+
+.episode-list {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.episode-item {
+  padding: var(--space-3) var(--space-4);
+  display: grid;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.episode-item:last-child {
+  border-bottom: none;
+}
+
+.training-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.quiz-shell {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.quiz-options {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.quiz-option {
+  text-align: left;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: var(--space-3);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.quiz-option:hover,
+.quiz-option.is-selected {
+  border-color: var(--color-primary);
+  background: #f5faf7;
+}
+
+.ai-shell {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.ai-log {
+  min-height: 260px;
+  max-height: 340px;
+  overflow: auto;
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.ai-message {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-muted);
+}
+
+.ai-message[data-role="user"] {
+  background: #eef6f1;
+}
+
+.chat-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--space-4);
+  min-height: 580px;
+}
+
+.chat-rooms,
+.chat-main {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+
+.chat-rooms {
+  padding: var(--space-4);
+}
+
+.room-item {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: var(--space-3);
+  margin-bottom: var(--space-2);
+  cursor: pointer;
+}
+
+.room-item.is-active {
+  border-color: var(--color-primary);
+  background: #f1f8f3;
+}
+
+.chat-main {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.chat-header,
+.chat-input-wrap {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+}
+
+.chat-input-wrap {
+  border-bottom: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.chat-messages {
+  padding: var(--space-4);
+  overflow: auto;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.chat-msg {
+  max-width: 72ch;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: var(--space-3);
+}
+
+.consultation-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: var(--space-5);
+}
+
+.booking-stepper {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.step-chip {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  font-size: var(--fs-caption);
+}
+
+.step-chip.is-current {
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--space-5);
+}
+
+.account-nav {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.account-panel {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5);
+  display: none;
+}
+
+.account-panel.is-active {
+  display: grid;
+  gap: var(--space-4);
+}
