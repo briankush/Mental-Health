@@ -37,6 +37,11 @@ const register = async (req, res) => {
       password: hashedPassword
     });
 
+    /*if (!process.env.JWT_SECRET) {
+            console.error("JWT_SECRET not defined!");
+            return res.status(500).json({message: "Server configuration error"});
+        }*/
+
     // Generate token
     // const token = generateToken(user._id);
 

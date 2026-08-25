@@ -1,4 +1,4 @@
-import { mockNetworkDelay } from "./api.js";
+import { api } from "./api.js";
 import { showToast } from "./components/toast.js";
 
 function validateEmail(value) {
@@ -11,6 +11,7 @@ export function initAuthForms() {
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const submit = form.querySelector("button[type='submit']");
+      const nameInput = form.querySelector("input[name='name'], #name");
       const emailInput = form.querySelector("input[type='email']");
       const passwordInput = form.querySelector("input[type='password']");
       const errorEl = form.querySelector("[data-form-error]");
@@ -38,10 +39,27 @@ export function initAuthForms() {
 
       submit.disabled = true;
       submit.textContent = "Please wait...";
-      await mockNetworkDelay();
-      submit.disabled = false;
-      submit.textContent = submit.dataset.defaultLabel || "Submit";
-      showToast("Backend integration required: connect this form to /api/auth endpoints.", "success");
+
+      try {
+        const path = nameInput ? "/auth/register" : "/auth/login";
+        const body = {
+          email: emailInput.value.trim(),
+          password: passwordInput.value
+        };
+        if (nameInput) {
+          body.name = nameInput.value.trim();
+        }
+
+        const result = await api.post(path, body);
+
+        showToast(result.message || (nameInput ? "Account created" : "Login successful"), "success");
+        window.location.href = nameInput ? "./login.html" : "./profile.html";
+      } catch (error) {
+        errorEl.textContent = error.message || "Login failed. Please try again.";
+      } finally {
+        submit.disabled = false;
+        submit.textContent = submit.dataset.defaultLabel || "Submit";
+      }
     });
   });
 }
