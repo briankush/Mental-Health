@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 //const generateToken = require("../utils/generateToken");
 
 // REGISTER
@@ -37,13 +38,13 @@ const register = async (req, res) => {
       password: hashedPassword
     });
 
-    /*if (!process.env.JWT_SECRET) {
-            console.error("JWT_SECRET not defined!");
-            return res.status(500).json({message: "Server configuration error"});
-        }*/
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET not defined!");
+      return res.status(500).json({ message: "Server configuration error" });
+    }
 
     // Generate token
-    // const token = generateToken(user._id);
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     // // Set HTTP-only cookie
     // res.cookie("token", token, {
@@ -111,16 +112,12 @@ const login = async (req, res) => {
       });
     }
 
-//     // Generate JWT
-//     const token = generateToken(user._id);
-
-//     // Store JWT in HTTP-only cookie
-//     res.cookie("token", token, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production",
-//       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-//       maxAge: 7 * 24 * 60 * 60 * 1000,
-//     });
+    //Generate JWT token
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     res.status(200).json({
       success: true,
