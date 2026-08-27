@@ -1,4 +1,139 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Books | MindfulPath</title>
-<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/forms.css"><link rel="stylesheet" href="../css/admin.css"></head>
-<body><main class="admin-shell"><aside class="admin-nav"><a href="index.html">Dashboard</a><a href="users.html">Users</a><a href="articles.html">Articles</a><a class="is-active" href="books.html">Books</a><a href="podcasts.html">Podcasts</a><a href="appointments.html">Appointments</a><a href="payments.html">Payments</a><a href="moderation.html">Moderation</a></aside><section class="admin-main"><h1>Books</h1><div class="admin-toolbar"><button class="btn">Add Book</button><select><option>All types</option><option>Free</option><option>Paid</option></select></div><div class="table-wrap"><table><thead><tr><th>Title</th><th>Author</th><th>Price</th><th>Type</th><th>Status</th></tr></thead><tbody><tr><td>Understanding Stress in Everyday Life</td><td>N. Kamau</td><td>KES 750</td><td>Paid</td><td><span class="status status--ok">Available</span></td></tr><tr><td>Conversations That Care</td><td>A. Wanjiru</td><td>Free</td><td>Free</td><td><span class="status status--ok">Available</span></td></tr></tbody></table></div></section></main></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Books | MindfulPath</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <style>
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-box {
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .modal-box h2 {
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+    }
+    .form-group {
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .form-group input {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .form-msg {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <main class="admin-shell">
+    <aside class="admin-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="users.html">Users</a>
+      <a href="articles.html">Articles</a>
+      <a class="is-active" href="books.html">Books</a>
+      <a href="podcasts.html">Podcasts</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="payments.html">Payments</a>
+      <a href="moderation.html">Moderation</a>
+    </aside>
+
+    <section class="admin-main">
+      <h1>Books</h1>
+      <div class="admin-toolbar">
+        <button class="btn" id="addBookBtn">+ Add Book</button>
+        <select>
+          <option>All types</option>
+          <option>Free</option>
+          <option>Paid</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>PDF Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Loaded dynamically from API -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add Book Modal -->
+  <div class="modal-overlay" id="addBookModal">
+    <div class="modal-box">
+      <h2>Upload New Book</h2>
+      <form id="addBookForm">
+        <div class="form-group">
+          <label for="bookName">Book Name / Title</label>
+          <input type="text" id="bookName" placeholder="Enter book title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="price">Price (KES)</label>
+          <input type="number" id="price" placeholder="0 for free" min="0" required>
+        </div>
+
+        <div class="form-group">
+          <label for="pdfFile">Book PDF File</label>
+          <input type="file" id="pdfFile" accept="application/pdf" required>
+        </div>
+
+        <div class="form-msg" id="formMessage"></div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn--outline" id="closeModalBtn">Cancel</button>
+          <button type="submit" class="btn" id="submitBtn">Upload Book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="../js/admin-books.js"></script>
+</body>
+</html>
