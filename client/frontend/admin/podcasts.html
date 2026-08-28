@@ -1,4 +1,37 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Podcasts | MindfulPath</title>
 <link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/forms.css"><link rel="stylesheet" href="../css/admin.css"></head>
-<body><main class="admin-shell"><aside class="admin-nav"><a href="index.html">Dashboard</a><a href="users.html">Users</a><a href="articles.html">Articles</a><a href="books.html">Books</a><a class="is-active" href="podcasts.html">Podcasts</a><a href="appointments.html">Appointments</a><a href="payments.html">Payments</a><a href="moderation.html">Moderation</a></aside><section class="admin-main"><h1>Podcasts</h1><div class="admin-toolbar"><button class="btn">Add Episode</button><select><option>All statuses</option><option>Published</option><option>Draft</option></select></div><div class="table-wrap"><table><thead><tr><th>Episode</th><th>Host</th><th>Duration</th><th>Status</th><th>Live</th></tr></thead><tbody><tr><td>What Does Everyday Anxiety Actually Feel Like?</td><td>Dr. M. Achieng</td><td>32 min</td><td><span class="status status--ok">Published</span></td><td><span class="status status--pending">Scheduled</span></td></tr></tbody></table></div></section></main></body></html>
+<body><main class="admin-shell"><aside class="admin-nav"><a href="index.html">Dashboard</a><a href="users.html">Users</a><a href="articles.html">Articles</a><a href="books.html">Books</a><a class="is-active" href="podcasts.html">Podcasts</a><a href="appointments.html">Appointments</a><a href="payments.html">Payments</a><a href="moderation.html">Moderation</a></aside><section class="admin-main"><h1>Podcasts</h1><div class="admin-toolbar"><button class="btn" id="addEpisodeBtn">Add Episode</button><select><option>All statuses</option><option>Published</option><option>Draft</option></select></div><div class="table-wrap"><table><thead><tr><th>Episode</th><th>Host</th><th>Duration</th><th>Status</th><th>Audio / Player</th></tr></thead><tbody id="podcastsTableBody"><tr><td>What Does Everyday Anxiety Actually Feel Like?</td><td>Dr. M. Achieng</td><td>32 min</td><td><span class="status status--ok">Published</span></td><td><span class="status status--pending">Scheduled</span></td></tr></tbody></table></div></section></main>
+
+<!-- ADD PODCAST / AUDIO MODAL -->
+<div class="modal-overlay" id="addPodcastModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
+  <div class="modal-box" style="background:#fff; padding:25px; border-radius:8px; width:90%; max-width:500px; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+      <h2 style="margin:0; font-size:1.4rem;">Upload Audio Episode</h2>
+      <button type="button" id="closePodcastModalBtn" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+    </div>
+    <form id="addPodcastForm" style="display:flex; flex-direction:column; gap:15px;">
+      <div class="form-group">
+        <label for="podcastTitle" style="display:block; margin-bottom:5px; font-weight:600;">Episode Title</label>
+        <input type="text" id="podcastTitle" required placeholder="e.g. Understanding Everyday Anxiety" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+      </div>
+      <div class="form-group">
+        <label for="podcastHost" style="display:block; margin-bottom:5px; font-weight:600;">Host Name</label>
+        <input type="text" id="podcastHost" placeholder="e.g. Dr. M. Achieng" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+      </div>
+      <div class="form-group">
+        <label for="audioFile" style="display:block; margin-bottom:5px; font-weight:600;">Audio File (MP3, WAV, M4A, AAC, OGG)</label>
+        <input type="file" id="audioFile" accept="audio/*" required style="width:100%; padding:5px;">
+      </div>
+      <div id="podcastFormMessage" style="font-weight:600; font-size:0.9rem;"></div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:10px;">
+        <button type="button" id="cancelPodcastBtn" class="btn" style="background:#e0e0e0; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">Cancel</button>
+        <button type="submit" id="podcastSubmitBtn" class="btn" style="background:#007bff; color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">Upload Audio</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="../js/admin-podcasts.js"></script>
+</body>
+</html>

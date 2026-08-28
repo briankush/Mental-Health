@@ -43,7 +43,14 @@ export const api = {
     return response.json();
   },
   put: (path, body) => request(path, { method: "PUT", body: JSON.stringify(body) }),
-  delete: (path) => request(path, { method: "DELETE" })
+  delete: (path) => request(path, { method: "DELETE" }),
+  uploadAudio: async (audioFile, title, host) => {
+    const formData = new FormData();
+    formData.append("audio", audioFile);
+    if (title) formData.append("title", title);
+    if (host) formData.append("host", host);
+    return api.postFormData("/audio/upload", formData);
+  }
 };
 
 export async function mockNetworkDelay(ms = 650) {

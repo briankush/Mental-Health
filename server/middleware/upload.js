@@ -1,5 +1,6 @@
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
+const { Readable } = require("stream");
 
 // Configure Multer memory storage
 const storage = multer.memoryStorage();
@@ -19,7 +20,28 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 }, // Limit 10MB
 });
 
-// Helper function to stream upload to Cloudinary
+// File filter to accept audio files
+const audioFileFilter = (req, file, cb) => {
+  if (
+    file.mimetype.startsWith("audio/") ||
+    /\.(mp3|wav|m4a|aac|ogg|webm)$/i.test(file.originalname)
+  ) {
+    cb(null, true);
+  } else {
+    cb(
+      new Error("Only audio files (mp3, wav, m4a, aac, ogg, webm) are allowed!"),
+      false
+    );
+  }
+};
+
+const uploadAudio = multer({
+  storage,
+  fileFilter: audioFileFilter,
+  limits: { fileSize: 50 * 1024 * 1024 }, // Limit 50MB for audio
+});
+
+// Helper function to stream upload PDF to Cloudinary
 const uploadPdfToCloudinary = (fileBuffer) => {
   // Ensure Cloudinary is configured with environment variables on each upload
   cloudinary.config({
@@ -43,7 +65,35 @@ const uploadPdfToCloudinary = (fileBuffer) => {
   });
 };
 
+// Helper function to stream upload Audio to Cloudinary
+const uploadAudioToCloudinary = (fileBuffer) => {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        resource_type: "video",  // Audio files use resource_type "video" in Cloudinary
+        folder: "audio_files",
+        timeout: 120000,         // 2-minute upload timeout
+      },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+
+    Readable.from(fileBuffer).pipe(uploadStream);
+  });
+};
+
 module.exports = {
+  cloudinary,
   upload,
+  uploadAudio,
   uploadPdfToCloudinary,
+  uploadAudioToCloudinary,
 };

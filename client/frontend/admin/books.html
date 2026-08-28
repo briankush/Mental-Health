@@ -1,2479 +1,4230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Books | MindfulPath Admin</title>
+<title>Books | MindfulPath Admin</title>
 
-  <style>
-    /* =========================================================
-       RESET
-       ========================================================= */
+<style>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+/* =========================================================
+   FONT
+========================================================= */
 
-    html {
-      scroll-behavior: smooth;
-    }
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
-    body {
-      min-height: 100vh;
-      background: #f7f8f6;
-      color: #1f2925;
-      font-family:
+
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+
+    --forest-950: #102f28;
+    --forest-900: #143a31;
+    --forest-800: #173f35;
+    --forest-700: #245747;
+    --forest-600: #326c59;
+
+    --sage-100: #eef5f1;
+    --sage-200: #e2eee8;
+    --sage-300: #cddfd6;
+    --sage-500: #8eac9e;
+
+    --cream: #f7f8f5;
+    --white: #ffffff;
+
+    --text: #18221e;
+    --text-secondary: #5d6963;
+    --text-muted: #8b958f;
+
+    --border: #e5e9e6;
+    --border-dark: #d9dfdb;
+
+    --success: #3f7d5a;
+    --success-bg: #edf7f0;
+
+    --warning: #a96f29;
+    --warning-bg: #fff6e8;
+
+    --danger: #b44e4e;
+    --danger-bg: #fff0f0;
+
+    --sidebar-width: 248px;
+
+    --radius-sm: 7px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    --shadow-sm:
+        0 1px 2px rgba(16, 47, 40, .04);
+
+    --shadow-md:
+        0 10px 30px rgba(16, 47, 40, .08);
+
+    --shadow-lg:
+        0 24px 70px rgba(16, 47, 40, .15);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    background: var(--cream);
+
+    color: var(--text);
+
+    font-family:
         Inter,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
-        Roboto,
-        Helvetica,
-        Arial,
         sans-serif;
-    }
+
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+}
+
+
+/* =========================================================
+   APPLICATION LAYOUT
+========================================================= */
+
+.app {
+    min-height: 100vh;
+
+    display: flex;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+
+    width: var(--sidebar-width);
+
+    min-height: 100vh;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--forest-800),
+            var(--forest-950)
+        );
+
+    color: #dce8e2;
+
+    padding: 25px 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 100;
+}
+
+
+/* BRAND */
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 4px 10px 28px;
+}
+
+.brand-mark {
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.11);
+
+    border: 1px solid rgba(255,255,255,.09);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color: white;
+}
+
+.brand-name {
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    letter-spacing: -.03em;
+
+    color: white;
+}
+
+.brand-name span {
+    color: #9dc4b2;
+}
+
+.brand-subtitle {
+
+    font-size: 9px;
+
+    color: #8ca89c;
+
+    margin-top: 2px;
+
+    letter-spacing: .07em;
+
+    text-transform: uppercase;
+}
+
+
+/* NAVIGATION */
+
+.nav-group {
+    margin-bottom: 20px;
+}
+
+.nav-label {
+
+    padding: 0 11px;
+
+    margin-bottom: 7px;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    color: #759186;
+
+    letter-spacing: .12em;
+
+    text-transform: uppercase;
+}
+
+.nav-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    width: 100%;
+
+    padding: 10px 11px;
+
+    margin-bottom: 2px;
+
+    border-radius: 7px;
+
+    color: #afc0b8;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    transition:
+        background .18s ease,
+        color .18s ease;
+}
+
+.nav-item:hover {
+
+    background: rgba(255,255,255,.055);
+
+    color: white;
+}
+
+.nav-item.active {
+
+    background: rgba(150, 192, 174, .13);
+
+    color: white;
+
+    box-shadow:
+        inset 2px 0 0 #9bc0ae;
+}
+
+.nav-icon {
+
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #8da99c;
+
+    font-size: 14px;
+}
+
+.nav-item.active .nav-icon {
+    color: #b4d1c3;
+}
+
+
+/* SIDEBAR BOTTOM */
+
+.sidebar-bottom {
+
+    margin-top: auto;
+}
+
+.sidebar-user {
+
+    padding: 13px 9px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+}
+
+.avatar {
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    background: #8eac9e;
+
+    color: var(--forest-950);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.user-name {
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.user-role {
+
+    color: #789187;
+
+    font-size: 9px;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+
+    margin-left: var(--sidebar-width);
+
+    width: calc(100% - var(--sidebar-width));
+
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar {
+
+    height: 68px;
+
+    padding: 0 38px;
+
+    background: rgba(255,255,255,.88);
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 50;
+
+    backdrop-filter: blur(12px);
+}
+
+
+/* SEARCH */
+
+.global-search {
+
+    width: 310px;
+
+    position: relative;
+}
+
+.global-search-icon {
+
+    position: absolute;
+
+    left: 12px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #9aa39e;
+
+    font-size: 14px;
+}
+
+.global-search input {
+
+    width: 100%;
+
+    height: 35px;
+
+    padding: 0 13px 0 34px;
+
+    background: #f8faf8;
+
+    border: 1px solid transparent;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    font-size: 11px;
+
+    color: var(--text);
+
+    transition: .18s;
+}
+
+.global-search input:focus {
+
+    background: white;
+
+    border-color: var(--border-dark);
+
+    box-shadow: 0 0 0 3px rgba(49,92,76,.06);
+}
+
+
+/* TOPBAR RIGHT */
+
+.topbar-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 17px;
+}
+
+.view-site {
+
+    padding: 7px 11px;
+
+    border: 1px solid var(--border);
+
+    background: white;
+
+    border-radius: 6px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+
+    text-decoration: none;
+}
+
+.view-site:hover {
+    background: #f7f9f7;
+}
+
+.notification {
+
+    width: 31px;
+    height: 31px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 7px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    color: var(--text-secondary);
+}
+
+.notification-dot {
+
+    position: absolute;
+
+    width: 5px;
+    height: 5px;
+
+    background: #bc5a50;
+
+    border-radius: 50%;
+
+    top: 7px;
+    right: 7px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+
+    padding: 34px 40px 60px;
+
+    max-width: 1500px;
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-bottom: 28px;
+}
+
+.breadcrumb {
+
+    display: flex;
+
+    gap: 7px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+
+    margin-bottom: 9px;
+}
+
+.breadcrumb span:last-child {
+    color: var(--text-secondary);
+}
+
+.page-title {
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 34px;
+
+    line-height: 1.1;
+
+    letter-spacing: -.045em;
+
+    font-weight: 700;
+}
+
+.page-description {
+
+    margin-top: 7px;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* PRIMARY BUTTON */
+
+.primary-button {
+
+    border: 0;
+
+    background: var(--forest-800);
+
+    color: white;
+
+    height: 38px;
+
+    padding: 0 15px;
+
+    border-radius: 7px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        background .18s ease,
+        transform .18s ease;
+}
+
+.primary-button:hover {
+
+    background: var(--forest-700);
+
+    transform: translateY(-1px);
+}
+
+.primary-button span {
+    font-size: 16px;
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   KPI CARDS
+========================================================= */
+
+.kpis {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 22px;
+}
+
+.kpi {
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-md);
+
+    padding: 17px 18px;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.kpi-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+.kpi-label {
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+
+    font-weight: 500;
+}
+
+.kpi-icon {
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 7px;
+
+    background: var(--sage-100);
+
+    color: var(--forest-700);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+}
+
+.kpi-number {
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    letter-spacing: -.04em;
+}
+
+.kpi-meta {
+
+    margin-top: 4px;
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+}
+
+.kpi-growth {
+    color: var(--success);
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   LIBRARY CONTAINER
+========================================================= */
+
+.library {
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-md);
+
+    overflow: hidden;
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* LIBRARY HEADER */
+
+.library-header {
+
+    padding: 18px 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.library-title {
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: -.02em;
+}
+
+.library-subtitle {
+
+    margin-top: 3px;
+
+    color: var(--text-muted);
+
+    font-size: 9.5px;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar {
+
+    padding: 12px 20px;
+
+    background: #fbfcfb;
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.toolbar-left {
+
+    display: flex;
+
+    gap: 8px;
+
+    flex: 1;
+}
+
+.search-books {
+
+    width: 280px;
+
+    position: relative;
+}
+
+.search-books span {
+
+    position: absolute;
+
+    left: 11px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #9ba49f;
+
+    font-size: 13px;
+}
+
+.search-books input {
+
+    width: 100%;
+
+    height: 34px;
+
+    padding: 0 10px 0 31px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    outline: none;
+
+    font-size: 10.5px;
+
+    background: white;
+}
+
+.search-books input:focus {
+
+    border-color: var(--sage-500);
+
+    box-shadow:
+        0 0 0 3px rgba(49,92,76,.05);
+}
+
+.filter {
+
+    height: 34px;
+
+    padding: 0 28px 0 10px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    background: white;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+
+    outline: none;
+}
+
+.toolbar-actions {
+
+    display: flex;
 
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
+    gap: 7px;
+}
 
-    button {
-      cursor: pointer;
-    }
+.secondary-button {
 
-    /* =========================================================
-       VARIABLES
-       ========================================================= */
+    height: 34px;
 
-    :root {
-      --green: #315c4c;
-      --green-dark: #25483b;
-      --green-light: #eaf2ee;
-      --sage: #8da99b;
+    padding: 0 11px;
 
-      --background: #f7f8f6;
-      --surface: #ffffff;
+    border: 1px solid var(--border);
 
-      --border: #e5e8e5;
-      --border-light: #edf0ed;
+    background: white;
 
-      --text: #1f2925;
-      --text-secondary: #56635c;
-      --muted: #748079;
+    color: var(--text-secondary);
 
-      --success: #3f7d5a;
-      --success-bg: #edf7f0;
+    border-radius: 6px;
 
-      --warning: #a86c22;
-      --warning-bg: #fff6e8;
+    font-size: 10px;
+}
 
-      --danger: #b44a4a;
-      --danger-bg: #fff0f0;
+.secondary-button:hover {
+    background: #f6f8f6;
+}
 
-      --radius: 10px;
-      --radius-small: 7px;
-    }
 
-    /* =========================================================
-       MAIN LAYOUT
-       ========================================================= */
-
-    .admin-shell {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 240px minmax(0, 1fr);
-    }
+/* =========================================================
+   TABLE
+========================================================= */
 
-    /* =========================================================
-       SIDEBAR
-       ========================================================= */
+.table-container {
 
-    .admin-nav {
-      background: #ffffff;
-      border-right: 1px solid var(--border);
+    overflow-x: auto;
+}
 
-      padding: 25px 15px;
+table {
 
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+    width: 100%;
 
-      position: sticky;
-      top: 0;
+    min-width: 900px;
 
-      height: 100vh;
-      overflow-y: auto;
-    }
+    border-collapse: collapse;
+}
 
-    .admin-brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
+thead th {
 
-      padding: 5px 12px 27px;
-    }
+    padding: 11px 20px;
 
-    .admin-brand-mark {
-      width: 35px;
-      height: 35px;
+    background: #fcfdfc;
 
-      border-radius: 9px;
+    color: #929c96;
 
-      background: var(--green);
-      color: white;
+    font-size: 8.5px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    font-weight: 600;
 
-      font-size: 15px;
-      font-weight: 700;
-    }
+    letter-spacing: .08em;
 
-    .admin-brand-text {
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
+    text-transform: uppercase;
 
-    .admin-brand-text span {
-      color: var(--green);
-    }
+    text-align: left;
 
-    .nav-section-label {
-      margin: 17px 12px 7px;
+    border-bottom: 1px solid var(--border);
+}
 
-      color: #9aa39e;
+tbody td {
 
-      font-size: 10px;
-      font-weight: 700;
+    padding: 14px 20px;
 
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-    }
+    border-bottom: 1px solid #edf0ed;
 
-    .admin-nav a {
-      display: flex;
-      align-items: center;
-      gap: 11px;
+    font-size: 10.5px;
 
-      padding: 10px 12px;
+    color: var(--text-secondary);
 
-      border-radius: 7px;
+    vertical-align: middle;
+}
 
-      color: #647069;
+tbody tr {
 
-      text-decoration: none;
+    transition: background .15s ease;
+}
 
-      font-size: 13px;
-      font-weight: 500;
+tbody tr:hover {
 
-      transition:
-        background 0.15s ease,
-        color 0.15s ease;
-    }
+    background: #fbfcfb;
+}
 
-    .admin-nav a:hover {
-      background: #f4f6f4;
-      color: var(--text);
-    }
+tbody tr:last-child td {
 
-    .admin-nav a.is-active {
-      background: var(--green-light);
-      color: var(--green-dark);
-      font-weight: 650;
-    }
+    border-bottom: none;
+}
 
-    .nav-icon {
-      width: 17px;
-      height: 17px;
 
-      display: grid;
-      place-items: center;
+/* BOOK */
 
-      font-size: 15px;
+.book-cell {
 
-      flex-shrink: 0;
-    }
+    display: flex;
 
-    /* =========================================================
-       MAIN CONTENT
-       ========================================================= */
+    align-items: center;
 
-    .admin-main {
-      width: 100%;
-      max-width: 1500px;
+    gap: 11px;
 
-      padding: 34px 42px 60px;
+    min-width: 250px;
+}
 
-      margin: 0 auto;
-    }
+.book-cover {
 
-    /* =========================================================
-       PAGE HEADER
-       ========================================================= */
+    width: 39px;
 
-    .books-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+    height: 52px;
 
-      gap: 24px;
+    flex-shrink: 0;
 
-      margin-bottom: 30px;
-    }
+    border-radius: 4px;
 
-    .breadcrumb {
-      display: flex;
-      align-items: center;
+    overflow: hidden;
 
-      gap: 7px;
+    background:
+        linear-gradient(
+            145deg,
+            #dbe9e1,
+            #f0f5f2
+        );
 
-      color: var(--muted);
+    border: 1px solid #d7e1dc;
 
-      font-size: 12px;
+    display: flex;
 
-      margin-bottom: 8px;
-    }
+    align-items: center;
+    justify-content: center;
 
-    .breadcrumb strong {
-      color: var(--text);
-      font-weight: 550;
-    }
+    color: var(--forest-700);
 
-    .books-header h1 {
-      margin-bottom: 7px;
+    font-size: 15px;
+}
 
-      font-size: clamp(25px, 3vw, 32px);
-      line-height: 1.15;
+.book-cover img {
 
-      letter-spacing: -0.035em;
+    width: 100%;
+    height: 100%;
 
-      font-weight: 700;
-    }
+    object-fit: cover;
+}
 
-    .books-header p {
-      margin: 0;
+.book-name {
 
-      color: var(--muted);
+    color: var(--text);
 
-      font-size: 13px;
-      line-height: 1.6;
-    }
+    font-weight: 600;
 
-    .header-actions {
-      display: flex;
-      gap: 9px;
+    font-size: 10.5px;
 
-      flex-shrink: 0;
-    }
+    line-height: 1.35;
+}
 
-    /* =========================================================
-       BUTTONS
-       ========================================================= */
+.book-author {
 
-    .btn-primary {
-      border: 0;
-      border-radius: 7px;
+    margin-top: 3px;
 
-      background: var(--green);
-      color: #ffffff;
+    color: var(--text-muted);
 
-      padding: 10px 15px;
+    font-size: 9px;
+}
 
-      font-size: 13px;
-      font-weight: 600;
 
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+/* BADGES */
 
-      gap: 7px;
+.badge {
 
-      transition:
-        background 0.15s ease,
-        transform 0.15s ease;
-    }
+    display: inline-flex;
 
-    .btn-primary:hover {
-      background: var(--green-dark);
-    }
+    align-items: center;
 
-    .btn-primary:active {
-      transform: translateY(1px);
-    }
+    padding: 4px 7px;
 
-    .btn-secondary {
-      height: 37px;
+    border-radius: 5px;
 
-      padding: 0 13px;
+    font-size: 8.5px;
 
-      border: 1px solid var(--border);
-      border-radius: 7px;
+    font-weight: 600;
+}
 
-      background: #ffffff;
-      color: #59655e;
+.badge-free {
 
-      font-size: 12px;
-      font-weight: 550;
-    }
+    background: var(--success-bg);
 
-    .btn-secondary:hover {
-      background: #f5f7f5;
-    }
+    color: var(--success);
+}
 
-    /* =========================================================
-       STATISTICS
-       ========================================================= */
+.badge-paid {
 
-    .book-stats {
-      display: grid;
+    background: var(--warning-bg);
 
-      grid-template-columns: repeat(4, 1fr);
+    color: var(--warning);
+}
 
-      gap: 13px;
 
-      margin-bottom: 24px;
-    }
+/* STATUS */
 
-    .stat-card {
-      background: var(--surface);
+.status {
 
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+    display: inline-flex;
 
-      padding: 17px 18px;
-    }
+    align-items: center;
 
-    .stat-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    gap: 6px;
 
-      margin-bottom: 10px;
-    }
+    font-size: 9.5px;
 
-    .stat-label {
-      color: var(--muted);
+    font-weight: 500;
+}
 
-      font-size: 12px;
-      font-weight: 550;
-    }
+.status-dot {
 
-    .stat-icon {
-      width: 30px;
-      height: 30px;
+    width: 6px;
+    height: 6px;
 
-      border-radius: 7px;
+    border-radius: 50%;
 
-      background: var(--green-light);
-      color: var(--green);
+    background: currentColor;
+}
 
-      display: grid;
-      place-items: center;
+.status-published {
 
-      font-size: 14px;
-    }
+    color: var(--success);
+}
 
-    .stat-number {
-      font-size: 23px;
-      font-weight: 700;
+.status-draft {
 
-      letter-spacing: -0.03em;
-    }
+    color: #89938d;
+}
 
-    .stat-description {
-      margin-top: 4px;
 
-      color: #8b958f;
+/* PDF */
 
-      font-size: 10.5px;
-    }
+.pdf {
 
-    /* =========================================================
-       BOOK PANEL
-       ========================================================= */
+    color: var(--forest-700);
 
-    .books-panel {
-      background: var(--surface);
+    font-size: 9.5px;
 
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+    font-weight: 600;
 
-      overflow: hidden;
-    }
+    text-decoration: none;
+}
 
-    .books-panel-header {
-      padding: 19px 20px;
+.pdf:hover {
+    text-decoration: underline;
+}
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
 
-      gap: 15px;
+/* ACTION */
 
-      border-bottom: 1px solid var(--border);
-    }
+.action {
 
-    .panel-title {
-      font-size: 14px;
-      font-weight: 650;
-    }
+    width: 29px;
+    height: 29px;
 
-    .panel-subtitle {
-      color: var(--muted);
+    border: 0;
 
-      font-size: 11px;
+    border-radius: 6px;
 
-      margin-top: 3px;
-    }
+    background: transparent;
 
-    /* =========================================================
-       TOOLBAR
-       ========================================================= */
+    color: #8b958f;
 
-    .books-toolbar {
-      padding: 14px 20px;
+    font-size: 17px;
+}
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+.action:hover {
 
-      gap: 12px;
+    background: #f0f3f0;
 
-      border-bottom: 1px solid var(--border);
+    color: var(--text);
+}
 
-      background: #fcfdfc;
-    }
 
-    .toolbar-left {
-      display: flex;
-      align-items: center;
+/* =========================================================
+   TABLE FOOTER
+========================================================= */
 
-      gap: 8px;
+.library-footer {
 
-      flex: 1;
-    }
+    padding: 12px 20px;
 
-    .search-box {
-      position: relative;
+    border-top: 1px solid var(--border);
 
-      width: min(340px, 100%);
-    }
+    display: flex;
 
-    .search-box span {
-      position: absolute;
+    justify-content: space-between;
 
-      left: 11px;
-      top: 50%;
+    align-items: center;
 
-      transform: translateY(-50%);
+    color: var(--text-muted);
 
-      color: #9aa39e;
+    font-size: 9px;
+}
 
-      font-size: 14px;
-    }
+.pagination {
 
-    .search-box input {
-      width: 100%;
+    display: flex;
 
-      height: 36px;
+    gap: 4px;
+}
 
-      padding: 0 12px 0 33px;
+.page {
 
-      border: 1px solid var(--border);
-      border-radius: 7px;
+    width: 27px;
+    height: 27px;
 
-      background: #ffffff;
+    border: 1px solid var(--border);
 
-      color: var(--text);
+    border-radius: 5px;
 
-      font-size: 12px;
+    background: white;
 
-      outline: none;
-    }
+    color: var(--text-secondary);
 
-    .search-box input:focus {
-      border-color: var(--sage);
+    font-size: 9px;
+}
 
-      box-shadow:
-        0 0 0 3px rgba(49, 92, 76, 0.08);
-    }
+.page:hover:not(:disabled) {
+    background: #f6f8f6;
+}
 
-    .filter-select {
-      height: 36px;
+.page.active {
 
-      padding: 0 30px 0 11px;
+    background: var(--forest-800);
 
-      border: 1px solid var(--border);
-      border-radius: 7px;
+    border-color: var(--forest-800);
 
-      background: #ffffff;
+    color: white;
+}
 
-      color: #56635c;
+.page:disabled {
 
-      font-size: 12px;
+    opacity: .4;
 
-      cursor: pointer;
-    }
+    cursor: not-allowed;
+}
 
-    .toolbar-right {
-      display: flex;
-      align-items: center;
 
-      gap: 8px;
-    }
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
 
-    .toolbar-btn {
-      height: 36px;
+    background: rgba(16, 35, 29, .42);
 
-      padding: 0 12px;
+    backdrop-filter: blur(5px);
 
-      border: 1px solid var(--border);
-      border-radius: 7px;
+    display: none;
 
-      background: #ffffff;
+    align-items: center;
 
-      color: #56635c;
+    justify-content: center;
 
-      font-size: 12px;
-      font-weight: 550;
+    padding: 20px;
+
+    z-index: 1000;
+}
+
+.modal-overlay.open {
+
+    display: flex;
+}
+
+.modal {
+
+    width: min(760px, 100%);
+
+    max-height: 92vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border-radius: 14px;
+
+    box-shadow: var(--shadow-lg);
+
+    animation:
+        modalIn .2s ease;
+}
+
+@keyframes modalIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(.985);
     }
 
-    .toolbar-btn:hover {
-      background: #f5f7f5;
+    to {
+        opacity: 1;
+        transform: none;
     }
+}
 
-    /* =========================================================
-       TABLE
-       ========================================================= */
 
-    .table-wrap {
-      width: 100%;
+/* MODAL HEADER */
 
-      overflow-x: auto;
-    }
+.modal-header {
 
-    .books-table {
-      width: 100%;
+    padding: 21px 23px 17px;
 
-      border-collapse: collapse;
+    border-bottom: 1px solid var(--border);
 
-      min-width: 850px;
-    }
+    display: flex;
 
-    .books-table th {
-      padding: 11px 20px;
+    justify-content: space-between;
 
-      background: #fafbfa;
+    align-items: flex-start;
+}
 
-      color: #89938d;
+.modal-title {
 
-      font-size: 10px;
-      font-weight: 650;
+    font-family: "DM Sans", sans-serif;
 
-      text-transform: uppercase;
+    font-size: 18px;
 
-      letter-spacing: 0.055em;
+    font-weight: 700;
 
-      text-align: left;
+    letter-spacing: -.025em;
+}
 
-      border-bottom: 1px solid var(--border);
+.modal-description {
 
-      white-space: nowrap;
-    }
+    color: var(--text-muted);
 
-    .books-table td {
-      padding: 13px 20px;
+    font-size: 9.5px;
 
-      color: #4d5952;
+    margin-top: 4px;
+}
 
-      font-size: 12px;
+.close {
 
-      border-bottom: 1px solid var(--border-light);
+    width: 30px;
+    height: 30px;
 
-      vertical-align: middle;
-    }
+    border: 0;
 
-    .books-table tbody tr {
-      transition: background 0.12s ease;
-    }
+    background: #f4f6f4;
 
-    .books-table tbody tr:hover {
-      background: #fbfcfb;
-    }
+    color: #68736d;
 
-    .books-table tbody tr:last-child td {
-      border-bottom: none;
-    }
+    border-radius: 6px;
 
-    /* =========================================================
-       BOOK INFORMATION
-       ========================================================= */
+    font-size: 18px;
+}
 
-    .book-info {
-      display: flex;
-      align-items: center;
+.close:hover {
+    background: #e9ece9;
+}
 
-      gap: 11px;
 
-      min-width: 220px;
-    }
+/* =========================================================
+   MODAL CONTENT
+========================================================= */
 
-    .book-cover {
-      width: 39px;
-      height: 52px;
+.modal-body {
 
-      flex-shrink: 0;
+    padding: 21px 23px;
+}
 
-      border-radius: 4px;
+.form-layout {
 
-      background: #e7ece8;
+    display: grid;
 
-      overflow: hidden;
+    grid-template-columns: 1fr 260px;
 
-      display: grid;
-      place-items: center;
+    gap: 25px;
+}
 
-      color: var(--green);
 
-      font-size: 15px;
+/* FORM */
 
-      border: 1px solid #dce3de;
-    }
+.form-group {
 
-    .book-cover img {
-      width: 100%;
-      height: 100%;
+    margin-bottom: 16px;
+}
 
-      object-fit: cover;
-    }
+.form-label {
 
-    .book-title {
-      color: var(--text);
+    display: block;
 
-      font-weight: 620;
+    margin-bottom: 6px;
 
-      font-size: 12.5px;
+    color: #46534c;
 
-      line-height: 1.35;
-    }
+    font-size: 10px;
 
-    .book-author {
-      color: #8a948e;
+    font-weight: 600;
+}
 
-      font-size: 10.5px;
+.form-label span {
 
-      margin-top: 3px;
-    }
+    color: #9aa39e;
 
-    /* =========================================================
-       TYPE BADGES
-       ========================================================= */
+    font-weight: 400;
+}
 
-    .type-badge {
-      display: inline-flex;
-      align-items: center;
+.form-input,
+.form-select,
+.form-textarea {
 
-      padding: 4px 8px;
+    width: 100%;
 
-      border-radius: 5px;
+    border: 1px solid var(--border);
 
-      font-size: 10px;
+    border-radius: 7px;
 
-      font-weight: 650;
-    }
+    padding: 10px 11px;
 
-    .type-free {
-      color: var(--success);
+    outline: none;
 
-      background: var(--success-bg);
-    }
+    color: var(--text);
 
-    .type-paid {
-      color: var(--warning);
+    background: white;
 
-      background: var(--warning-bg);
-    }
+    font-size: 10.5px;
 
-    /* =========================================================
-       STATUS
-       ========================================================= */
+    transition: .15s;
+}
 
-    .status {
-      display: inline-flex;
-      align-items: center;
+.form-input,
+.form-select {
 
-      gap: 6px;
+    height: 37px;
+}
 
-      font-size: 11px;
-      font-weight: 550;
-    }
+.form-textarea {
 
-    .status-dot {
-      width: 6px;
-      height: 6px;
+    min-height: 100px;
 
-      border-radius: 50%;
+    resize: vertical;
+}
 
-      background: currentColor;
-    }
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
 
-    .status-published {
-      color: var(--success);
-    }
+    border-color: var(--sage-500);
 
-    .status-draft {
-      color: #8a938e;
-    }
+    box-shadow:
+        0 0 0 3px rgba(49,92,76,.055);
+}
 
-    /* =========================================================
-       PDF LINK
-       ========================================================= */
 
-    .pdf-link {
-      display: inline-flex;
-      align-items: center;
+/* FORM ROW */
 
-      gap: 6px;
+.form-row {
 
-      color: var(--green);
+    display: grid;
 
-      text-decoration: none;
+    grid-template-columns: 1fr 1fr;
 
-      font-size: 11px;
-      font-weight: 600;
-    }
+    gap: 10px;
+}
 
-    .pdf-link:hover {
-      text-decoration: underline;
-    }
 
-    /* =========================================================
-       ACTION BUTTON
-       ========================================================= */
+/* =========================================================
+   PRICING
+========================================================= */
 
-    .action-btn {
-      width: 30px;
-      height: 30px;
+.pricing {
 
-      border: 0;
-      border-radius: 6px;
+    display: flex;
 
-      background: transparent;
+    gap: 8px;
+}
 
-      color: #7c8780;
+.price-input {
 
-      font-size: 17px;
+    flex: 1;
+}
 
-      cursor: pointer;
-    }
+.free-option {
 
-    .action-btn:hover {
-      background: #f1f4f1;
+    height: 37px;
 
-      color: var(--text);
-    }
+    padding: 0 10px;
 
-    /* =========================================================
-       TABLE FOOTER
-       ========================================================= */
+    border: 1px solid var(--border);
 
-    .table-footer {
-      padding: 13px 20px;
+    border-radius: 7px;
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    display: flex;
 
-      border-top: 1px solid var(--border);
+    align-items: center;
 
-      color: #89938d;
+    gap: 6px;
 
-      font-size: 11px;
-    }
+    color: var(--text-secondary);
 
-    .pagination {
-      display: flex;
-      align-items: center;
+    font-size: 9.5px;
 
-      gap: 4px;
-    }
+    white-space: nowrap;
+}
 
-    .page-btn {
-      width: 29px;
-      height: 29px;
+.free-option input {
+    accent-color: var(--forest-700);
+}
 
-      border: 1px solid var(--border);
-      border-radius: 6px;
 
-      background: #ffffff;
+/* =========================================================
+   UPLOAD
+========================================================= */
 
-      color: #69756e;
+.upload-zone {
 
-      font-size: 11px;
-    }
+    min-height: 142px;
 
-    .page-btn:hover:not(:disabled) {
-      background: #f5f7f5;
-    }
+    border: 1px dashed #b9c9c0;
 
-    .page-btn.active {
-      background: var(--green);
+    border-radius: 9px;
 
-      border-color: var(--green);
+    background: #fafcfb;
 
-      color: #ffffff;
-    }
+    display: flex;
 
-    .page-btn:disabled {
-      opacity: 0.45;
+    align-items: center;
 
-      cursor: not-allowed;
-    }
+    justify-content: center;
 
-    /* =========================================================
-       MODAL
-       ========================================================= */
+    flex-direction: column;
 
-    .modal-overlay {
-      display: none;
+    text-align: center;
 
-      position: fixed;
+    position: relative;
 
-      inset: 0;
+    cursor: pointer;
 
-      z-index: 1000;
+    transition: .18s;
+}
 
-      background: rgba(20, 29, 25, 0.42);
+.upload-zone:hover,
+.upload-zone.dragging {
 
-      padding: 24px;
+    background: var(--sage-100);
 
-      align-items: center;
-      justify-content: center;
+    border-color: var(--forest-600);
+}
 
-      backdrop-filter: blur(3px);
-    }
+.upload-zone input {
 
-    .modal-overlay.is-open {
-      display: flex;
-    }
+    position: absolute;
 
-    .modal-box {
-      width: min(620px, 100%);
+    inset: 0;
 
-      max-height: 92vh;
+    width: 100%;
 
-      overflow-y: auto;
+    height: 100%;
 
-      background: #ffffff;
+    opacity: 0;
 
-      border: 1px solid rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
 
-      border-radius: 12px;
+.upload-icon {
 
-      box-shadow:
-        0 24px 70px rgba(20, 30, 25, 0.18);
-    }
+    width: 36px;
+    height: 36px;
 
-    /* =========================================================
-       MODAL HEADER
-       ========================================================= */
+    border-radius: 8px;
 
-    .modal-header {
-      padding: 20px 22px 17px;
+    background: var(--sage-100);
 
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+    color: var(--forest-700);
 
-      border-bottom: 1px solid var(--border);
-    }
+    display: flex;
 
-    .modal-header h2 {
-      margin-bottom: 4px;
+    align-items: center;
+    justify-content: center;
 
-      font-size: 18px;
+    font-size: 15px;
 
-      letter-spacing: -0.02em;
-    }
+    margin-bottom: 9px;
+}
 
-    .modal-header p {
-      color: var(--muted);
+.upload-title {
 
-      font-size: 11px;
+    color: var(--text);
 
-      line-height: 1.5;
-    }
+    font-size: 10px;
 
-    .modal-close {
-      width: 31px;
-      height: 31px;
+    font-weight: 600;
+}
 
-      border: 0;
+.upload-text {
 
-      border-radius: 6px;
+    color: var(--text-muted);
 
-      background: #f4f6f4;
+    font-size: 9px;
 
-      color: #69746e;
+    margin-top: 4px;
+}
 
-      font-size: 18px;
-    }
+.upload-text strong {
+    color: var(--forest-700);
+}
 
-    .modal-close:hover {
-      background: #e9ece9;
-    }
 
-    /* =========================================================
-       MODAL BODY
-       ========================================================= */
+/* =========================================================
+   COVER UPLOAD
+========================================================= */
 
-    .modal-body {
-      padding: 21px 22px;
-    }
+.cover-area {
 
-    /* =========================================================
-       FORM
-       ========================================================= */
+    display: flex;
 
-    .form-grid {
-      display: grid;
+    flex-direction: column;
 
-      grid-template-columns: 1fr 1fr;
+    align-items: center;
 
-      gap: 15px;
-    }
+    gap: 10px;
+}
 
-    .form-group {
-      display: flex;
+.cover-preview {
 
-      flex-direction: column;
+    width: 110px;
 
-      gap: 6px;
+    height: 145px;
 
-      margin-bottom: 15px;
-    }
+    border-radius: 7px;
 
-    .form-group.full {
-      grid-column: 1 / -1;
-    }
+    border: 1px dashed #b9c9c0;
 
-    .form-group label {
-      color: #47534c;
+    background: #f7f9f7;
 
-      font-size: 11px;
+    display: flex;
 
-      font-weight: 650;
-    }
+    align-items: center;
+    justify-content: center;
 
-    .form-group label span {
-      color: #a1aaa5;
+    overflow: hidden;
 
-      font-weight: 450;
-    }
+    color: #9aa49e;
 
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
+    font-size: 20px;
+}
 
-      padding: 10px 11px;
+.cover-preview img {
 
-      border: 1px solid var(--border);
+    width: 100%;
+    height: 100%;
 
-      border-radius: 7px;
+    object-fit: cover;
+}
 
-      background: #ffffff;
+.cover-button {
 
-      color: var(--text);
+    position: relative;
 
-      font-family: inherit;
+    overflow: hidden;
 
-      font-size: 12px;
+    padding: 7px 10px;
 
-      outline: none;
-    }
+    border: 1px solid var(--border);
 
-    .form-group textarea {
-      min-height: 85px;
+    background: white;
 
-      resize: vertical;
-    }
+    border-radius: 6px;
 
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--sage);
+    color: var(--text-secondary);
 
-      box-shadow:
-        0 0 0 3px rgba(49, 92, 76, 0.07);
-    }
+    font-size: 9px;
 
-    /* =========================================================
-       PRICE
-       ========================================================= */
+    cursor: pointer;
+}
 
-    .price-row {
-      display: flex;
+.cover-button input {
 
-      align-items: center;
+    position: absolute;
 
-      gap: 10px;
-    }
+    inset: 0;
 
-    .price-input {
-      flex: 1;
-    }
+    opacity: 0;
 
-    .free-toggle {
-      height: 38px;
+    cursor: pointer;
+}
 
-      padding: 0 11px;
 
-      border: 1px solid var(--border);
+/* =========================================================
+   MODAL FOOTER
+========================================================= */
 
-      border-radius: 7px;
+.modal-footer {
 
-      background: #fafbfa;
+    padding: 14px 23px;
 
-      display: flex;
+    background: #fcfdfc;
 
-      align-items: center;
+    border-top: 1px solid var(--border);
 
-      gap: 7px;
+    display: flex;
 
-      color: #5d6962;
+    justify-content: flex-end;
 
-      font-size: 11px;
+    gap: 8px;
+}
 
-      white-space: nowrap;
-    }
+.cancel {
 
-    .free-toggle input {
-      width: auto;
-    }
+    height: 36px;
 
-    /* =========================================================
-       FILE UPLOAD
-       ========================================================= */
+    padding: 0 13px;
 
-    .upload-area {
-      position: relative;
+    border: 1px solid var(--border);
 
-      min-height: 145px;
+    background: white;
 
-      border: 1px dashed #b9c7bf;
+    color: var(--text-secondary);
 
-      border-radius: 9px;
+    border-radius: 6px;
 
-      background: #fafcfb;
+    font-size: 10px;
+}
 
-      display: flex;
+.submit {
 
-      flex-direction: column;
+    height: 36px;
 
-      align-items: center;
+    padding: 0 15px;
 
-      justify-content: center;
+    border: 0;
 
-      text-align: center;
+    background: var(--forest-800);
 
-      padding: 22px;
+    color: white;
 
-      cursor: pointer;
+    border-radius: 6px;
 
-      transition:
-        border-color 0.15s ease,
-        background 0.15s ease;
-    }
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+.submit:hover {
+    background: var(--forest-700);
+}
+
+
+/* =========================================================
+   PREVIEW DRAWER
+========================================================= */
+
+.drawer-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(16,35,29,.25);
+
+    display: none;
+
+    z-index: 900;
+}
+
+.drawer-overlay.open {
+    display: block;
+}
+
+.drawer {
+
+    position: fixed;
+
+    top: 0;
+
+    right: 0;
+
+    bottom: 0;
 
-    .upload-area:hover {
-      border-color: var(--green);
+    width: min(420px, 100%);
 
-      background: #f6faf7;
+    background: white;
+
+    box-shadow: -15px 0 50px rgba(16,35,29,.13);
+
+    z-index: 901;
+
+    transform: translateX(100%);
+
+    transition: transform .25s ease;
+
+    overflow-y: auto;
+}
+
+.drawer.open {
+    transform: translateX(0);
+}
+
+.drawer-header {
+
+    height: 65px;
+
+    padding: 0 21px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.drawer-title {
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.drawer-body {
+
+    padding: 25px;
+}
+
+.drawer-cover {
+
+    width: 145px;
+
+    height: 190px;
+
+    margin: 0 auto 22px;
+
+    border-radius: 7px;
+
+    background: var(--sage-100);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--forest-700);
+
+    font-size: 25px;
+
+    overflow: hidden;
+}
+
+.drawer-cover img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.drawer-book-title {
+
+    font-family: "DM Sans", sans-serif;
+
+    text-align: center;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    letter-spacing: -.035em;
+}
+
+.drawer-author {
+
+    text-align: center;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+
+    margin-top: 5px;
+}
+
+.drawer-meta {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    margin-top: 25px;
+}
+
+.meta-box {
+
+    padding: 12px;
+
+    background: #fafbfa;
+
+    border: 1px solid var(--border);
+
+    border-radius: 7px;
+}
+
+.meta-label {
+
+    color: var(--text-muted);
+
+    font-size: 8px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .07em;
+}
+
+.meta-value {
+
+    color: var(--text);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    margin-top: 4px;
+}
+
+.drawer-description {
+
+    margin-top: 20px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+
+    line-height: 1.7;
+}
+
+.drawer-actions {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 22px;
+}
+
+.drawer-actions button {
+
+    flex: 1;
+
+    height: 36px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+.edit-btn {
+
+    background: var(--forest-800);
+
+    color: white;
+
+    border: 0;
+}
+
+.view-btn {
+
+    background: white;
+
+    color: var(--text-secondary);
+
+    border: 1px solid var(--border);
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+
+    position: fixed;
+
+    right: 25px;
+
+    bottom: 25px;
+
+    padding: 12px 15px;
+
+    background: var(--forest-950);
+
+    color: white;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+
+    box-shadow: var(--shadow-md);
+
+    transform: translateY(20px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: .2s;
+
+    z-index: 2000;
+}
+
+.toast.show {
+
+    transform: translateY(0);
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+.mobile-menu {
+
+    display: none;
+
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    background: white;
+
+    color: var(--text-secondary);
+}
+
+@media (max-width: 1050px) {
+
+    .kpis {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .upload-area.dragging {
-      border-color: var(--green);
+    .content {
+        padding: 30px 25px;
+    }
 
-      background: var(--green-light);
+    .topbar {
+        padding: 0 25px;
     }
+}
+
 
-    .upload-icon {
-      width: 38px;
-      height: 38px;
+@media (max-width: 800px) {
 
-      margin-bottom: 9px;
+    .sidebar {
 
-      border-radius: 8px;
+        transform: translateX(-100%);
+
+        transition: transform .25s ease;
+    }
 
-      background: var(--green-light);
+    .sidebar.open {
+        transform: translateX(0);
+    }
 
-      color: var(--green);
+    .main {
 
-      display: grid;
+        margin-left: 0;
 
-      place-items: center;
+        width: 100%;
+    }
 
-      font-size: 17px;
+    .mobile-menu {
+        display: block;
     }
 
-    .upload-title {
-      color: var(--text);
+    .topbar {
 
-      font-size: 12px;
+        gap: 10px;
 
-      font-weight: 650;
+        justify-content: flex-start;
     }
 
-    .upload-description {
-      margin-top: 4px;
+    .global-search {
 
-      color: #8a958e;
+        flex: 1;
 
-      font-size: 10.5px;
+        width: auto;
     }
 
-    .upload-description strong {
-      color: var(--green);
+    .topbar-right {
+        gap: 6px;
     }
 
-    .upload-area input[type="file"] {
-      position: absolute;
+    .view-site {
+        display: none;
+    }
 
-      inset: 0;
+    .page-header {
 
-      width: 100%;
-      height: 100%;
+        align-items: flex-start;
 
-      opacity: 0;
+        flex-direction: column;
 
-      cursor: pointer;
+        gap: 15px;
     }
 
-    /* =========================================================
-       COVER UPLOAD
-       ========================================================= */
+    .primary-button {
+        width: 100%;
+    }
 
-    .cover-upload {
-      display: grid;
+    .form-layout {
+        grid-template-columns: 1fr;
+    }
 
-      grid-template-columns: 80px 1fr;
+    .cover-area {
 
-      gap: 12px;
+        align-items: flex-start;
 
-      align-items: center;
+        flex-direction: row;
     }
 
     .cover-preview {
-      width: 80px;
-      height: 105px;
+        width: 90px;
+        height: 120px;
+    }
+}
 
-      border: 1px dashed #bcc8c1;
 
-      border-radius: 7px;
+@media (max-width: 550px) {
 
-      background: #f7f9f7;
-
-      display: grid;
-
-      place-items: center;
-
-      color: #9aa49e;
-
-      font-size: 20px;
-
-      overflow: hidden;
+    .content {
+        padding: 23px 15px 40px;
     }
 
-    .cover-preview img {
-      width: 100%;
-      height: 100%;
-
-      object-fit: cover;
+    .topbar {
+        padding: 0 15px;
     }
 
-    .cover-upload-area {
-      min-height: 105px;
+    .page-title {
+        font-size: 28px;
     }
 
-    /* =========================================================
-       FORM MESSAGE
-       ========================================================= */
-
-    .form-msg {
-      margin-top: 11px;
-
-      font-size: 11px;
-
-      font-weight: 550;
-    }
-
-    .form-msg.success {
-      color: var(--success);
-    }
-
-    .form-msg.error {
-      color: var(--danger);
-    }
-
-    /* =========================================================
-       MODAL FOOTER
-       ========================================================= */
-
-    .modal-footer {
-      padding: 15px 22px;
-
-      display: flex;
-
-      justify-content: flex-end;
-
-      gap: 8px;
-
-      border-top: 1px solid var(--border);
-
-      background: #fcfdfc;
-    }
-
-    /* =========================================================
-       RESPONSIVE
-       ========================================================= */
-
-    @media (max-width: 1050px) {
-
-      .admin-shell {
-        grid-template-columns: 205px minmax(0, 1fr);
-      }
-
-      .admin-main {
-        padding: 28px 25px 50px;
-      }
-
-      .book-stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-    }
-
-    @media (max-width: 760px) {
-
-      .admin-shell {
-        display: block;
-      }
-
-      .admin-nav {
-        position: static;
-
-        height: auto;
-
-        flex-direction: row;
-
-        overflow-x: auto;
-
-        padding: 10px;
-
-        border-right: 0;
-
-        border-bottom: 1px solid var(--border);
-      }
-
-      .admin-brand,
-      .nav-section-label {
-        display: none;
-      }
-
-      .admin-nav a {
-        white-space: nowrap;
-      }
-
-      .admin-main {
-        padding: 23px 16px 40px;
-      }
-
-      .books-header {
-        flex-direction: column;
-
-        margin-bottom: 22px;
-      }
-
-      .header-actions {
-        width: 100%;
-      }
-
-      .btn-primary {
-        width: 100%;
-      }
-
-      .books-toolbar {
-        flex-direction: column;
-
-        align-items: stretch;
-      }
-
-      .toolbar-left {
-        flex-direction: column;
-
-        align-items: stretch;
-      }
-
-      .search-box {
-        width: 100%;
-      }
-
-      .filter-select {
-        width: 100%;
-      }
-
-      .toolbar-right {
-        justify-content: flex-end;
-      }
-
-    }
-
-    @media (max-width: 500px) {
-
-      .book-stats {
+    .kpis {
         grid-template-columns: 1fr 1fr;
 
         gap: 8px;
-      }
-
-      .stat-card {
-        padding: 13px;
-      }
-
-      .stat-number {
-        font-size: 20px;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-
-        gap: 0;
-      }
-
-      .form-group.full {
-        grid-column: auto;
-      }
-
-      .modal-overlay {
-        padding: 10px;
-
-        align-items: flex-end;
-      }
-
-      .modal-box {
-        max-height: 94vh;
-
-        border-radius: 12px 12px 0 0;
-      }
-
-      .cover-upload {
-        grid-template-columns: 65px 1fr;
-      }
-
-      .cover-preview {
-        width: 65px;
-        height: 90px;
-      }
-
-      .cover-upload-area {
-        min-height: 90px;
-      }
-
     }
 
-  </style>
+    .kpi {
+        padding: 14px;
+    }
+
+    .kpi-number {
+        font-size: 21px;
+    }
+
+    .toolbar {
+
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .toolbar-left {
+
+        flex-direction: column;
+    }
+
+    .search-books {
+        width: 100%;
+    }
+
+    .filter {
+        width: 100%;
+    }
+
+    .toolbar-actions {
+        justify-content: flex-end;
+    }
+
+    .modal-overlay {
+        padding: 8px;
+
+        align-items: flex-end;
+    }
+
+    .modal {
+
+        max-height: 95vh;
+
+        border-radius: 12px 12px 0 0;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .drawer {
+        width: 100%;
+    }
+}
+
+</style>
 </head>
 
 
 <body>
 
-  <main class="admin-shell">
+
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
+
+<div class="app">
+
 
     <!-- =====================================================
          SIDEBAR
-         ====================================================== -->
+    ====================================================== -->
 
-    <aside class="admin-nav">
+    <aside class="sidebar" id="sidebar">
 
-      <div class="admin-brand">
 
-        <div class="admin-brand-mark">
-          M
+        <div class="brand">
+
+            <div class="brand-mark">
+                M
+            </div>
+
+            <div>
+
+                <div class="brand-name">
+                    Mindful<span>Path</span>
+                </div>
+
+                <div class="brand-subtitle">
+                    Admin Console
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="admin-brand-text">
-          Mindful<span>Path</span>
+
+        <!-- MAIN -->
+
+        <div class="nav-group">
+
+            <div class="nav-label">
+                Main
+            </div>
+
+            <a class="nav-item" href="index.html">
+
+                <span class="nav-icon">⌂</span>
+
+                Dashboard
+
+            </a>
+
         </div>
 
-      </div>
+
+        <!-- CONTENT -->
+
+        <div class="nav-group">
+
+            <div class="nav-label">
+                Content
+            </div>
+
+            <a class="nav-item" href="articles.html">
+
+                <span class="nav-icon">▤</span>
+
+                Articles
+
+            </a>
 
 
-      <div class="nav-section-label">
-        Overview
-      </div>
+            <a class="nav-item active" href="books.html">
+
+                <span class="nav-icon">▥</span>
+
+                Books
+
+            </a>
 
 
-      <a href="index.html">
-        <span class="nav-icon">⌂</span>
-        Dashboard
-      </a>
+            <a class="nav-item" href="podcasts.html">
+
+                <span class="nav-icon">◉</span>
+
+                Podcasts
+
+            </a>
 
 
-      <div class="nav-section-label">
-        Content
-      </div>
+            <a class="nav-item" href="training.html">
+
+                <span class="nav-icon">◇</span>
+
+                Training
+
+            </a>
+
+        </div>
 
 
-      <a href="articles.html">
-        <span class="nav-icon">▤</span>
-        Articles
-      </a>
+        <!-- COMMUNITY -->
+
+        <div class="nav-group">
+
+            <div class="nav-label">
+                Community
+            </div>
+
+            <a class="nav-item" href="users.html">
+
+                <span class="nav-icon">♙</span>
+
+                Users
+
+            </a>
 
 
-      <a
-        href="books.html"
-        class="is-active"
-      >
-        <span class="nav-icon">▥</span>
-        Books
-      </a>
+            <a class="nav-item" href="moderation.html">
+
+                <span class="nav-icon">◌</span>
+
+                Moderation
+
+            </a>
+
+        </div>
 
 
-      <a href="podcasts.html">
-        <span class="nav-icon">◉</span>
-        Podcasts
-      </a>
+        <!-- OPERATIONS -->
+
+        <div class="nav-group">
+
+            <div class="nav-label">
+                Operations
+            </div>
+
+            <a class="nav-item" href="appointments.html">
+
+                <span class="nav-icon">□</span>
+
+                Appointments
+
+            </a>
 
 
-      <a href="training.html">
-        <span class="nav-icon">◇</span>
-        Training
-      </a>
+            <a class="nav-item" href="payments.html">
+
+                <span class="nav-icon">◇</span>
+
+                Payments
+
+            </a>
+
+        </div>
 
 
-      <div class="nav-section-label">
-        Platform
-      </div>
+        <!-- BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <a class="nav-item" href="settings.html">
+
+                <span class="nav-icon">⚙</span>
+
+                Settings
+
+            </a>
 
 
-      <a href="users.html">
-        <span class="nav-icon">♙</span>
-        Users
-      </a>
+            <div class="sidebar-user">
 
+                <div class="avatar">
+                    BM
+                </div>
 
-      <a href="appointments.html">
-        <span class="nav-icon">□</span>
-        Appointments
-      </a>
+                <div>
 
+                    <div class="user-name">
+                        Admin User
+                    </div>
 
-      <a href="payments.html">
-        <span class="nav-icon">◇</span>
-        Payments
-      </a>
+                    <div class="user-role">
+                        Administrator
+                    </div>
 
+                </div>
 
-      <a href="moderation.html">
-        <span class="nav-icon">◌</span>
-        Moderation
-      </a>
+            </div>
+
+        </div>
 
     </aside>
 
 
+
     <!-- =====================================================
-         MAIN CONTENT
-         ====================================================== -->
+         MAIN
+    ====================================================== -->
 
-    <section class="admin-main">
+    <main class="main">
 
 
-      <!-- PAGE HEADER -->
+        <!-- TOPBAR -->
 
-      <header class="books-header">
+        <header class="topbar">
 
-        <div>
 
-          <div class="breadcrumb">
+            <button
+                class="mobile-menu"
+                id="mobileMenu"
+            >
+                ☰
+            </button>
 
-            <span>Content</span>
 
-            <span>/</span>
+            <div class="global-search">
 
-            <strong>Books</strong>
+                <span class="global-search-icon">
+                    ⌕
+                </span>
 
-          </div>
-
-
-          <h1>
-            Books
-          </h1>
-
-
-          <p>
-            Manage the mental-health e-books available on MindfulPath.
-          </p>
-
-        </div>
-
-
-        <div class="header-actions">
-
-          <button
-            class="btn-primary"
-            id="addBookBtn"
-            type="button"
-          >
-
-            <span>+</span>
-
-            Add book
-
-          </button>
-
-        </div>
-
-      </header>
-
-
-      <!-- ===================================================
-           STATISTICS
-           ==================================================== -->
-
-      <section class="book-stats">
-
-
-        <article class="stat-card">
-
-          <div class="stat-top">
-
-            <span class="stat-label">
-              Total books
-            </span>
-
-            <span class="stat-icon">
-              ▥
-            </span>
-
-          </div>
-
-          <div class="stat-number">
-            24
-          </div>
-
-          <div class="stat-description">
-            All books in library
-          </div>
-
-        </article>
-
-
-        <article class="stat-card">
-
-          <div class="stat-top">
-
-            <span class="stat-label">
-              Published
-            </span>
-
-            <span class="stat-icon">
-              ✓
-            </span>
-
-          </div>
-
-          <div class="stat-number">
-            18
-          </div>
-
-          <div class="stat-description">
-            Currently visible to users
-          </div>
-
-        </article>
-
-
-        <article class="stat-card">
-
-          <div class="stat-top">
-
-            <span class="stat-label">
-              Free
-            </span>
-
-            <span class="stat-icon">
-              ○
-            </span>
-
-          </div>
-
-          <div class="stat-number">
-            11
-          </div>
-
-          <div class="stat-description">
-            Available without payment
-          </div>
-
-        </article>
-
-
-        <article class="stat-card">
-
-          <div class="stat-top">
-
-            <span class="stat-label">
-              Paid
-            </span>
-
-            <span class="stat-icon">
-              ₭
-            </span>
-
-          </div>
-
-          <div class="stat-number">
-            13
-          </div>
-
-          <div class="stat-description">
-            Available for purchase
-          </div>
-
-        </article>
-
-      </section>
-
-
-      <!-- ===================================================
-           BOOK LIBRARY
-           ==================================================== -->
-
-      <section class="books-panel">
-
-
-        <div class="books-panel-header">
-
-          <div>
-
-            <div class="panel-title">
-              Book library
-            </div>
-
-            <div class="panel-subtitle">
-              Manage titles, pricing, publication status and files.
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- TOOLBAR -->
-
-        <div class="books-toolbar">
-
-
-          <div class="toolbar-left">
-
-
-            <div class="search-box">
-
-              <span>
-                ⌕
-              </span>
-
-              <input
-                type="search"
-                id="bookSearch"
-                placeholder="Search books..."
-                aria-label="Search books"
-              >
+                <input
+                    type="search"
+                    placeholder="Search anything..."
+                >
 
             </div>
 
 
-            <select
-              class="filter-select"
-              id="bookTypeFilter"
-            >
-
-              <option value="">
-                All types
-              </option>
-
-              <option value="free">
-                Free
-              </option>
-
-              <option value="paid">
-                Paid
-              </option>
-
-            </select>
+            <div class="topbar-right">
 
 
-            <select
-              class="filter-select"
-              id="bookStatusFilter"
-            >
-
-              <option value="">
-                All statuses
-              </option>
-
-              <option value="published">
-                Published
-              </option>
-
-              <option value="draft">
-                Draft
-              </option>
-
-            </select>
-
-          </div>
+                <a
+                    class="view-site"
+                    href="../index.html"
+                    target="_blank"
+                >
+                    View website ↗
+                </a>
 
 
-          <div class="toolbar-right">
+                <button
+                    class="notification"
+                    title="Notifications"
+                >
 
-            <button
-              class="toolbar-btn"
-              type="button"
-            >
-              Export
-            </button>
+                    ♧
 
-          </div>
+                    <span class="notification-dot"></span>
 
-        </div>
+                </button>
 
+            </div>
 
-        <!-- TABLE -->
-
-        <div class="table-wrap">
-
-          <table class="books-table">
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Book
-                </th>
-
-                <th>
-                  Category
-                </th>
-
-                <th>
-                  Price
-                </th>
-
-                <th>
-                  Type
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-                <th>
-                  File
-                </th>
-
-                <th>
-                </th>
-
-              </tr>
-
-            </thead>
+        </header>
 
 
-            <tbody id="booksTableBody">
 
-              <!--
-                Sample data.
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
 
-                This will eventually be replaced by data
-                fetched from the backend API.
-              -->
+        <div class="content">
 
 
-              <tr>
+            <!-- PAGE HEADER -->
 
-                <td>
+            <div class="page-header">
 
-                  <div class="book-info">
 
-                    <div class="book-cover">
-                      ▥
+                <div>
+
+                    <div class="breadcrumb">
+
+                        <span>
+                            Content
+                        </span>
+
+                        <span>
+                            /
+                        </span>
+
+                        <span>
+                            Books
+                        </span>
+
                     </div>
+
+
+                    <h1 class="page-title">
+                        Books
+                    </h1>
+
+
+                    <p class="page-description">
+                        Build a thoughtful library of resources
+                        for the MindfulPath community.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-button"
+                    id="openModal"
+                >
+
+                    <span>
+                        +
+                    </span>
+
+                    Add new book
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 KPIs
+            ================================================== -->
+
+            <section class="kpis">
+
+
+                <div class="kpi">
+
+                    <div class="kpi-top">
+
+                        <span class="kpi-label">
+                            Total books
+                        </span>
+
+                        <span class="kpi-icon">
+                            ▥
+                        </span>
+
+                    </div>
+
+                    <div class="kpi-number" id="totalBooks">
+                        24
+                    </div>
+
+                    <div class="kpi-meta">
+                        <span class="kpi-growth">
+                            ↑ 12%
+                        </span>
+                        &nbsp; vs last month
+                    </div>
+
+                </div>
+
+
+                <div class="kpi">
+
+                    <div class="kpi-top">
+
+                        <span class="kpi-label">
+                            Published
+                        </span>
+
+                        <span class="kpi-icon">
+                            ✓
+                        </span>
+
+                    </div>
+
+                    <div class="kpi-number">
+                        18
+                    </div>
+
+                    <div class="kpi-meta">
+                        75% of your library
+                    </div>
+
+                </div>
+
+
+                <div class="kpi">
+
+                    <div class="kpi-top">
+
+                        <span class="kpi-label">
+                            Free resources
+                        </span>
+
+                        <span class="kpi-icon">
+                            ○
+                        </span>
+
+                    </div>
+
+                    <div class="kpi-number">
+                        11
+                    </div>
+
+                    <div class="kpi-meta">
+                        46% of all books
+                    </div>
+
+                </div>
+
+
+                <div class="kpi">
+
+                    <div class="kpi-top">
+
+                        <span class="kpi-label">
+                            Paid resources
+                        </span>
+
+                        <span class="kpi-icon">
+                            ₭
+                        </span>
+
+                    </div>
+
+                    <div class="kpi-number">
+                        13
+                    </div>
+
+                    <div class="kpi-meta">
+                        KES 8,450 revenue this month
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 LIBRARY
+            ================================================== -->
+
+            <section class="library">
+
+
+                <div class="library-header">
 
                     <div>
 
-                      <div class="book-title">
-                        Understanding Mental Wellness
-                      </div>
+                        <div class="library-title">
+                            Book library
+                        </div>
 
-                      <div class="book-author">
-                        MindfulPath Editorial
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </td>
-
-
-                <td>
-                  Mental Health
-                </td>
-
-
-                <td>
-                  Free
-                </td>
-
-
-                <td>
-
-                  <span class="type-badge type-free">
-                    Free
-                  </span>
-
-                </td>
-
-
-                <td>
-
-                  <span class="status status-published">
-
-                    <span class="status-dot"></span>
-
-                    Published
-
-                  </span>
-
-                </td>
-
-
-                <td>
-
-                  <a
-                    href="#"
-                    class="pdf-link"
-                  >
-                    PDF ↗
-                  </a>
-
-                </td>
-
-
-                <td>
-
-                  <button
-                    class="action-btn"
-                    type="button"
-                    aria-label="Book actions"
-                  >
-                    ⋯
-                  </button>
-
-                </td>
-
-              </tr>
-
-
-              <tr>
-
-                <td>
-
-                  <div class="book-info">
-
-                    <div class="book-cover">
-                      ▥
-                    </div>
-
-                    <div>
-
-                      <div class="book-title">
-                        Building Healthy Relationships
-                      </div>
-
-                      <div class="book-author">
-                        MindfulPath Editorial
-                      </div>
+                        <div class="library-subtitle">
+                            Manage titles, pricing,
+                            publication status and files.
+                        </div>
 
                     </div>
 
-                  </div>
-
-                </td>
+                </div>
 
 
-                <td>
-                  Relationships
-                </td>
+
+                <!-- TOOLBAR -->
+
+                <div class="toolbar">
 
 
-                <td>
-                  KES 450
-                </td>
+                    <div class="toolbar-left">
 
 
-                <td>
+                        <div class="search-books">
 
-                  <span class="type-badge type-paid">
-                    Paid
-                  </span>
+                            <span>
+                                ⌕
+                            </span>
 
-                </td>
+                            <input
+                                type="search"
+                                id="bookSearch"
+                                placeholder="Search books..."
+                            >
 
-
-                <td>
-
-                  <span class="status status-published">
-
-                    <span class="status-dot"></span>
-
-                    Published
-
-                  </span>
-
-                </td>
+                        </div>
 
 
-                <td>
+                        <select
+                            class="filter"
+                            id="typeFilter"
+                        >
 
-                  <a
-                    href="#"
-                    class="pdf-link"
-                  >
-                    PDF ↗
-                  </a>
+                            <option value="">
+                                All types
+                            </option>
 
-                </td>
+                            <option value="free">
+                                Free
+                            </option>
 
+                            <option value="paid">
+                                Paid
+                            </option>
 
-                <td>
-
-                  <button
-                    class="action-btn"
-                    type="button"
-                    aria-label="Book actions"
-                  >
-                    ⋯
-                  </button>
-
-                </td>
-
-              </tr>
+                        </select>
 
 
-              <tr>
+                        <select
+                            class="filter"
+                            id="statusFilter"
+                        >
 
-                <td>
+                            <option value="">
+                                All statuses
+                            </option>
 
-                  <div class="book-info">
+                            <option value="published">
+                                Published
+                            </option>
 
-                    <div class="book-cover">
-                      ▥
-                    </div>
+                            <option value="draft">
+                                Draft
+                            </option>
 
-                    <div>
-
-                      <div class="book-title">
-                        Coping With Academic Pressure
-                      </div>
-
-                      <div class="book-author">
-                        MindfulPath Editorial
-                      </div>
+                        </select>
 
                     </div>
 
-                  </div>
 
-                </td>
+                    <div class="toolbar-actions">
 
+                        <button
+                            class="secondary-button"
+                            onclick="showToast('Export feature will connect to the backend.')"
+                        >
+                            Export
+                        </button>
 
-                <td>
-                  Mental Health
-                </td>
+                    </div>
 
-
-                <td>
-                  KES 300
-                </td>
-
-
-                <td>
-
-                  <span class="type-badge type-paid">
-                    Paid
-                  </span>
-
-                </td>
+                </div>
 
 
-                <td>
 
-                  <span class="status status-draft">
+                <!-- TABLE -->
 
-                    <span class="status-dot"></span>
+                <div class="table-container">
 
-                    Draft
+                    <table>
 
-                  </span>
+                        <thead>
 
-                </td>
+                            <tr>
+
+                                <th>
+                                    Book
+                                </th>
+
+                                <th>
+                                    Category
+                                </th>
+
+                                <th>
+                                    Price
+                                </th>
+
+                                <th>
+                                    Type
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    File
+                                </th>
+
+                                <th>
+                                </th>
+
+                            </tr>
+
+                        </thead>
 
 
-                <td>
-
-                  <a
-                    href="#"
-                    class="pdf-link"
-                  >
-                    PDF ↗
-                  </a>
-
-                </td>
+                        <tbody id="booksTable">
 
 
-                <td>
+                            <!-- BOOK 1 -->
 
-                  <button
-                    class="action-btn"
-                    type="button"
-                    aria-label="Book actions"
-                  >
-                    ⋯
-                  </button>
+                            <tr
+                                data-title="Understanding Mental Wellness"
+                                data-type="free"
+                                data-status="published"
+                                data-book="Understanding Mental Wellness"
+                                data-author="MindfulPath Editorial"
+                                data-category="Mental Health"
+                                data-price="Free"
+                            >
 
-                </td>
+                                <td>
 
-              </tr>
+                                    <div class="book-cell">
 
-            </tbody>
+                                        <div class="book-cover">
+                                            ♧
+                                        </div>
 
-          </table>
+                                        <div>
+
+                                            <div class="book-name">
+                                                Understanding Mental Wellness
+                                            </div>
+
+                                            <div class="book-author">
+                                                MindfulPath Editorial
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Mental Health
+                                </td>
+
+
+                                <td>
+                                    Free
+                                </td>
+
+
+                                <td>
+
+                                    <span class="badge badge-free">
+                                        Free
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="status status-published">
+
+                                        <span class="status-dot"></span>
+
+                                        Published
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="pdf"
+                                    >
+                                        PDF ↗
+                                    </a>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        class="action preview-book"
+                                    >
+                                        ⋯
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- BOOK 2 -->
+
+                            <tr
+                                data-title="Building Healthy Relationships"
+                                data-type="paid"
+                                data-status="published"
+                                data-book="Building Healthy Relationships"
+                                data-author="MindfulPath Editorial"
+                                data-category="Relationships"
+                                data-price="KES 450"
+                            >
+
+                                <td>
+
+                                    <div class="book-cell">
+
+                                        <div class="book-cover">
+                                            ♧
+                                        </div>
+
+                                        <div>
+
+                                            <div class="book-name">
+                                                Building Healthy Relationships
+                                            </div>
+
+                                            <div class="book-author">
+                                                MindfulPath Editorial
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Relationships
+                                </td>
+
+
+                                <td>
+                                    KES 450
+                                </td>
+
+
+                                <td>
+
+                                    <span class="badge badge-paid">
+                                        Paid
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="status status-published">
+
+                                        <span class="status-dot"></span>
+
+                                        Published
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="pdf"
+                                    >
+                                        PDF ↗
+                                    </a>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        class="action preview-book"
+                                    >
+                                        ⋯
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- BOOK 3 -->
+
+                            <tr
+                                data-title="Coping With Academic Pressure"
+                                data-type="paid"
+                                data-status="draft"
+                                data-book="Coping With Academic Pressure"
+                                data-author="MindfulPath Editorial"
+                                data-category="Academic Wellbeing"
+                                data-price="KES 300"
+                            >
+
+                                <td>
+
+                                    <div class="book-cell">
+
+                                        <div class="book-cover">
+                                            ♧
+                                        </div>
+
+                                        <div>
+
+                                            <div class="book-name">
+                                                Coping With Academic Pressure
+                                            </div>
+
+                                            <div class="book-author">
+                                                MindfulPath Editorial
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Academic Wellbeing
+                                </td>
+
+
+                                <td>
+                                    KES 300
+                                </td>
+
+
+                                <td>
+
+                                    <span class="badge badge-paid">
+                                        Paid
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="status status-draft">
+
+                                        <span class="status-dot"></span>
+
+                                        Draft
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="pdf"
+                                    >
+                                        PDF ↗
+                                    </a>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        class="action preview-book"
+                                    >
+                                        ⋯
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="library-footer">
+
+                    <span id="resultCount">
+                        Showing 1–3 of 24 books
+                    </span>
+
+
+                    <div class="pagination">
+
+                        <button
+                            class="page"
+                            disabled
+                        >
+                            ‹
+                        </button>
+
+                        <button
+                            class="page active"
+                        >
+                            1
+                        </button>
+
+                        <button class="page">
+                            2
+                        </button>
+
+                        <button class="page">
+                            3
+                        </button>
+
+                        <button class="page">
+                            ›
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
 
         </div>
 
+    </main>
 
-        <!-- FOOTER -->
-
-        <div class="table-footer">
-
-          <span>
-            Showing 1–3 of 24 books
-          </span>
+</div>
 
 
-          <div class="pagination">
 
-            <button
-              class="page-btn"
-              type="button"
-              disabled
-            >
-              ‹
-            </button>
+<!-- =========================================================
+     ADD BOOK MODAL
+========================================================= -->
 
-            <button
-              class="page-btn active"
-              type="button"
-            >
-              1
-            </button>
-
-            <button
-              class="page-btn"
-              type="button"
-            >
-              2
-            </button>
-
-            <button
-              class="page-btn"
-              type="button"
-            >
-              3
-            </button>
-
-            <button
-              class="page-btn"
-              type="button"
-            >
-              ›
-            </button>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </section>
-
-  </main>
-
-
-  <!-- =======================================================
-       ADD BOOK MODAL
-       ======================================================== -->
-
-  <div
+<div
     class="modal-overlay"
-    id="addBookModal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="addBookTitle"
-  >
+    id="bookModal"
+>
 
 
-    <div class="modal-box">
+    <div class="modal">
 
 
-      <!-- MODAL HEADER -->
+        <div class="modal-header">
 
-      <div class="modal-header">
+            <div>
 
-        <div>
+                <div class="modal-title">
+                    Add new book
+                </div>
 
-          <h2 id="addBookTitle">
-            Add a new book
-          </h2>
+                <div class="modal-description">
+                    Add a resource to the MindfulPath library.
+                </div>
 
-          <p>
-            Add the book information and upload its digital file.
-          </p>
+            </div>
 
+
+            <button
+                class="close"
+                id="closeModal"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+
+        <form id="bookForm">
+
+
+            <div class="modal-body">
+
+
+                <div class="form-layout">
+
+
+                    <!-- LEFT -->
+
+                    <div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Book title
+                            </label>
+
+                            <input
+                                class="form-input"
+                                id="bookTitle"
+                                type="text"
+                                placeholder="e.g. Understanding Mental Wellness"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-row">
+
+
+                            <div class="form-group">
+
+                                <label class="form-label">
+                                    Author
+                                    <span>Optional</span>
+                                </label>
+
+                                <input
+                                    class="form-input"
+                                    id="bookAuthor"
+                                    type="text"
+                                    placeholder="Author name"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label class="form-label">
+                                    Category
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="bookCategory"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select
+                                    </option>
+
+                                    <option>
+                                        Mental Health
+                                    </option>
+
+                                    <option>
+                                        Relationships
+                                    </option>
+
+                                    <option>
+                                        Academic Wellbeing
+                                    </option>
+
+                                    <option>
+                                        Personal Development
+                                    </option>
+
+                                    <option>
+                                        Social Issues
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Description
+                                <span>Optional</span>
+                            </label>
+
+                            <textarea
+                                class="form-textarea"
+                                id="bookDescription"
+                                placeholder="Briefly describe this resource..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Pricing
+                            </label>
+
+
+                            <div class="pricing">
+
+
+                                <input
+                                    class="form-input price-input"
+                                    id="bookPrice"
+                                    type="number"
+                                    min="0"
+                                    placeholder="Price in KES"
+                                >
+
+
+                                <label class="free-option">
+
+                                    <input
+                                        type="checkbox"
+                                        id="freeBook"
+                                    >
+
+                                    Free book
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Book PDF
+                            </label>
+
+
+                            <div
+                                class="upload-zone"
+                                id="pdfZone"
+                            >
+
+                                <div class="upload-icon">
+                                    ↑
+                                </div>
+
+                                <div class="upload-title">
+                                    Drop your PDF here
+                                </div>
+
+                                <div class="upload-text">
+                                    <strong>Browse files</strong>
+                                    or drag and drop
+                                </div>
+
+
+                                <input
+                                    type="file"
+                                    id="pdfFile"
+                                    accept="application/pdf"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- RIGHT -->
+
+                    <div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Book cover
+                                <span>Optional</span>
+                            </label>
+
+
+                            <div class="cover-area">
+
+
+                                <div
+                                    class="cover-preview"
+                                    id="coverPreview"
+                                >
+                                    ▧
+                                </div>
+
+
+                                <label class="cover-button">
+
+                                    Choose cover image
+
+                                    <input
+                                        type="file"
+                                        id="coverFile"
+                                        accept="image/png,image/jpeg,image/webp"
+                                    >
+
+                                </label>
+
+
+                                <div class="upload-text">
+                                    PNG, JPG or WEBP
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="cancel"
+                    id="cancelModal"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="submit"
+                >
+                    Upload book
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     BOOK PREVIEW DRAWER
+========================================================= -->
+
+<div
+    class="drawer-overlay"
+    id="drawerOverlay"
+></div>
+
+
+<aside
+    class="drawer"
+    id="bookDrawer"
+>
+
+
+    <div class="drawer-header">
+
+        <div class="drawer-title">
+            Book details
         </div>
 
 
         <button
-          class="modal-close"
-          type="button"
-          id="closeModalBtn"
-          aria-label="Close modal"
+            class="close"
+            id="closeDrawer"
         >
-          ×
+            ×
         </button>
-
-      </div>
-
-
-      <!-- FORM -->
-
-      <form id="addBookForm">
-
-
-        <div class="modal-body">
-
-
-          <div class="form-grid">
-
-
-            <!-- TITLE -->
-
-            <div class="form-group full">
-
-              <label for="bookName">
-                Book title
-              </label>
-
-              <input
-                type="text"
-                id="bookName"
-                name="title"
-                placeholder="e.g. Understanding Mental Wellness"
-                required
-              >
-
-            </div>
-
-
-            <!-- AUTHOR -->
-
-            <div class="form-group">
-
-              <label for="bookAuthor">
-                Author
-                <span>Optional</span>
-              </label>
-
-              <input
-                type="text"
-                id="bookAuthor"
-                name="author"
-                placeholder="Author name"
-              >
-
-            </div>
-
-
-            <!-- CATEGORY -->
-
-            <div class="form-group">
-
-              <label for="bookCategory">
-                Category
-              </label>
-
-              <select
-                id="bookCategory"
-                name="category"
-                required
-              >
-
-                <option value="">
-                  Select category
-                </option>
-
-                <option value="mental-health">
-                  Mental Health
-                </option>
-
-                <option value="social-issues">
-                  Social Issues
-                </option>
-
-                <option value="relationships">
-                  Relationships
-                </option>
-
-                <option value="personal-development">
-                  Personal Development
-                </option>
-
-                <option value="academic">
-                  Academic Wellbeing
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- DESCRIPTION -->
-
-            <div class="form-group full">
-
-              <label for="bookDescription">
-                Description
-                <span>Optional</span>
-              </label>
-
-              <textarea
-                id="bookDescription"
-                name="description"
-                placeholder="Briefly describe what readers will learn from this book..."
-              ></textarea>
-
-            </div>
-
-
-            <!-- PRICE -->
-
-            <div class="form-group full">
-
-              <label>
-                Pricing
-              </label>
-
-
-              <div class="price-row">
-
-                <input
-                  class="price-input"
-                  type="number"
-                  id="price"
-                  name="price"
-                  placeholder="Price in KES"
-                  min="0"
-                  step="1"
-                  required
-                >
-
-
-                <label class="free-toggle">
-
-                  <input
-                    type="checkbox"
-                    id="isFree"
-                    name="isFree"
-                  >
-
-                  Free book
-
-                </label>
-
-              </div>
-
-            </div>
-
-
-            <!-- COVER -->
-
-            <div class="form-group full">
-
-              <label>
-                Book cover
-                <span>JPG, PNG or WEBP</span>
-              </label>
-
-
-              <div class="cover-upload">
-
-
-                <div
-                  class="cover-preview"
-                  id="coverPreview"
-                >
-                  ▧
-                </div>
-
-
-                <div class="upload-area cover-upload-area">
-
-                  <div class="upload-icon">
-                    ↑
-                  </div>
-
-                  <div class="upload-title">
-                    Upload cover image
-                  </div>
-
-                  <div class="upload-description">
-                    <strong>Choose file</strong>
-                    or drag it here
-                  </div>
-
-
-                  <input
-                    type="file"
-                    id="coverFile"
-                    name="cover"
-                    accept="image/jpeg,image/png,image/webp"
-                  >
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <!-- PDF -->
-
-            <div class="form-group full">
-
-              <label>
-                Book PDF
-              </label>
-
-
-              <div
-                class="upload-area"
-                id="pdfDropZone"
-              >
-
-                <div class="upload-icon">
-                  ↑
-                </div>
-
-
-                <div class="upload-title">
-                  Drop your PDF here
-                </div>
-
-
-                <div class="upload-description">
-                  <strong>Browse files</strong>
-                  or drag and drop
-                </div>
-
-
-                <div class="upload-description">
-                  PDF only · Maximum size enforced by server
-                </div>
-
-
-                <input
-                  type="file"
-                  id="pdfFile"
-                  name="pdf"
-                  accept="application/pdf"
-                  required
-                >
-
-              </div>
-
-            </div>
-
-
-          </div>
-
-
-          <div
-            class="form-msg"
-            id="formMessage"
-          ></div>
-
-
-        </div>
-
-
-        <!-- MODAL FOOTER -->
-
-        <div class="modal-footer">
-
-          <button
-            type="button"
-            class="btn-secondary"
-            id="cancelBookBtn"
-          >
-            Cancel
-          </button>
-
-
-          <button
-            type="submit"
-            class="btn-primary"
-            id="submitBtn"
-          >
-            Upload book
-          </button>
-
-        </div>
-
-      </form>
 
     </div>
 
-  </div>
+
+    <div class="drawer-body">
 
 
-  <!-- =======================================================
-       JAVASCRIPT
-       ======================================================== -->
+        <div
+            class="drawer-cover"
+            id="drawerCover"
+        >
+            ♧
+        </div>
 
-  <script type="module" src="../js/admin-books.js"></script>
+
+        <div
+            class="drawer-book-title"
+            id="drawerTitle"
+        >
+            Understanding Mental Wellness
+        </div>
+
+
+        <div
+            class="drawer-author"
+            id="drawerAuthor"
+        >
+            MindfulPath Editorial
+        </div>
+
+
+        <div class="drawer-meta">
+
+
+            <div class="meta-box">
+
+                <div class="meta-label">
+                    Category
+                </div>
+
+                <div
+                    class="meta-value"
+                    id="drawerCategory"
+                >
+                    Mental Health
+                </div>
+
+            </div>
+
+
+            <div class="meta-box">
+
+                <div class="meta-label">
+                    Price
+                </div>
+
+                <div
+                    class="meta-value"
+                    id="drawerPrice"
+                >
+                    Free
+                </div>
+
+            </div>
+
+
+            <div class="meta-box">
+
+                <div class="meta-label">
+                    Format
+                </div>
+
+                <div class="meta-value">
+                    PDF
+                </div>
+
+            </div>
+
+
+            <div class="meta-box">
+
+                <div class="meta-label">
+                    Status
+                </div>
+
+                <div class="meta-value">
+                    Published
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p class="drawer-description">
+
+            A practical resource designed to help readers
+            better understand mental wellness, emotional
+            wellbeing and healthy everyday habits.
+
+        </p>
+
+
+        <div class="drawer-actions">
+
+            <button class="edit-btn">
+                Edit book
+            </button>
+
+            <button
+                class="view-btn"
+                onclick="showToast('PDF viewer will connect to the stored file.')"
+            >
+                View PDF
+            </button>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const modal =
+    document.getElementById("bookModal");
+
+const openModal =
+    document.getElementById("openModal");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+const cancelModal =
+    document.getElementById("cancelModal");
+
+const form =
+    document.getElementById("bookForm");
+
+const freeBook =
+    document.getElementById("freeBook");
+
+const priceInput =
+    document.getElementById("bookPrice");
+
+const pdfFile =
+    document.getElementById("pdfFile");
+
+const coverFile =
+    document.getElementById("coverFile");
+
+const coverPreview =
+    document.getElementById("coverPreview");
+
+const pdfZone =
+    document.getElementById("pdfZone");
+
+const drawer =
+    document.getElementById("bookDrawer");
+
+const drawerOverlay =
+    document.getElementById("drawerOverlay");
+
+const closeDrawer =
+    document.getElementById("closeDrawer");
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+const sidebar =
+    document.getElementById("sidebar");
+
+const searchInput =
+    document.getElementById("bookSearch");
+
+const typeFilter =
+    document.getElementById("typeFilter");
+
+const statusFilter =
+    document.getElementById("statusFilter");
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openBookModal() {
+
+    modal.classList.add("open");
+
+    document.body.style.overflow = "hidden";
+}
+
+function closeBookModal() {
+
+    modal.classList.remove("open");
+
+    document.body.style.overflow = "";
+}
+
+openModal.addEventListener(
+    "click",
+    openBookModal
+);
+
+closeModal.addEventListener(
+    "click",
+    closeBookModal
+);
+
+cancelModal.addEventListener(
+    "click",
+    closeBookModal
+);
+
+modal.addEventListener(
+    "click",
+    function(event) {
+
+        if (event.target === modal) {
+
+            closeBookModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FREE BOOK
+========================================================= */
+
+freeBook.addEventListener(
+    "change",
+    function() {
+
+        if (this.checked) {
+
+            priceInput.value = "0";
+
+            priceInput.disabled = true;
+
+        } else {
+
+            priceInput.disabled = false;
+
+            priceInput.value = "";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   COVER PREVIEW
+========================================================= */
+
+coverFile.addEventListener(
+    "change",
+    function() {
+
+        const file = this.files[0];
+
+        if (!file) return;
+
+        const reader =
+            new FileReader();
+
+        reader.onload =
+            function(event) {
+
+                coverPreview.innerHTML = `
+                    <img
+                        src="${event.target.result}"
+                        alt="Book cover preview"
+                    >
+                `;
+
+            };
+
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+/* =========================================================
+   PDF DISPLAY
+========================================================= */
+
+pdfFile.addEventListener(
+    "change",
+    function() {
+
+        const file = this.files[0];
+
+        if (!file) return;
+
+        if (file.type !== "application/pdf") {
+
+            showToast(
+                "Please select a PDF file."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+        pdfZone.querySelector(".upload-title")
+            .textContent = file.name;
+
+        pdfZone.querySelector(".upload-text")
+            .textContent =
+            `${(file.size / 1024 / 1024).toFixed(2)} MB`;
+
+    }
+);
+
+
+/* =========================================================
+   DRAG AND DROP
+========================================================= */
+
+[
+    "dragenter",
+    "dragover"
+].forEach(eventName => {
+
+    pdfZone.addEventListener(
+        eventName,
+        event => {
+
+            event.preventDefault();
+
+            pdfZone.classList.add(
+                "dragging"
+            );
+
+        }
+    );
+
+});
+
+
+[
+    "dragleave",
+    "drop"
+].forEach(eventName => {
+
+    pdfZone.addEventListener(
+        eventName,
+        event => {
+
+            event.preventDefault();
+
+            pdfZone.classList.remove(
+                "dragging"
+            );
+
+        }
+    );
+
+});
+
+
+pdfZone.addEventListener(
+    "drop",
+    function(event) {
+
+        const file =
+            event.dataTransfer.files[0];
+
+        if (!file) return;
+
+        if (
+            file.type !==
+            "application/pdf"
+        ) {
+
+            showToast(
+                "Only PDF files are allowed."
+            );
+
+            return;
+
+        }
+
+        pdfFile.files =
+            event.dataTransfer.files;
+
+        pdfFile.dispatchEvent(
+            new Event("change")
+        );
+
+    }
+);
+
+
+/* =========================================================
+   FORM SUBMISSION
+========================================================= */
+
+form.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+        const title =
+            document.getElementById(
+                "bookTitle"
+            ).value.trim();
+
+        const category =
+            document.getElementById(
+                "bookCategory"
+            ).value;
+
+        const pdf =
+            pdfFile.files[0];
+
+        if (!title) {
+
+            showToast(
+                "Please enter the book title."
+            );
+
+            return;
+
+        }
+
+        if (!category) {
+
+            showToast(
+                "Please select a category."
+            );
+
+            return;
+
+        }
+
+        if (!pdf) {
+
+            showToast(
+                "Please upload the book PDF."
+            );
+
+            return;
+
+        }
+
+        if (
+            pdf.type !==
+            "application/pdf"
+        ) {
+
+            showToast(
+                "The book must be a PDF."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * FRONTEND DEMO ONLY
+         *
+         * Later this will become:
+         *
+         * const formData = new FormData(form);
+         *
+         * fetch("/api/books", {
+         *     method: "POST",
+         *     headers: {
+         *         Authorization:
+         *             `Bearer ${token}`
+         *     },
+         *     body: formData
+         * })
+         */
+
+        showToast(
+            "Book validated successfully."
+        );
+
+        setTimeout(
+            closeBookModal,
+            800
+        );
+
+    }
+);
+
+
+/* =========================================================
+   BOOK PREVIEW
+========================================================= */
+
+document
+    .querySelectorAll(".preview-book")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                const row =
+                    this.closest("tr");
+
+                document.getElementById(
+                    "drawerTitle"
+                ).textContent =
+                    row.dataset.book;
+
+                document.getElementById(
+                    "drawerAuthor"
+                ).textContent =
+                    row.dataset.author;
+
+                document.getElementById(
+                    "drawerCategory"
+                ).textContent =
+                    row.dataset.category;
+
+                document.getElementById(
+                    "drawerPrice"
+                ).textContent =
+                    row.dataset.price;
+
+                drawer.classList.add(
+                    "open"
+                );
+
+                drawerOverlay.classList.add(
+                    "open"
+                );
+
+            }
+        );
+
+    });
+
+
+function closeBookDrawer() {
+
+    drawer.classList.remove(
+        "open"
+    );
+
+    drawerOverlay.classList.remove(
+        "open"
+    );
+
+}
+
+closeDrawer.addEventListener(
+    "click",
+    closeBookDrawer
+);
+
+drawerOverlay.addEventListener(
+    "click",
+    closeBookDrawer
+);
+
+
+/* =========================================================
+   SEARCH + FILTER
+========================================================= */
+
+function filterBooks() {
+
+    const search =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+    const type =
+        typeFilter.value;
+
+    const status =
+        statusFilter.value;
+
+    const rows =
+        document.querySelectorAll(
+            "#booksTable tr"
+        );
+
+    let visible = 0;
+
+    rows.forEach(row => {
+
+        const title =
+            row.dataset.title
+                .toLowerCase();
+
+        const rowType =
+            row.dataset.type;
+
+        const rowStatus =
+            row.dataset.status;
+
+        const matchesSearch =
+            !search ||
+            title.includes(search);
+
+        const matchesType =
+            !type ||
+            rowType === type;
+
+        const matchesStatus =
+            !status ||
+            rowStatus === status;
+
+        const show =
+            matchesSearch &&
+            matchesType &&
+            matchesStatus;
+
+        row.style.display =
+            show ? "" : "none";
+
+        if (show) {
+            visible++;
+        }
+
+    });
+
+
+    document.getElementById(
+        "resultCount"
+    ).textContent =
+        `Showing ${visible} result${visible === 1 ? "" : "s"}`;
+
+}
+
+searchInput.addEventListener(
+    "input",
+    filterBooks
+);
+
+typeFilter.addEventListener(
+    "change",
+    filterBooks
+);
+
+statusFilter.addEventListener(
+    "change",
+    filterBooks
+);
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+mobileMenu.addEventListener(
+    "click",
+    function() {
+
+        sidebar.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        message;
+
+    toast.classList.add(
+        "show"
+    );
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2800
+        );
+
+}
+
+</script>
 
 </body>
 </html>
