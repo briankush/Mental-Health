@@ -1,2 +1,222 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Training | MindfulPath</title><link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/admin.css"></head><body><main class="admin-shell"><aside class="admin-nav"><a href="index.html">Dashboard</a><a href="training.html" class="is-active">Training</a></aside><section class="admin-main"><h1>Training Courses</h1><div class="state">Course publishing and enrollment stats require backend course APIs.</div></section></main></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Training & Courses | MindfulPath Admin</title>
+  <link rel="stylesheet" href="../css/admin-training.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">Mindful<span>Path</span></div>
+        <div class="brand-subtitle">Admin Workspace</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <a class="nav-item" href="index.html">
+        <div class="nav-icon"></div>
+        Dashboard
+      </a>
+      <a class="nav-item" href="reports.html">
+        <div class="nav-icon"></div>
+        Analytics & Reports
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Content Library</div>
+      <a class="nav-item" href="books.html">
+        <div class="nav-icon"></div>
+        Books & PDFs
+      </a>
+      <a class="nav-item" href="podcasts.html">
+        <div class="nav-icon"></div>
+        Podcasts & Audio
+      </a>
+      <a class="nav-item" href="articles.html">
+        <div class="nav-icon"></div>
+        Articles & Guides
+      </a>
+      <a class="nav-item" href="quizzes.html">
+        <div class="nav-icon"></div>
+        Self-Assessments
+      </a>
+      <a class="nav-item" href="book-club.html">
+        <div class="nav-icon"></div>
+        Book Club
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Management</div>
+      <a class="nav-item" href="users.html">
+        <div class="nav-icon"></div>
+        Users & Roles
+      </a>
+      <a class="nav-item" href="appointments.html">
+        <div class="nav-icon"></div>
+        Appointments
+      </a>
+      <a class="nav-item" href="payments.html">
+        <div class="nav-icon"></div>
+        Payments & Revenue
+      </a>
+      <a class="nav-item" href="moderation.html">
+        <div class="nav-icon"></div>
+        Moderation
+      </a>
+      <a class="nav-item active" href="training.html">
+        <div class="nav-icon"></div>
+        Training & Courses
+      </a>
+      <a class="nav-item" href="advertisements.html">
+        <div class="nav-icon"></div>
+        Advertisements
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">System</div>
+      <a class="nav-item" href="settings.html">
+        <div class="nav-icon"></div>
+        Settings
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar">AD</div>
+        <div>
+          <div class="user-name">Admin Workspace</div>
+          <div class="user-role">Super Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobileMenu" type="button">≡</button>
+        <div class="global-search">
+          <span class="global-search-icon"></span>
+          <input type="text" placeholder="Search training courses...">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="../../index.html" class="view-site" target="_blank">View Website ↗</a>
+        <div class="notification">
+          <span class="notification-dot"></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb">
+            <span>Admin</span> / <span>Management</span> / <span>Training</span>
+          </div>
+          <h1 class="page-title">Training Courses</h1>
+          <p class="page-desc">Publish educational programs, monitor enrollment, and review completion progress.</p>
+        </div>
+        <button class="primary-button" type="button">
+          <span>+</span> New Course
+        </button>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Total Courses</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">14</div>
+          <div class="kpi-foot"><span class="growth">↑ 9%</span> this quarter</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Enrolled</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">2,860</div>
+          <div class="kpi-foot">Active learners</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Completion</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">71%</div>
+          <div class="kpi-foot">Average pass rate</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Review Queue</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">7</div>
+          <div class="kpi-foot">Awaiting approval</div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <div class="table-search">
+              <span class="table-search-icon"></span>
+              <input type="search" placeholder="Search course titles...">
+            </div>
+          </div>
+          <div class="toolbar-right">
+            <span class="result-count">Course library</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Category</th>
+                <th>Enrollments</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Foundations of Emotional Wellness</td>
+                <td>Self-care</td>
+                <td>640</td>
+                <td><span class="status-badge status-live">Published</span></td>
+              </tr>
+              <tr>
+                <td>Managing Stress in Daily Life</td>
+                <td>Mindfulness</td>
+                <td>510</td>
+                <td><span class="status-badge status-open">Draft</span></td>
+              </tr>
+              <tr>
+                <td>Supportive Communication Skills</td>
+                <td>Relationships</td>
+                <td>420</td>
+                <td><span class="status-badge status-closed">Review</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
+

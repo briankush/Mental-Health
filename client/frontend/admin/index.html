@@ -1,6 +1,217 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Dashboard | MindfulPath</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/forms.css"><link rel="stylesheet" href="../css/admin.css"></head>
-<body><main class="admin-shell"><aside class="admin-nav"><a class="is-active" href="index.html">Dashboard</a><a href="users.html">Users</a><a href="articles.html">Articles</a><a href="books.html">Books</a><a href="podcasts.html">Podcasts</a><a href="appointments.html">Appointments</a><a href="payments.html">Payments</a><a href="moderation.html">Moderation</a></aside><section class="admin-main"><header><h1>Admin Dashboard</h1><p class="meta">Monitor activity and manage platform content responsibly.</p></header><section class="stats-grid"><article class="stat"><p class="meta">Active users</p><h3>--</h3></article><article class="stat"><p class="meta">New appointments</p><h3>--</h3></article><article class="stat"><p class="meta">Pending reports</p><h3>--</h3></article><article class="stat"><p class="meta">Payments today</p><h3>--</h3></article></section><section class="state">Dashboard statistics are placeholders until backend analytics endpoints are connected.</section></section></main></body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | MindfulPath</title>
+<link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">Mindful<span>Path</span></div>
+        <div class="brand-subtitle">Admin Workspace</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <a class="nav-item active" href="index.html">
+        <div class="nav-icon"></div>
+        Dashboard
+      </a>
+      <a class="nav-item" href="reports.html">
+        <div class="nav-icon"></div>
+        Analytics & Reports
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Content Library</div>
+      <a class="nav-item" href="books.html">
+        <div class="nav-icon"></div>
+        Books & PDFs
+      </a>
+      <a class="nav-item" href="podcasts.html">
+        <div class="nav-icon"></div>
+        Podcasts & Audio
+      </a>
+      <a class="nav-item" href="articles.html">
+        <div class="nav-icon"></div>
+        Articles & Guides
+      </a>
+      <a class="nav-item" href="quizzes.html">
+        <div class="nav-icon"></div>
+        Self-Assessments
+      </a>
+      <a class="nav-item" href="book-club.html">
+        <div class="nav-icon"></div>
+        Book Club
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Management</div>
+      <a class="nav-item" href="users.html">
+        <div class="nav-icon"></div>
+        Users & Roles
+      </a>
+      <a class="nav-item" href="appointments.html">
+        <div class="nav-icon"></div>
+        Appointments
+      </a>
+      <a class="nav-item" href="payments.html">
+        <div class="nav-icon"></div>
+        Payments & Revenue
+      </a>
+      <a class="nav-item" href="moderation.html">
+        <div class="nav-icon"></div>
+        Moderation
+      </a>
+      <a class="nav-item" href="training.html">
+        <div class="nav-icon"></div>
+        Training & Courses
+      </a>
+      <a class="nav-item" href="advertisements.html">
+        <div class="nav-icon"></div>
+        Advertisements
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">System</div>
+      <a class="nav-item" href="settings.html">
+        <div class="nav-icon"></div>
+        Settings
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar">AD</div>
+        <div>
+          <div class="user-name">Admin Workspace</div>
+          <div class="user-role">Super Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobileMenu" type="button">≡</button>
+        <div class="global-search">
+          <span class="global-search-icon"></span>
+          <input type="text" placeholder="Search platform activity, users...">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="../../index.html" class="view-site" target="_blank">View Website ↗</a>
+        <div class="notification">
+          
+          <span class="notification-dot"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb">
+            <span>Admin</span> / <span>Overview</span> / <span>Dashboard</span>
+          </div>
+          <h1 class="page-title">Executive Dashboard</h1>
+          <p class="page-desc">Monitor real-time system metrics, recent user engagement, and platform content performance.</p>
+        </div>
+        <a href="reports.html" class="primary-button">
+          <span></span> System Analytics
+        </a>
+      </div>
+
+      <!-- KPI METRICS GRID -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Registered Users</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value" id="dashKpiUsers">--</div>
+          <div class="kpi-foot">Live database accounts</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Books in Library</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value" id="dashKpiBooks">--</div>
+          <div class="kpi-foot">Stored e-books & guides</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Audio Episodes</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value" id="dashKpiAudio">--</div>
+          <div class="kpi-foot">Cloudinary streaming audio</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Free Books</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value" id="dashKpiFree">--</div>
+          <div class="kpi-foot">Accessible open resources</div>
+        </div>
+      </div>
+
+      <!-- RECENT ACTIVITY TABLE CARD -->
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <h3 class="activity-title">Live MongoDB Activity Feed</h3>
+          </div>
+          <div class="toolbar-right">
+            <span class="result-count">Connected to MongoDB</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="dashActivityBody">
+              <tr>
+                <td colspan="4" class="table-empty-state table-empty-state--compact">Loading real-time MongoDB statistics...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<script type="module" src="../js/admin-dashboard.js"></script>
+</body>
+</html>

@@ -1,2 +1,222 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Reports | MindfulPath</title><link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/admin.css"></head><body><main class="admin-shell"><aside class="admin-nav"><a href="index.html">Dashboard</a><a href="reports.html" class="is-active">Reports</a></aside><section class="admin-main"><h1>Platform Reports</h1><div class="state">Reporting and exports depend on backend analytics and role permissions.</div></section></main></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics & Reports | MindfulPath Admin</title>
+  <link rel="stylesheet" href="../css/admin-reports.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">Mindful<span>Path</span></div>
+        <div class="brand-subtitle">Admin Workspace</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <a class="nav-item" href="index.html">
+        <div class="nav-icon"></div>
+        Dashboard
+      </a>
+      <a class="nav-item active" href="reports.html">
+        <div class="nav-icon"></div>
+        Analytics & Reports
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Content Library</div>
+      <a class="nav-item" href="books.html">
+        <div class="nav-icon"></div>
+        Books & PDFs
+      </a>
+      <a class="nav-item" href="podcasts.html">
+        <div class="nav-icon"></div>
+        Podcasts & Audio
+      </a>
+      <a class="nav-item" href="articles.html">
+        <div class="nav-icon"></div>
+        Articles & Guides
+      </a>
+      <a class="nav-item" href="quizzes.html">
+        <div class="nav-icon"></div>
+        Self-Assessments
+      </a>
+      <a class="nav-item" href="book-club.html">
+        <div class="nav-icon"></div>
+        Book Club
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Management</div>
+      <a class="nav-item" href="users.html">
+        <div class="nav-icon"></div>
+        Users & Roles
+      </a>
+      <a class="nav-item" href="appointments.html">
+        <div class="nav-icon"></div>
+        Appointments
+      </a>
+      <a class="nav-item" href="payments.html">
+        <div class="nav-icon"></div>
+        Payments & Revenue
+      </a>
+      <a class="nav-item" href="moderation.html">
+        <div class="nav-icon"></div>
+        Moderation
+      </a>
+      <a class="nav-item" href="training.html">
+        <div class="nav-icon"></div>
+        Training & Courses
+      </a>
+      <a class="nav-item" href="advertisements.html">
+        <div class="nav-icon"></div>
+        Advertisements
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">System</div>
+      <a class="nav-item" href="settings.html">
+        <div class="nav-icon"></div>
+        Settings
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar">AD</div>
+        <div>
+          <div class="user-name">Admin Workspace</div>
+          <div class="user-role">Super Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobileMenu" type="button">≡</button>
+        <div class="global-search">
+          <span class="global-search-icon"></span>
+          <input type="text" placeholder="Search analytics...">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="../../index.html" class="view-site" target="_blank">View Website ↗</a>
+        <div class="notification">
+          <span class="notification-dot"></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb">
+            <span>Admin</span> / <span>Overview</span> / <span>Analytics & Reports</span>
+          </div>
+          <h1 class="page-title">Analytics & Reports</h1>
+          <p class="page-desc">Track platform growth, engagement, conversions, and operational performance across the ecosystem.</p>
+        </div>
+        <button class="primary-button" type="button">
+          <span>↓</span> Export Report
+        </button>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Monthly Active Users</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">18.4K</div>
+          <div class="kpi-foot"><span class="growth">↑ 12.5%</span> vs last month</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Engagement Rate</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">64%</div>
+          <div class="kpi-foot">Average reading activity</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Conversion</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">7.8%</div>
+          <div class="kpi-foot">From visitors to users</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Revenue</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">KES 2.9M</div>
+          <div class="kpi-foot">Gross monthly income</div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <div class="table-search">
+              <span class="table-search-icon"></span>
+              <input type="search" placeholder="Search report metrics...">
+            </div>
+          </div>
+          <div class="toolbar-right">
+            <span class="result-count">Last 30 days</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Channel</th>
+                <th>Current</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Newsletter Signups</td>
+                <td>Email</td>
+                <td>2,480</td>
+                <td><span class="badge badge-free">+18.2%</span></td>
+              </tr>
+              <tr>
+                <td>Book Purchases</td>
+                <td>Library</td>
+                <td>894</td>
+                <td><span class="badge badge-paid">+9.7%</span></td>
+              </tr>
+              <tr>
+                <td>Therapy Consultations</td>
+                <td>Appointments</td>
+                <td>341</td>
+                <td><span class="badge badge-free">+14.1%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
+

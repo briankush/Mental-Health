@@ -1,15 +1,16 @@
 const Book = require("../models/books");
-const { uploadPdfToCloudinary } = require("../middleware/upload");
+const { uploadPdfToCloudinary, cloudinary } = require("../middleware/upload");
 
 // ADD BOOK
 const addBook = async (req, res) => {
+  let cloudinaryResult = null;
   try {
-    const { bookName, price } = req.body;
+    const { bookName, price, author, category, description } = req.body || {};
 
-    if (!bookName || !price) {
+    if (!bookName || price === undefined || price === null || price === "") {
       return res.status(400).json({
         success: false,
-        message: "bookName and price are required",
+        message: "Book title and price are required",
       });
     }
 
@@ -21,19 +22,43 @@ const addBook = async (req, res) => {
     }
 
     // Upload PDF buffer to Cloudinary
-    const cloudinaryResult = await uploadPdfToCloudinary(req.file.buffer);
+    cloudinaryResult = await uploadPdfToCloudinary(req.file.buffer);
 
-    // Create book
-    const book = await Book.create({
-      bookName,
-      price,
-      pdfUrl: cloudinaryResult.secure_url,
-      pdfPublicId: cloudinaryResult.public_id,
-    });
+    const pdfUrl = cloudinaryResult.secure_url || cloudinaryResult.url;
+
+    if (!pdfUrl) {
+      if (cloudinaryResult.public_id) {
+        await cloudinary.uploader.destroy(cloudinaryResult.public_id, { resource_type: "raw" });
+      }
+      return res.status(500).json({
+        success: false,
+        message: "Failed to obtain secure PDF URL from Cloudinary",
+      });
+    }
+
+    // Create book record in MongoDB
+    let book;
+    try {
+      book = await Book.create({
+        bookName,
+        price: Number(price),
+        author: author || "MindfulPath Editorial",
+        category: category || "Mental Health",
+        description: description || "",
+        pdfUrl,
+        pdfPublicId: cloudinaryResult.public_id,
+      });
+    } catch (dbError) {
+      console.error("Database error saving book. Cleaning up Cloudinary upload...", dbError);
+      if (cloudinaryResult.public_id) {
+        await cloudinary.uploader.destroy(cloudinaryResult.public_id, { resource_type: "raw" });
+      }
+      throw dbError;
+    }
 
     return res.status(201).json({
       success: true,
-      message: "Book and PDF uploaded successfully",
+      message: "Book uploaded successfully!",
       data: book,
     });
   } catch (error) {

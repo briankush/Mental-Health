@@ -1,0 +1,28 @@
+/* =========================================================
+   USERS ADMIN PAGE STYLES
+   ========================================================= */
+
+@import "./admin-shared.css";
+
+/* USER ROLE BADGES */
+.role-badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.role-admin {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.role-therapist {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.role-client {
+    background: var(--sage-100);
+    color: var(--forest-800);
+}

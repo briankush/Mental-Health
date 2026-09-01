@@ -1,4 +1,226 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Moderation | MindfulPath</title>
-<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/forms.css"><link rel="stylesheet" href="../css/admin.css"></head>
-<body><main class="admin-shell"><aside class="admin-nav"><a href="index.html">Dashboard</a><a href="users.html">Users</a><a href="articles.html">Articles</a><a href="books.html">Books</a><a href="podcasts.html">Podcasts</a><a href="appointments.html">Appointments</a><a href="payments.html">Payments</a><a class="is-active" href="moderation.html">Moderation</a></aside><section class="admin-main"><h1>Chat Moderation and Reports</h1><div class="admin-toolbar"><input type="search" placeholder="Search reports"><select><option>All report types</option><option>Abuse</option><option>Spam</option><option>Misinformation</option></select></div><div class="table-wrap"><table><thead><tr><th>Report ID</th><th>Room</th><th>Message</th><th>Status</th><th>Action</th></tr></thead><tbody><tr><td>--</td><td>General Wellbeing</td><td class="meta">Pending backend feed</td><td><span class="status status--pending">Pending</span></td><td><button class="btn btn--secondary">Review</button></td></tr></tbody></table></div><div class="state">Loading, empty, and error states should be driven by moderation APIs and role permissions.</div></section></main></body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moderation & Reports | MindfulPath Admin</title>
+<link rel="stylesheet" href="../css/admin-moderation.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">Mindful<span>Path</span></div>
+        <div class="brand-subtitle">Admin Workspace</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <a class="nav-item" href="index.html">
+        <div class="nav-icon"></div>
+        Dashboard
+      </a>
+      <a class="nav-item" href="reports.html">
+        <div class="nav-icon"></div>
+        Analytics & Reports
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Content Library</div>
+      <a class="nav-item" href="books.html">
+        <div class="nav-icon"></div>
+        Books & PDFs
+      </a>
+      <a class="nav-item" href="podcasts.html">
+        <div class="nav-icon"></div>
+        Podcasts & Audio
+      </a>
+      <a class="nav-item" href="articles.html">
+        <div class="nav-icon"></div>
+        Articles & Guides
+      </a>
+      <a class="nav-item" href="quizzes.html">
+        <div class="nav-icon"></div>
+        Self-Assessments
+      </a>
+      <a class="nav-item" href="book-club.html">
+        <div class="nav-icon"></div>
+        Book Club
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Management</div>
+      <a class="nav-item" href="users.html">
+        <div class="nav-icon"></div>
+        Users & Roles
+      </a>
+      <a class="nav-item" href="appointments.html">
+        <div class="nav-icon"></div>
+        Appointments
+      </a>
+      <a class="nav-item" href="payments.html">
+        <div class="nav-icon"></div>
+        Payments & Revenue
+      </a>
+      <a class="nav-item active" href="moderation.html">
+        <div class="nav-icon"></div>
+        Moderation
+      </a>
+      <a class="nav-item" href="training.html">
+        <div class="nav-icon"></div>
+        Training & Courses
+      </a>
+      <a class="nav-item" href="advertisements.html">
+        <div class="nav-icon"></div>
+        Advertisements
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">System</div>
+      <a class="nav-item" href="settings.html">
+        <div class="nav-icon"></div>
+        Settings
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar">AD</div>
+        <div>
+          <div class="user-name">Admin Workspace</div>
+          <div class="user-role">Super Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobileMenu" type="button">≡</button>
+        <div class="global-search">
+          <span class="global-search-icon"></span>
+          <input type="text" placeholder="Search moderation reports...">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="../../index.html" class="view-site" target="_blank">View Website ↗</a>
+        <div class="notification">
+          
+          <span class="notification-dot"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb">
+            <span>Admin</span> / <span>Management</span> / <span>Moderation</span>
+          </div>
+          <h1 class="page-title">Chat & Content Moderation</h1>
+          <p class="page-desc">Review community forum posts, chat room reports, and flag safety policy violations.</p>
+        </div>
+      </div>
+
+      <!-- KPI METRICS GRID -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Pending Reports</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">0</div>
+          <div class="kpi-foot">Queue is up to date</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Resolved Reports</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">14</div>
+          <div class="kpi-foot">Reviewed cases</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Flagged Content</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">0</div>
+          <div class="kpi-foot">Active flags</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Safety Score</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">99.8%</div>
+          <div class="kpi-foot">Platform compliance</div>
+        </div>
+      </div>
+
+      <!-- TABLE SECTION -->
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <div class="table-search">
+              <span class="table-search-icon"></span>
+              <input type="search" placeholder="Search report ID or user...">
+            </div>
+          </div>
+          <div class="toolbar-right">
+            <span class="result-count">0 pending items</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Report ID</th>
+                <th>Channel / Room</th>
+                <th>Message Content</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="5" class="table-empty-state">No moderation flags found. Community chat room operations are clean!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const sidebar = document.getElementById('sidebar');
+    if (mobileMenu && sidebar) {
+      mobileMenu.addEventListener('click', () => sidebar.classList.toggle('open'));
+    }
+  });
+</script>
+</body>
+</html>

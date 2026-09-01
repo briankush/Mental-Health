@@ -1,4 +1,238 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Appointments | MindfulPath</title>
-<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/forms.css"><link rel="stylesheet" href="../css/admin.css"></head>
-<body><main class="admin-shell"><aside class="admin-nav"><a href="index.html">Dashboard</a><a href="users.html">Users</a><a href="articles.html">Articles</a><a href="books.html">Books</a><a href="podcasts.html">Podcasts</a><a class="is-active" href="appointments.html">Appointments</a><a href="payments.html">Payments</a><a href="moderation.html">Moderation</a></aside><section class="admin-main"><h1>Appointments</h1><div class="admin-toolbar"><select><option>All professionals</option><option>Grace Nyambura</option><option>Dr. James Oloo</option></select><select><option>All statuses</option><option>Confirmed</option><option>Pending</option><option>Cancelled</option></select></div><div class="table-wrap"><table><thead><tr><th>User</th><th>Professional</th><th>Date</th><th>Time</th><th>Status</th></tr></thead><tbody><tr><td colspan="5" class="meta">No appointments yet.</td></tr></tbody></table></div><div class="state">Empty state: no appointment requests currently.</div></section></main></body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appointments | MindfulPath Admin</title>
+<link rel="stylesheet" href="../css/admin-appointments.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">Mindful<span>Path</span></div>
+        <div class="brand-subtitle">Admin Workspace</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <a class="nav-item" href="index.html">
+        <div class="nav-icon"></div>
+        Dashboard
+      </a>
+      <a class="nav-item" href="reports.html">
+        <div class="nav-icon"></div>
+        Analytics & Reports
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Content Library</div>
+      <a class="nav-item" href="books.html">
+        <div class="nav-icon"></div>
+        Books & PDFs
+      </a>
+      <a class="nav-item" href="podcasts.html">
+        <div class="nav-icon"></div>
+        Podcasts & Audio
+      </a>
+      <a class="nav-item" href="articles.html">
+        <div class="nav-icon"></div>
+        Articles & Guides
+      </a>
+      <a class="nav-item" href="quizzes.html">
+        <div class="nav-icon"></div>
+        Self-Assessments
+      </a>
+      <a class="nav-item" href="book-club.html">
+        <div class="nav-icon"></div>
+        Book Club
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Management</div>
+      <a class="nav-item" href="users.html">
+        <div class="nav-icon"></div>
+        Users & Roles
+      </a>
+      <a class="nav-item active" href="appointments.html">
+        <div class="nav-icon"></div>
+        Appointments
+      </a>
+      <a class="nav-item" href="payments.html">
+        <div class="nav-icon"></div>
+        Payments & Revenue
+      </a>
+      <a class="nav-item" href="moderation.html">
+        <div class="nav-icon"></div>
+        Moderation
+      </a>
+      <a class="nav-item" href="training.html">
+        <div class="nav-icon"></div>
+        Training & Courses
+      </a>
+      <a class="nav-item" href="advertisements.html">
+        <div class="nav-icon"></div>
+        Advertisements
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">System</div>
+      <a class="nav-item" href="settings.html">
+        <div class="nav-icon"></div>
+        Settings
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar">AD</div>
+        <div>
+          <div class="user-name">Admin Workspace</div>
+          <div class="user-role">Super Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobileMenu" type="button">≡</button>
+        <div class="global-search">
+          <span class="global-search-icon"></span>
+          <input type="text" placeholder="Search appointments...">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="../../index.html" class="view-site" target="_blank">View Website ↗</a>
+        <div class="notification">
+          
+          <span class="notification-dot"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb">
+            <span>Admin</span> / <span>Management</span> / <span>Appointments</span>
+          </div>
+          <h1 class="page-title">Therapy Consultations & Appointments</h1>
+          <p class="page-desc">Schedule, track, and manage client appointments with licensed mental health practitioners.</p>
+        </div>
+        <button class="primary-button" type="button">
+          <span>+</span> Schedule Appointment
+        </button>
+      </div>
+
+      <!-- KPI METRICS GRID -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Total Bookings</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">124</div>
+          <div class="kpi-foot">Monthly appointments</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Confirmed</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">98</div>
+          <div class="kpi-foot">Upcoming sessions</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Pending Approval</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">18</div>
+          <div class="kpi-foot">Awaiting therapist review</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Completed</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">840</div>
+          <div class="kpi-foot">Past therapy sessions</div>
+        </div>
+      </div>
+
+      <!-- TABLE SECTION -->
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <div class="table-search">
+              <span class="table-search-icon"></span>
+              <input type="search" placeholder="Search client or therapist...">
+            </div>
+            <select class="filter-select">
+              <option value="">All Statuses</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+          <div class="toolbar-right">
+            <span class="result-count">Showing 124 bookings</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Therapist</th>
+                <th>Session Time</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Grace Wanjiku</strong></td>
+                <td>Dr. M. Achieng</td>
+                <td>Today, 2:00 PM - 3:00 PM</td>
+                <td><span class="badge badge-paid">1-on-1 Therapy</span></td>
+                <td><span class="status status-published"><span class="status-dot"></span>Confirmed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const sidebar = document.getElementById('sidebar');
+    if (mobileMenu && sidebar) {
+      mobileMenu.addEventListener('click', () => sidebar.classList.toggle('open'));
+    }
+  });
+</script>
+</body>
+</html>

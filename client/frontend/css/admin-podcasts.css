@@ -1,0 +1,43 @@
+/* =========================================================
+   PODCASTS ADMIN PAGE STYLES
+   ========================================================= */
+
+@import "./admin-shared.css";
+
+/* AUDIO PLAYER STYLING */
+audio {
+    outline: none;
+    border-radius: 20px;
+    background: #f1f5f3;
+}
+
+audio::-webkit-media-controls-panel {
+    background: #f1f5f3;
+}
+
+.modal-centered {
+    position: relative;
+    transform: none;
+    left: auto;
+    top: auto;
+    margin: auto;
+}
+
+.file-input-hidden {
+    display: none;
+}
+
+.form-message {
+    font-weight: 600;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+/* PODCAST MODAL */
+.modal-box {
+    background: white;
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+}

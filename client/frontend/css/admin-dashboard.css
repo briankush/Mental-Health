@@ -1,0 +1,28 @@
+/* =========================================================
+   DASHBOARD ADMIN PAGE STYLES
+   ========================================================= */
+
+@import "./admin-shared.css";
+
+/* DASHBOARD METRICS & RECENT ACTIVITY */
+.activity-title {
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: white;
+}
