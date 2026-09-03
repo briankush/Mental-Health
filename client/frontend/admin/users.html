@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Users & Roles | MindfulPath Admin</title>
 <link rel="stylesheet" href="../css/admin-users.css">
+<script src="../js/admin-auth.js"></script>
 </head>
 <body>
 
@@ -184,7 +185,7 @@
             </div>
             <select class="filter-select" id="userRoleFilter">
               <option value="">All Roles</option>
-              <option value="client">Client</option>
+              <option value="user">User</option>
               <option value="therapist">Therapist</option>
               <option value="admin">Administrator</option>
             </select>
@@ -203,11 +204,12 @@
                 <th>Role</th>
                 <th>Status</th>
                 <th>Date Joined</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody id="usersTableBody">
               <tr>
-                <td colspan="5" class="table-empty-state">Loading users from database...</td>
+                <td colspan="6" class="table-empty-state">Loading users from database...</td>
               </tr>
             </tbody>
           </table>

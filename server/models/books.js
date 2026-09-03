@@ -34,6 +34,11 @@ const bookSchema = new mongoose.Schema(
     pdfPublicId: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "published",
+    },
   },
   {
     timestamps: true,

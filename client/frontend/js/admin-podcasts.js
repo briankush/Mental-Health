@@ -59,10 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${escapeHtml(audio.host || "MindfulPath Team")}</td>
             <td>${durationText}</td>
             <td>
-              <span class="status status-published">
-                <span class="status-dot"></span>
-                Published
-              </span>
+              <select class="audio-status" data-audio-id="${audio._id}" aria-label="Publication status">
+                <option value="draft" ${(audio.status || "draft") === "draft" ? "selected" : ""}>Draft</option>
+                <option value="published" ${audio.status === "published" ? "selected" : ""}>Published</option>
+              </select>
             </td>
             <td>
               ${
@@ -79,6 +79,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (audioResultCount) {
       audioResultCount.textContent = `Showing ${audios.length} episode${audios.length === 1 ? "" : "s"}`;
     }
+
+    document.querySelectorAll(".audio-status").forEach((select) => {
+      select.addEventListener("change", async () => {
+        try {
+          await api.authPatch(`/audio/${select.dataset.audioId}/status`, { status: select.value });
+        } catch (error) {
+          console.error("Audio status update error:", error);
+          loadAudios();
+        }
+      });
+    });
   }
 
   // Filter audios by search query & status dropdown
@@ -90,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const titleMatch = (audio.title || "").toLowerCase().includes(search);
       const hostMatch = (audio.host || "").toLowerCase().includes(search);
       const searchMatch = !search || titleMatch || hostMatch;
-      const statusMatch = !status || status === "published";
+      const statusMatch = !status || (audio.status || "draft") === status;
 
       return searchMatch && statusMatch;
     });
@@ -103,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!podcastsTableBody) return;
     try {
       podcastsTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:15px;">Loading episodes...</td></tr>`;
-      const response = await api.get("/audio");
+      const response = await api.authGet("/audio");
       loadedAudios = response.data || [];
 
       if (totalAudioKpi) {

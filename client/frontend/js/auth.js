@@ -5,6 +5,41 @@ function validateEmail(value) {
   return /\S+@\S+\.\S+/.test(value);
 }
 
+/**
+ * Stores authentication data in localStorage after a successful login/register.
+ */
+function storeAuthData(token, user) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
+}
+
+/**
+ * Returns the currently logged-in user object from localStorage, or null.
+ */
+export function getStoredUser() {
+  try {
+    const raw = localStorage.getItem("user");
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Returns the stored JWT token, or null.
+ */
+export function getStoredToken() {
+  return localStorage.getItem("token");
+}
+
+/**
+ * Clears auth data from localStorage (used for logout).
+ */
+export function clearAuth() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+}
+
 export function initAuthForms() {
   const forms = document.querySelectorAll("[data-auth-form]");
   forms.forEach((form) => {
@@ -41,19 +76,40 @@ export function initAuthForms() {
       submit.textContent = "Please wait...";
 
       try {
-        const path = nameInput ? "/auth/register" : "/auth/login";
+        const isRegister = !!nameInput;
+        const path = isRegister ? "/auth/register" : "/auth/login";
         const body = {
           email: emailInput.value.trim(),
-          password: passwordInput.value
+          password: passwordInput.value,
         };
-        if (nameInput) {
+        if (isRegister) {
           body.name = nameInput.value.trim();
         }
 
         const result = await api.post(path, body);
 
-        showToast(result.message || (nameInput ? "Account created" : "Login successful"), "success");
-        window.location.href = nameInput ? "./login.html" : "./profile.html";
+        showToast(result.message || (isRegister ? "Account created" : "Login successful"), "success");
+
+        if (isRegister) {
+          // After registration, redirect to login page
+          window.location.href = "./login.html";
+          return;
+        }
+
+        // Store token and user from login response
+        if (result.token && result.user) {
+          storeAuthData(result.token, result.user);
+        }
+
+        // Role-based redirect after login
+        const role = result.user?.role;
+        if (role === "admin") {
+          // Redirect to admin dashboard
+          window.location.href = "../admin/index.html";
+        } else {
+          // Redirect to normal user homepage
+          window.location.href = "../index.html";
+        }
       } catch (error) {
         errorEl.textContent = error.message || "Login failed. Please try again.";
       } finally {

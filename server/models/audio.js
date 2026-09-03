@@ -28,6 +28,11 @@ const audioSchema = new mongoose.Schema(
     bytes: {
       type: Number,
     },
+    status: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "published",
+    },
   },
   {
     timestamps: true,

@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!booksTable) return;
     try {
       booksTable.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:20px;">Loading books library...</td></tr>`;
-      const response = await api.get("/books");
+      const response = await api.authGet("/books");
       loadedBooks = response.data || [];
 
       // Update KPI total
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
             data-id="${book._id}"
             data-title="${escapeHtml(book.bookName)}"
             data-type="${isFree ? "free" : "paid"}"
-            data-status="published"
+            data-status="${book.status || "draft"}"
             data-book="${escapeHtml(book.bookName)}"
             data-author="${escapeHtml(book.author || "MindfulPath Editorial")}"
             data-category="${escapeHtml(book.category || "Mental Health")}"
@@ -111,10 +111,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${priceDisplay}</td>
             <td>${typeBadge}</td>
             <td>
-              <span class="status status-published">
-                <span class="status-dot"></span>
-                Published
-              </span>
+              <select class="book-status" data-book-id="${book._id}" aria-label="Publication status">
+                <option value="draft" ${(book.status || "draft") === "draft" ? "selected" : ""}>Draft</option>
+                <option value="published" ${book.status === "published" ? "selected" : ""}>Published</option>
+              </select>
             </td>
             <td>
               ${
@@ -164,6 +164,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         drawer.classList.add("open");
         drawerOverlay.classList.add("open");
+      });
+    });
+
+    document.querySelectorAll(".book-status").forEach((select) => {
+      select.addEventListener("change", async () => {
+        try {
+          await api.authPatch(`/books/${select.dataset.bookId}/status`, { status: select.value });
+          showToast(`Book ${select.value}.`);
+        } catch (error) {
+          showToast(error.message || "Unable to update book status.");
+          loadBooks();
+        }
       });
     });
   }
@@ -322,7 +334,8 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append("price", priceVal);
         formData.append("pdf", pdf);
 
-        const result = await api.postFormData("/books", formData);
+        formData.append("status", "draft");
+        const result = await api.postFormData("/books", formData, true);
 
         showToast(result.message || "Book uploaded successfully!");
 
@@ -353,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const isFree = Number(book.price) === 0;
       const typeMatch = !type || (type === "free" && isFree) || (type === "paid" && !isFree);
       // Status match (defaults to published)
-      const statusMatch = !status || status === "published";
+      const statusMatch = !status || (book.status || "draft") === status;
 
       return titleMatch && typeMatch && statusMatch;
     });

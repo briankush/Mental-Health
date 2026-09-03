@@ -47,7 +47,27 @@ const getUsers = async (req, res) => {
   }
 };
 
+// DELETE USER (Admin only)
+const deleteUser = async (req, res) => {
+  try {
+    if (String(req.user.id) === String(req.params.id)) {
+      return res.status(400).json({ success: false, message: "You cannot delete your own admin account" });
+    }
+
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    return res.json({ success: true, message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   getStats,
   getUsers,
+  deleteUser,
 };
