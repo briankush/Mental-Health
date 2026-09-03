@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!usersTableBody) return;
 
     if (users.length === 0) {
-      usersTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px;">No registered accounts found in database.</td></tr>`;
+      usersTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:20px;">No registered accounts found in database.</td></tr>`;
       if (userResultCount) userResultCount.textContent = "Showing 0 users";
       return;
     }
@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <tr>
             <td><strong>${escapeHtml(user.name || "User")}</strong></td>
             <td>${escapeHtml(user.email || "")}</td>
+            <td>${escapeHtml(user.phone || "")}</td>
             <td><span class="role-badge ${roleBadgeClass}">${role.toUpperCase()}</span></td>
             <td><span class="status status-published"><span class="status-dot"></span>Active</span></td>
             <td>${joinedDate}</td>
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadUsers() {
     if (!usersTableBody) return;
     try {
-      usersTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px;">Loading users from database...</td></tr>`;
+      usersTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:15px;">Loading users from database...</td></tr>`;
       const response = await api.authGet("/admin/users");
       loadedUsers = response.data || [];
 
@@ -84,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
       renderUsers(loadedUsers);
     } catch (error) {
       console.error("Error loading users:", error);
-      usersTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red; padding:15px;">Failed to load users: ${error.message}</td></tr>`;
+      usersTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding:15px;">Failed to load users: ${error.message}</td></tr>`;
     }
   }
 

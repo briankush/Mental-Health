@@ -9,6 +9,10 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
     return;
   }
 
+  const profileLink = localStorage.getItem("token")
+    ? navLink(basePath, "pages/profile.html", "Profile", "profile", currentPage)
+    : "";
+
   mount.innerHTML = `
     <header class="navbar-wrap" id="top-nav">
       <div class="container navbar">
@@ -48,6 +52,7 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
             </div>
           </div>
           <div class="nav-item">${navLink(basePath, "pages/consultation.html", "Consultation", "consultation", currentPage)}</div>
+          <div class="nav-item">${profileLink}</div>
         </nav>
 
         <div style="display:flex; gap: 0.5rem; align-items:center;">
@@ -75,6 +80,7 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
           <a href="${basePath}pages/training.html">Training</a>
           <a href="${basePath}pages/community.html">Community</a>
           <a href="${basePath}pages/consultation.html">Consultation</a>
+          ${profileLink ? `<a href="${basePath}pages/profile.html">Profile</a>` : ""}
           <a href="${basePath}pages/login.html">Login</a>
         </div>
       </div>

@@ -3,6 +3,16 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 //const generateToken = require("../utils/generateToken");
 
+function publicUser(user) {
+  return {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    phone: user.phone || "",
+    role: user.role,
+  };
+}
+
 // REGISTER
 const register = async (req, res) => {
   try {
@@ -50,12 +60,7 @@ const register = async (req, res) => {
       success: true,
       message: "Account created successfully",
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+      user: publicUser(user),
     });
   } catch (error) {
     console.error("Register error:", error);
@@ -116,12 +121,7 @@ const login = async (req, res) => {
       success: true,
       message: "Login successful",
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+      user: publicUser(user),
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -133,7 +133,42 @@ const login = async (req, res) => {
   }
 };
 
+const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    return res.json({ success: true, user: publicUser(user) });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error while loading profile" });
+  }
+};
+
+const updateProfile = async (req, res) => {
+  try {
+    const { email, phone } = req.body || {};
+    if (!email || !/^\S+@\S+\.\S+$/.test(email.trim())) {
+      return res.status(400).json({ success: false, message: "A valid email is required" });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const duplicate = await User.findOne({ email: normalizedEmail, _id: { $ne: req.user.id } });
+    if (duplicate) return res.status(409).json({ success: false, message: "That email is already in use" });
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { email: normalizedEmail, phone: String(phone || "").trim() },
+      { new: true, runValidators: true }
+    ).select("-password");
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    return res.json({ success: true, message: "Profile updated successfully", user: publicUser(user) });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error while updating profile" });
+  }
+};
+
 module.exports = {
   register,
   login,
+  getProfile,
+  updateProfile,
 };

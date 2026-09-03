@@ -1,6 +1,6 @@
 import { initNavbar } from "./components/navbar.js";
 import { initFooter } from "./components/footer.js";
-import { initAuthForms, initProfileTabs } from "./auth.js";
+import { initAuthForms, initProfileTabs, initProfileForm } from "./auth.js";
 import { initQuiz } from "./quiz.js";
 import { initAiAssistant } from "./ai.js";
 import { initChat } from "./chat.js";
@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initAuthForms();
   initProfileTabs();
+  initProfileForm();
   initQuiz();
   initAiAssistant();
   initChat();

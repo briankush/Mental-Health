@@ -120,6 +120,50 @@ export function initAuthForms() {
   });
 }
 
+export function initProfileForm() {
+  if (!getStoredToken()) {
+    window.location.replace("./login.html");
+    return;
+  }
+
+    let form = document.querySelector("[data-profile-form]");
+    const settingsPanel = document.querySelector("[data-profile-panel='settings']");
+    if (!form && settingsPanel) {
+      settingsPanel.insertAdjacentHTML("afterbegin", `<form class="form-panel" data-profile-form><div class="form-row"><label for="profileEmail">Email</label><input id="profileEmail" name="email" type="email" required></div><div class="form-row"><label for="profilePhone">Phone</label><input id="profilePhone" name="phone" type="tel" placeholder="07xx xxx xxx"></div><p class="form-help" data-profile-message aria-live="polite"></p><button class="btn" type="submit">Save profile</button></form>`);
+      form = settingsPanel.querySelector("[data-profile-form]");
+    }
+    if (!form) return;
+
+    const emailInput = form.querySelector("[name='email']");
+    const phoneInput = form.querySelector("[name='phone']");
+    const message = form.querySelector("[data-profile-message]");
+    const storedUser = getStoredUser();
+    if (emailInput) emailInput.value = storedUser?.email || "";
+    if (phoneInput) phoneInput.value = storedUser?.phone || "";
+
+    api.authGet("/auth/profile").then((result) => {
+      if (emailInput) emailInput.value = result.user.email || "";
+      if (phoneInput) phoneInput.value = result.user.phone || "";
+      storeAuthData(getStoredToken(), result.user);
+    }).catch(() => {
+      if (message) message.textContent = "Unable to load your profile.";
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        const result = await api.authPatch("/auth/profile", {
+          email: emailInput.value,
+          phone: phoneInput.value,
+        });
+        storeAuthData(getStoredToken(), result.user);
+        if (message) message.textContent = result.message;
+      } catch (error) {
+        if (message) message.textContent = error.message || "Unable to update your profile.";
+      }
+    });
+}
+
 export function initProfileTabs() {
   const navButtons = document.querySelectorAll("[data-profile-nav]");
   const panels = document.querySelectorAll("[data-profile-panel]");
