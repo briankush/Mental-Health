@@ -1,3 +1,5 @@
+import { api } from "../api.js";
+
 function navLink(base, href, label, page, currentPage) {
   const active = page === currentPage ? "is-active" : "";
   return `<a class="nav-link ${active}" href="${base}${href}">${label}</a>`;
@@ -11,6 +13,12 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
 
   const profileLink = localStorage.getItem("token")
     ? navLink(basePath, "pages/profile.html", "Profile", "profile", currentPage)
+    : "";
+  const signupLink = localStorage.getItem("token")
+    ? ""
+    : `<a class="btn" href="${basePath}pages/register.html">Sign up</a>`;
+  const logoutButton = localStorage.getItem("token")
+    ? `<button class="btn btn--secondary" type="button" data-logout>Log out</button>`
     : "";
 
   mount.innerHTML = `
@@ -56,7 +64,8 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
         </nav>
 
         <div style="display:flex; gap: 0.5rem; align-items:center;">
-          <a class="btn btn--secondary" href="${basePath}pages/login.html">Login</a>
+          ${logoutButton || `<a class="btn btn--secondary" href="${basePath}pages/login.html">Login</a>`}
+          ${signupLink}
           <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-panel" aria-label="Open menu">
             <span aria-hidden="true">☰</span>
           </button>
@@ -81,7 +90,8 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
           <a href="${basePath}pages/community.html">Community</a>
           <a href="${basePath}pages/consultation.html">Consultation</a>
           ${profileLink ? `<a href="${basePath}pages/profile.html">Profile</a>` : ""}
-          <a href="${basePath}pages/login.html">Login</a>
+          ${logoutButton ? `<button type="button" data-logout>Log out</button>` : `<a href="${basePath}pages/login.html">Login</a>`}
+          ${signupLink ? `<a href="${basePath}pages/register.html">Sign up</a>` : ""}
         </div>
       </div>
     </header>
@@ -90,6 +100,19 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
   const navbarWrap = mount.querySelector(".navbar-wrap");
   const toggle = mount.querySelector(".nav-toggle");
   const panel = mount.querySelector("#mobile-panel");
+
+  mount.querySelectorAll("[data-logout]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      try {
+        await api.authLogout();
+      } finally {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = `${basePath}index.html`;
+      }
+    });
+  });
 
   toggle?.addEventListener("click", () => {
     const isOpen = panel.classList.toggle("is-open");

@@ -48,6 +48,7 @@ export const api = {
   authPost: (path, body) => request(path, { method: "POST", body: JSON.stringify(body) }, true),
   authPatch: (path, body) => request(path, { method: "PATCH", body: JSON.stringify(body) }, true),
   authDelete: (path) => request(path, { method: "DELETE" }, true),
+  authLogout: () => request("/auth/logout", { method: "POST" }, true),
 
   // FormData upload (authenticated)
   postFormData: async (path, formData, withAuth = false) => {

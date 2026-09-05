@@ -16,7 +16,9 @@ function publicUser(user) {
 // REGISTER
 const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const name = String(req.body?.name || "").trim();
+    const email = String(req.body?.email || "").trim().toLowerCase();
+    const password = String(req.body?.password || "");
 
     // Validate required fields
     if (!name || !email || !password) {
@@ -24,6 +26,14 @@ const register = async (req, res) => {
         success: false,
         message: "Name, email and password are required",
       });
+    }
+
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      return res.status(400).json({ success: false, message: "A valid email is required" });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ success: false, message: "Password must be at least 8 characters" });
     }
 
     // Check whether user already exists
@@ -44,7 +54,7 @@ const register = async (req, res) => {
     // Create user
     const user = await User.create({
       name,
-      email: email.toLowerCase(),
+      email,
       password: hashedPassword
     });
 
@@ -54,7 +64,7 @@ const register = async (req, res) => {
     }
 
     // Generate token
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, role: user.role, tokenVersion: user.tokenVersion }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.status(201).json({
       success: true,
@@ -112,7 +122,7 @@ const login = async (req, res) => {
 
     //Generate JWT token
     const token = jwt.sign(
-      { id: user._id, role: user.role },
+      { id: user._id, role: user.role, tokenVersion: user.tokenVersion },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -133,6 +143,15 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.user.id, { $inc: { tokenVersion: 1 } });
+    return res.json({ success: true, message: "Logged out successfully" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error during logout" });
+  }
+};
+
 const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -145,18 +164,23 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const { email, phone } = req.body || {};
-    if (!email || !/^\S+@\S+\.\S+$/.test(email.trim())) {
+    const name = String(req.body?.name || "").trim();
+    const email = String(req.body?.email || "").trim();
+    const phone = String(req.body?.phone || "").trim();
+    if (!name) {
+      return res.status(400).json({ success: false, message: "Name is required" });
+    }
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
       return res.status(400).json({ success: false, message: "A valid email is required" });
     }
 
-    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedEmail = email.toLowerCase();
     const duplicate = await User.findOne({ email: normalizedEmail, _id: { $ne: req.user.id } });
     if (duplicate) return res.status(409).json({ success: false, message: "That email is already in use" });
 
     const user = await User.findByIdAndUpdate(
       req.user.id,
-      { email: normalizedEmail, phone: String(phone || "").trim() },
+      { name, email: normalizedEmail, phone },
       { new: true, runValidators: true }
     ).select("-password");
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
@@ -171,4 +195,5 @@ module.exports = {
   login,
   getProfile,
   updateProfile,
+  logout,
 };

@@ -136,6 +136,18 @@
       <div class="settings-grid">
         <div class="panel-card">
           <div class="panel-header">
+            <h2>Administrator profile</h2>
+          </div>
+          <form class="form-stack" data-admin-profile-form>
+            <label class="field"><span>Full name</span><input name="name" type="text" required></label>
+            <label class="field"><span>Email</span><input name="email" type="email" required></label>
+            <label class="field"><span>Phone</span><input name="phone" type="tel"></label>
+            <p class="settings-message" data-admin-profile-message role="status"></p>
+            <button class="primary-button" type="submit">Save profile</button>
+          </form>
+        </div>
+        <div class="panel-card">
+          <div class="panel-header">
             <h2>Communication preferences</h2>
           </div>
           <div class="form-stack">
@@ -183,6 +195,7 @@
   </main>
 </div>
 
+<script type="module" src="../js/admin-profile.js"></script>
 </body>
 </html>
 

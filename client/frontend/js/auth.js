@@ -50,6 +50,7 @@ export function initAuthForms() {
       const emailInput = form.querySelector("input[type='email']");
       const passwordInput = form.querySelector("input[type='password']");
       const errorEl = form.querySelector("[data-form-error]");
+      const isRegister = !!nameInput;
       errorEl.textContent = "";
 
       let hasError = false;
@@ -67,8 +68,17 @@ export function initAuthForms() {
         passwordInput?.setAttribute("aria-invalid", "false");
       }
 
+      if (isRegister && nameInput && nameInput.value.trim().length < 2) {
+        nameInput.setAttribute("aria-invalid", "true");
+        hasError = true;
+      } else {
+        nameInput?.setAttribute("aria-invalid", "false");
+      }
+
       if (hasError) {
-        errorEl.textContent = "Please check your email and password fields.";
+        errorEl.textContent = isRegister && nameInput?.value.trim().length < 2
+          ? "Please enter your full name and check your email and password fields."
+          : "Please check your email and password fields.";
         return;
       }
 
@@ -76,7 +86,6 @@ export function initAuthForms() {
       submit.textContent = "Please wait...";
 
       try {
-        const isRegister = !!nameInput;
         const path = isRegister ? "/auth/register" : "/auth/login";
         const body = {
           email: emailInput.value.trim(),
@@ -88,13 +97,16 @@ export function initAuthForms() {
 
         const result = await api.post(path, body);
 
-        showToast(result.message || (isRegister ? "Account created" : "Login successful"), "success");
-
         if (isRegister) {
-          // After registration, redirect to login page
-          window.location.href = "./login.html";
+          if (result.token && result.user) {
+            storeAuthData(result.token, result.user);
+          }
+          showToast(result.message || "Account created", "success");
+          window.location.href = "../index.html";
           return;
         }
+
+        showToast(result.message || "Login successful", "success");
 
         // Store token and user from login response
         if (result.token && result.user) {
@@ -129,15 +141,17 @@ export function initProfileForm() {
     let form = document.querySelector("[data-profile-form]");
     const settingsPanel = document.querySelector("[data-profile-panel='settings']");
     if (!form && settingsPanel) {
-      settingsPanel.insertAdjacentHTML("afterbegin", `<form class="form-panel" data-profile-form><div class="form-row"><label for="profileEmail">Email</label><input id="profileEmail" name="email" type="email" required></div><div class="form-row"><label for="profilePhone">Phone</label><input id="profilePhone" name="phone" type="tel" placeholder="07xx xxx xxx"></div><p class="form-help" data-profile-message aria-live="polite"></p><button class="btn" type="submit">Save profile</button></form>`);
+      settingsPanel.insertAdjacentHTML("afterbegin", `<form class="form-panel" data-profile-form><div class="form-row"><label for="profileName">Full name</label><input id="profileName" name="name" type="text" required></div><div class="form-row"><label for="profileEmail">Email</label><input id="profileEmail" name="email" type="email" required></div><div class="form-row"><label for="profilePhone">Phone</label><input id="profilePhone" name="phone" type="tel" placeholder="07xx xxx xxx"></div><p class="form-help" data-profile-message aria-live="polite"></p><button class="btn" type="submit">Save profile</button></form>`);
       form = settingsPanel.querySelector("[data-profile-form]");
     }
     if (!form) return;
 
+    const nameInput = form.querySelector("[name='name']");
     const emailInput = form.querySelector("[name='email']");
     const phoneInput = form.querySelector("[name='phone']");
     const message = form.querySelector("[data-profile-message]");
     const storedUser = getStoredUser();
+    if (nameInput) nameInput.value = storedUser?.name || "";
     if (emailInput) emailInput.value = storedUser?.email || "";
     if (phoneInput) phoneInput.value = storedUser?.phone || "";
 
@@ -153,8 +167,9 @@ export function initProfileForm() {
       event.preventDefault();
       try {
         const result = await api.authPatch("/auth/profile", {
+          name: nameInput?.value || "",
           email: emailInput.value,
-          phone: phoneInput.value,
+          phone: phoneInput?.value || "",
         });
         storeAuthData(getStoredToken(), result.user);
         if (message) message.textContent = result.message;

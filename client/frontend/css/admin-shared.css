@@ -72,6 +72,11 @@ button {
     cursor: pointer;
 }
 
+.admin-logout {
+    border: 0;
+    background: transparent;
+}
+
 a {
     color: inherit;
     text-decoration: none;

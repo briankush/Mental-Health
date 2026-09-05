@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
 /**
  * Authentication middleware.
  * Verifies the JWT from the Authorization header and attaches
  * the decoded payload to req.user = { id, role }.
  */
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -19,7 +20,15 @@ const auth = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { id, role, iat, exp }
+    const user = await User.findById(decoded.id).select("tokenVersion role");
+    const tokenVersion = decoded.tokenVersion ?? 0;
+    if (!user || tokenVersion !== (user.tokenVersion || 0)) {
+      return res.status(401).json({
+        success: false,
+        message: "Session is no longer valid. Please log in again.",
+      });
+    }
+    req.user = { ...decoded, role: user.role }; // { id, role, tokenVersion, iat, exp }
     next();
   } catch (error) {
     return res.status(401).json({

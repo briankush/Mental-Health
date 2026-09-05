@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const userResultCount = document.getElementById("userResultCount");
   const mobileMenu = document.getElementById("mobileMenu");
   const sidebar = document.getElementById("sidebar");
+  const actionMessage = document.getElementById("userActionMessage");
 
   let loadedUsers = [];
 
@@ -94,15 +95,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   usersTableBody?.addEventListener("click", async (event) => {
     const button = event.target.closest(".delete-user");
-    if (!button || !window.confirm("Delete this user account?")) return;
+    const confirmButton = event.target.closest("[data-confirm-delete]");
+    const cancelButton = event.target.closest("[data-cancel-delete]");
 
-    button.disabled = true;
+    if (cancelButton) {
+      actionMessage.hidden = true;
+      actionMessage.textContent = "";
+      return;
+    }
+
+    if (button) {
+      const user = loadedUsers.find((item) => String(item._id) === button.dataset.userId);
+      actionMessage.innerHTML = `Delete ${escapeHtml(user?.name || "this user")}&#39;s account? <button type="button" class="action" data-confirm-delete="${button.dataset.userId}">Confirm delete</button> <button type="button" class="action" data-cancel-delete>Cancel</button>`;
+      actionMessage.hidden = false;
+      return;
+    }
+
+    if (!confirmButton) return;
+
+    confirmButton.disabled = true;
     try {
-      await api.authDelete(`/admin/users/${button.dataset.userId}`);
+      await api.authDelete(`/admin/users/${confirmButton.dataset.confirmDelete}`);
       await loadUsers();
+      actionMessage.textContent = "User account deleted successfully.";
     } catch (error) {
-      button.disabled = false;
-      window.alert(error.message || "Unable to delete user.");
+      confirmButton.disabled = false;
+      actionMessage.textContent = error.message || "Unable to delete user.";
     }
   });
 
