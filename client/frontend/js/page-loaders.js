@@ -31,9 +31,20 @@ async function loadCollection({ rootSelector, path, items = [], renderer, emptyM
 export function initDynamicCollections() {
   loadCollection({
     rootSelector: "[data-articles-list]",
-    items: articlesMock,
+    path: "/articles/published",
     renderer: articleCard,
-    emptyMessage: "Nothing here yet."
+    emptyMessage: "Nothing here yet.",
+    mapItem: (article) => ({
+      id: article.id,
+      title: article.title,
+      category: article.category,
+      excerpt: article.excerpt || article.content?.slice(0, 160) || "",
+      readingTime: article.readingTime || 5,
+      date: article.date ? new Date(article.date).toLocaleDateString() : "Recently",
+      image: article.image || "../assets/images/article-1.svg",
+      imageAlt: `${article.title} illustration`,
+      href: `article.html?id=${article.id}`
+    })
   });
 
   loadCollection({
@@ -49,7 +60,7 @@ export function initDynamicCollections() {
       description: book.description || "",
       isFree: Number(book.price) === 0,
       price: book.price,
-      cover: "../assets/images/book-1.svg",
+      cover: book.coverUrl || "../assets/images/book-1.svg",
       coverAlt: `${book.bookName} cover`,
       previewHref: book.pdfUrl || "../pages/ebook.html"
     })
@@ -66,7 +77,7 @@ export function initDynamicCollections() {
       description: "Listen to the latest MindfulPath conversation.",
       host: audio.host,
       duration: audio.duration ? `${Math.round(audio.duration / 60)} min` : "Audio episode",
-      image: "../assets/images/podcast-1.svg",
+      image: audio.coverUrl || "../assets/images/podcast-1.svg",
       imageAlt: `${audio.title} podcast cover`,
       href: audio.audioUrl || "../pages/podcast.html"
     })

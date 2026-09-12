@@ -137,7 +137,7 @@
           <h1 class="page-title">Articles & Guides</h1>
           <p class="page-desc">Manage, edit, publish, and structure educational mental health articles and expert advice.</p>
         </div>
-        <button class="primary-button" type="button">
+        <button class="primary-button" id="createArticleBtn" type="button">
           <span>+</span> Create New Article
         </button>
       </div>
@@ -149,7 +149,7 @@
             <div class="kpi-title">Total Published</div>
             <div class="kpi-icon"></div>
           </div>
-          <div class="kpi-value">64</div>
+          <div class="kpi-value" id="totalPublishedArticles">0</div>
           <div class="kpi-foot"><span class="growth">↑ 12%</span> educational guides</div>
         </div>
         <div class="kpi-card">
@@ -173,7 +173,7 @@
             <div class="kpi-title">Drafts</div>
             <div class="kpi-icon"></div>
           </div>
-          <div class="kpi-value">3</div>
+          <div class="kpi-value" id="totalDraftArticles">0</div>
           <div class="kpi-foot">Pending editorial review</div>
         </div>
       </div>
@@ -184,7 +184,7 @@
           <div class="toolbar-left">
             <div class="table-search">
               <span class="table-search-icon"></span>
-              <input type="search" placeholder="Search article title or author...">
+                <input type="search" id="articleSearch" placeholder="Search article title or author...">
             </div>
             <select class="filter-select">
               <option value="">All Categories</option>
@@ -194,7 +194,7 @@
             </select>
           </div>
           <div class="toolbar-right">
-            <span class="result-count">Showing 64 articles</span>
+            <span class="result-count" id="articleResultCount">Loading articles...</span>
           </div>
         </div>
 
@@ -207,24 +207,10 @@
                 <th>Category</th>
                 <th>Status</th>
                 <th>Views</th>
+                <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><strong>Recognizing Early Signs of Burnout</strong></td>
-                <td>Dr. M. Achieng</td>
-                <td>Wellness & Work</td>
-                <td><span class="status status-published"><span class="status-dot"></span>Published</span></td>
-                <td>3,420</td>
-              </tr>
-              <tr>
-                <td><strong>Grounding Techniques for Panic Attacks</strong></td>
-                <td>MindfulPath Editorial</td>
-                <td>Anxiety & Stress</td>
-                <td><span class="status status-published"><span class="status-dot"></span>Published</span></td>
-                <td>5,190</td>
-              </tr>
-            </tbody>
+            <tbody id="articlesTableBody"></tbody>
           </table>
         </div>
       </div>
@@ -232,6 +218,33 @@
     </div>
   </main>
 
+</div>
+
+<div class="article-modal-overlay" id="articleModal">
+  <form class="article-modal" id="articleForm">
+    <div class="article-modal-header">
+      <div>
+        <h2 id="articleModalTitle">Create New Article</h2>
+        <p>Write and publish an educational resource.</p>
+      </div>
+      <button type="button" class="article-modal-close" id="closeArticleModal">×</button>
+    </div>
+    <div class="article-form-grid">
+      <label>Title<input id="articleTitle" required></label>
+      <label>Author<input id="articleAuthor" placeholder="MindfulPath Editorial"></label>
+      <label>Category<input id="articleCategory" required placeholder="Anxiety & Stress"></label>
+      <label>Reading time (minutes)<input id="articleReadingTime" type="number" min="1" value="5"></label>
+      <label class="article-form-wide">Image URL<input id="articleImage" type="url" placeholder="Optional image URL"></label>
+      <label class="article-form-wide">Excerpt<textarea id="articleExcerpt" rows="2"></textarea></label>
+      <label class="article-form-wide">Article content<textarea id="articleContent" rows="8" required></textarea></label>
+      <label>Status<select id="articleStatus"><option value="published">Published</option><option value="draft">Draft</option></select></label>
+    </div>
+    <p class="article-form-message" id="articleFormMessage"></p>
+    <div class="article-modal-footer">
+      <button type="button" class="secondary-button" id="cancelArticleModal">Cancel</button>
+      <button type="submit" class="primary-button" id="saveArticleBtn">Create Article</button>
+    </div>
+  </form>
 </div>
 
 <script>
@@ -243,5 +256,6 @@
     }
   });
 </script>
+<script type="module" src="../js/admin-articles.js"></script>
 </body>
 </html>

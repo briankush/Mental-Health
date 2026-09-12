@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const response = await api.get("/admin/stats");
+    const response = await api.authGet("/admin/stats");
     const stats = response.stats || {};
 
     if (kpiUsers) kpiUsers.textContent = stats.totalUsers ?? 0;

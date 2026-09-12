@@ -19,6 +19,12 @@ const audioSchema = new mongoose.Schema(
     publicId: {
       type: String,
     },
+    coverUrl: {
+      type: String,
+    },
+    coverPublicId: {
+      type: String,
+    },
     duration: {
       type: Number,
     },

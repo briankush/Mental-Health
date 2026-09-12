@@ -34,6 +34,12 @@ const bookSchema = new mongoose.Schema(
     pdfPublicId: {
       type: String,
     },
+    coverUrl: {
+      type: String,
+    },
+    coverPublicId: {
+      type: String,
+    },
     status: {
       type: String,
       enum: ["draft", "published"],

@@ -3,10 +3,11 @@ const {
   addBook,
   getBooks,
   getPublishedBooks,
+  updateBook,
   updateBookStatus,
   deleteBook,
 } = require("../controllers/bookcontroller");
-const { upload } = require("../middleware/upload");
+const { bookAssetUpload } = require("../middleware/upload");
 const auth = require("../middleware/auth");
 const adminOnly = require("../middleware/adminOnly");
 
@@ -19,7 +20,10 @@ router.get("/published", getPublishedBooks);
 router.get("/", auth, adminOnly, getBooks);
 
 // ADMIN ONLY — Upload a new book
-router.post("/", auth, adminOnly, upload.single("pdf"), addBook);
+router.post("/", auth, adminOnly, bookAssetUpload.fields([{ name: "pdf", maxCount: 1 }, { name: "cover", maxCount: 1 }]), addBook);
+
+// ADMIN ONLY — Edit book metadata and optionally replace the PDF
+router.patch("/:id", auth, adminOnly, bookAssetUpload.fields([{ name: "pdf", maxCount: 1 }, { name: "cover", maxCount: 1 }]), updateBook);
 
 // ADMIN ONLY — Update book status (draft / published)
 router.patch("/:id/status", auth, adminOnly, updateBookStatus);

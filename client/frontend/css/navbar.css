@@ -72,6 +72,15 @@
   display: none;
 }
 
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: -0.6rem;
+  left: 0;
+  width: 100%;
+  height: 0.6rem;
+}
+
 .nav-item:hover .dropdown,
 .nav-item:focus-within .dropdown {
   display: grid;

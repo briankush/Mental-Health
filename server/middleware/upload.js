@@ -20,6 +20,20 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 }, // Limit 10MB
 });
 
+const bookAssetUpload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    if (file.fieldname === "pdf" && file.mimetype === "application/pdf") {
+      return cb(null, true);
+    }
+    if (file.fieldname === "cover" && ["image/png", "image/jpeg", "image/webp"].includes(file.mimetype)) {
+      return cb(null, true);
+    }
+    return cb(new Error("Books require a PDF and covers must be PNG, JPG, or WEBP files."), false);
+  },
+  limits: { fileSize: 10 * 1024 * 1024 },
+});
+
 // File filter to accept audio files
 const audioFileFilter = (req, file, cb) => {
   if (
@@ -41,6 +55,23 @@ const uploadAudio = multer({
   limits: { fileSize: 50 * 1024 * 1024 }, // Limit 50MB for audio
 });
 
+const audioAssetUpload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    if (file.fieldname === "audio" && (
+      file.mimetype.startsWith("audio/") ||
+      /\.(mp3|wav|m4a|aac|ogg|webm)$/i.test(file.originalname)
+    )) {
+      return cb(null, true);
+    }
+    if (file.fieldname === "cover" && ["image/png", "image/jpeg", "image/webp"].includes(file.mimetype)) {
+      return cb(null, true);
+    }
+    return cb(new Error("Audio covers must be PNG, JPG, or WEBP files."), false);
+  },
+  limits: { fileSize: 50 * 1024 * 1024 },
+});
+
 // Helper function to stream upload PDF to Cloudinary
 const uploadPdfToCloudinary = (fileBuffer) => {
   // Ensure Cloudinary is configured with environment variables on each upload
@@ -56,6 +87,25 @@ const uploadPdfToCloudinary = (fileBuffer) => {
         resource_type: "auto",
         folder: "books_pdfs",
       },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+    stream.end(fileBuffer);
+  });
+};
+
+const uploadImageToCloudinary = (fileBuffer, folder = "book_covers") => {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { resource_type: "image", folder },
       (error, result) => {
         if (error) return reject(error);
         resolve(result);
@@ -93,7 +143,10 @@ const uploadAudioToCloudinary = (fileBuffer) => {
 module.exports = {
   cloudinary,
   upload,
+  bookAssetUpload,
   uploadAudio,
+  audioAssetUpload,
   uploadPdfToCloudinary,
+  uploadImageToCloudinary,
   uploadAudioToCloudinary,
 };

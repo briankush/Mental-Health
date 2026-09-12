@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeModalBtn = document.getElementById("closeModal");
   const cancelModalBtn = document.getElementById("cancelModal");
   const bookForm = document.getElementById("bookForm");
+  const bookModalTitle = document.getElementById("bookModalTitle");
+  const bookModalDescription = document.getElementById("bookModalDescription");
+  const editBookBtn = document.getElementById("editBookBtn");
 
   const freeBookCheckbox = document.getElementById("freeBook");
   const priceInput = document.getElementById("bookPrice");
@@ -31,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusFilter = document.getElementById("statusFilter");
 
   let loadedBooks = [];
+  let editingBookId = null;
+  let selectedBook = null;
 
   // Toast notification helper
   let toastTimer;
@@ -99,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>
               <div class="book-cell">
                 <div class="book-cover">
-                  ♧
+                  ${book.coverUrl ? `<img src="${book.coverUrl}" alt="${escapeHtml(book.bookName)} cover">` : "♧"}
                 </div>
                 <div>
                   <div class="book-name">${escapeHtml(book.bookName)}</div>
@@ -140,6 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("click", function () {
         const row = this.closest("tr");
         if (!row) return;
+
+        selectedBook = loadedBooks.find((book) => book._id === row.dataset.id) || null;
 
         document.getElementById("drawerTitle").textContent = row.dataset.book;
         document.getElementById("drawerAuthor").textContent = row.dataset.author;
@@ -183,9 +190,49 @@ document.addEventListener("DOMContentLoaded", () => {
   // Modal Open/Close Controls
   function openBookModal() {
     if (modal) {
+      editingBookId = null;
+      selectedBook = null;
+      bookForm?.reset();
+      pdfFile?.removeAttribute("required");
+      pdfFile?.setAttribute("required", "required");
+      if (bookModalTitle) bookModalTitle.textContent = "Add new book";
+      if (bookModalDescription) bookModalDescription.textContent = "Add a resource to the MindfulPath library.";
+      const submitButton = bookForm?.querySelector("button[type='submit']");
+      if (submitButton) submitButton.textContent = "Upload book";
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
     }
+  }
+
+  function openEditModal(book) {
+    if (!modal || !book) return;
+
+    editingBookId = book._id;
+    bookModalTitle.textContent = "Edit book";
+    bookModalDescription.textContent = "Update this resource in the MindfulPath library.";
+    document.getElementById("bookTitle").value = book.bookName || "";
+    document.getElementById("bookAuthor").value = book.author || "";
+    document.getElementById("bookCategory").value = book.category || "";
+    document.getElementById("bookDescription").value = book.description || "";
+    priceInput.value = book.price ?? "";
+    if (freeBookCheckbox) {
+      freeBookCheckbox.checked = Number(book.price) === 0;
+      priceInput.disabled = freeBookCheckbox.checked;
+    }
+    pdfFile.value = "";
+    pdfFile.removeAttribute("required");
+    coverFile.value = "";
+    if (coverPreview) {
+      coverPreview.innerHTML = book.coverUrl
+        ? `<img src="${book.coverUrl}" alt="${escapeHtml(book.bookName)} cover">`
+        : "▧";
+    }
+    const submitButton = bookForm.querySelector("button[type='submit']");
+    if (submitButton) submitButton.textContent = "Save changes";
+    drawer.classList.remove("open");
+    drawerOverlay.classList.remove("open");
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
   }
 
   function closeBookModal() {
@@ -193,6 +240,13 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.classList.remove("open");
       document.body.style.overflow = "";
       if (bookForm) bookForm.reset();
+      editingBookId = null;
+      selectedBook = null;
+      pdfFile?.setAttribute("required", "required");
+      if (bookModalTitle) bookModalTitle.textContent = "Add new book";
+      if (bookModalDescription) bookModalDescription.textContent = "Add a resource to the MindfulPath library.";
+      const submitButton = bookForm?.querySelector("button[type='submit']");
+      if (submitButton) submitButton.textContent = "Upload book";
       if (coverPreview) coverPreview.innerHTML = "▧";
       if (pdfZone) {
         pdfZone.querySelector(".upload-title").textContent = "Drop your PDF here";
@@ -219,6 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeBookDrawer);
   if (drawerOverlay) drawerOverlay.addEventListener("click", closeBookDrawer);
+  if (editBookBtn) editBookBtn.addEventListener("click", () => openEditModal(selectedBook));
 
   // Free Book Checkbox Toggle
   if (freeBookCheckbox && priceInput) {
@@ -314,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      if (!pdf) {
+      if (!editingBookId && !pdf) {
         showToast("Please upload the book PDF file.");
         return;
       }
@@ -332,12 +387,20 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append("category", category);
         formData.append("description", description);
         formData.append("price", priceVal);
-        formData.append("pdf", pdf);
+        if (pdf) formData.append("pdf", pdf);
+        const cover = coverFile?.files[0];
+        if (cover) formData.append("cover", cover);
 
-        formData.append("status", "draft");
-        const result = await api.postFormData("/books", formData, true);
+        let result;
+        if (editingBookId) {
+          formData.append("status", selectedBook?.status || "published");
+          result = await api.postFormData(`/books/${editingBookId}`, formData, true, "PATCH");
+        } else {
+          formData.append("status", "published");
+          result = await api.postFormData("/books", formData, true);
+        }
 
-        showToast(result.message || "Book uploaded successfully!");
+        showToast(result.message || (editingBookId ? "Book updated successfully!" : "Book uploaded successfully!"));
 
         setTimeout(() => {
           closeBookModal();

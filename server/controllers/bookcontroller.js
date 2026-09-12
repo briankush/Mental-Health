@@ -1,9 +1,10 @@
 const Book = require("../models/books");
-const { uploadPdfToCloudinary, cloudinary } = require("../middleware/upload");
+const { uploadPdfToCloudinary, uploadImageToCloudinary, cloudinary } = require("../middleware/upload");
 
 // ADD BOOK (Admin only)
 const addBook = async (req, res) => {
   let cloudinaryResult = null;
+  let coverResult = null;
   try {
     const { bookName, price, author, category, description, status } = req.body || {};
 
@@ -14,7 +15,10 @@ const addBook = async (req, res) => {
       });
     }
 
-    if (!req.file) {
+    const pdfFile = req.files?.pdf?.[0];
+    const coverFile = req.files?.cover?.[0];
+
+    if (!pdfFile) {
       return res.status(400).json({
         success: false,
         message: "Book PDF file is required",
@@ -22,7 +26,11 @@ const addBook = async (req, res) => {
     }
 
     // Upload PDF buffer to Cloudinary
-    cloudinaryResult = await uploadPdfToCloudinary(req.file.buffer);
+    cloudinaryResult = await uploadPdfToCloudinary(pdfFile.buffer);
+
+    if (coverFile) {
+      coverResult = await uploadImageToCloudinary(coverFile.buffer);
+    }
 
     const pdfUrl = cloudinaryResult.secure_url || cloudinaryResult.url;
 
@@ -47,12 +55,17 @@ const addBook = async (req, res) => {
         description: description || "",
         pdfUrl,
         pdfPublicId: cloudinaryResult.public_id,
-        status: status || "draft",
+        coverUrl: coverResult?.secure_url || coverResult?.url,
+        coverPublicId: coverResult?.public_id,
+        status: status || "published",
       });
     } catch (dbError) {
       console.error("Database error saving book. Cleaning up Cloudinary upload...", dbError);
       if (cloudinaryResult.public_id) {
         await cloudinary.uploader.destroy(cloudinaryResult.public_id, { resource_type: "raw" });
+      }
+      if (coverResult?.public_id) {
+        await cloudinary.uploader.destroy(coverResult.public_id, { resource_type: "image" });
       }
       throw dbError;
     }
@@ -103,6 +116,103 @@ const getPublishedBooks = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Server error while fetching books",
+      error: error.message,
+    });
+  }
+};
+
+// UPDATE BOOK (Admin only)
+const updateBook = async (req, res) => {
+  let cloudinaryResult = null;
+  let coverResult = null;
+  try {
+    const { id } = req.params;
+    const { bookName, price, author, category, description, status } = req.body || {};
+    const pdfFile = req.files?.pdf?.[0];
+    const coverFile = req.files?.cover?.[0];
+    const book = await Book.findById(id);
+
+    if (!book) {
+      return res.status(404).json({ success: false, message: "Book not found" });
+    }
+
+    if (!bookName || price === undefined || price === null || price === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Book title and price are required",
+      });
+    }
+
+    if (status && !["draft", "published"].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Status must be 'draft' or 'published'",
+      });
+    }
+
+    const update = {
+      bookName: String(bookName).trim(),
+      price: Number(price),
+      author: author || "MindfulPath Editorial",
+      category: category || "Mental Health",
+      description: description || "",
+    };
+
+    if (status) update.status = status;
+
+    if (pdfFile) {
+      cloudinaryResult = await uploadPdfToCloudinary(pdfFile.buffer);
+      const pdfUrl = cloudinaryResult.secure_url || cloudinaryResult.url;
+      if (!pdfUrl) {
+        return res.status(500).json({ success: false, message: "Failed to obtain secure PDF URL from Cloudinary" });
+      }
+      update.pdfUrl = pdfUrl;
+      update.pdfPublicId = cloudinaryResult.public_id;
+    }
+
+    if (coverFile) {
+      coverResult = await uploadImageToCloudinary(coverFile.buffer);
+      update.coverUrl = coverResult.secure_url || coverResult.url;
+      update.coverPublicId = coverResult.public_id;
+    }
+
+    const updatedBook = await Book.findByIdAndUpdate(id, update, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (pdfFile && book.pdfPublicId && book.pdfPublicId !== updatedBook.pdfPublicId) {
+      try {
+        await cloudinary.uploader.destroy(book.pdfPublicId, { resource_type: "raw" });
+      } catch (cloudErr) {
+        console.warn("Cloudinary cleanup warning:", cloudErr.message);
+      }
+    }
+
+    if (coverFile && book.coverPublicId && book.coverPublicId !== updatedBook.coverPublicId) {
+      try {
+        await cloudinary.uploader.destroy(book.coverPublicId, { resource_type: "image" });
+      } catch (cloudErr) {
+        console.warn("Cloudinary cover cleanup warning:", cloudErr.message);
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Book updated successfully",
+      data: updatedBook,
+    });
+  } catch (error) {
+    if (cloudinaryResult?.public_id) {
+      await cloudinary.uploader.destroy(cloudinaryResult.public_id, { resource_type: "raw" }).catch(() => {});
+    }
+    if (coverResult?.public_id) {
+      await cloudinary.uploader.destroy(coverResult.public_id, { resource_type: "image" }).catch(() => {});
+    }
+    console.error("Error updating book:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while updating book",
       error: error.message,
     });
   }
@@ -185,6 +295,7 @@ module.exports = {
   addBook,
   getBooks,
   getPublishedBooks,
+  updateBook,
   updateBookStatus,
   deleteBook,
 };

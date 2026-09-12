@@ -3,10 +3,11 @@ const {
   uploadAudioFile,
   getAudioFiles,
   getPublishedAudio,
+  updateAudio,
   updateAudioStatus,
   deleteAudio,
 } = require("../controllers/audiocontroller");
-const { uploadAudio } = require("../middleware/upload");
+const { audioAssetUpload } = require("../middleware/upload");
 const auth = require("../middleware/auth");
 const adminOnly = require("../middleware/adminOnly");
 
@@ -19,7 +20,10 @@ router.get("/published", getPublishedAudio);
 router.get("/", auth, adminOnly, getAudioFiles);
 
 // ADMIN ONLY — Upload audio file to Cloudinary & save to DB
-router.post("/upload", auth, adminOnly, uploadAudio.any(), uploadAudioFile);
+router.post("/upload", auth, adminOnly, audioAssetUpload.fields([{ name: "audio", maxCount: 1 }, { name: "cover", maxCount: 1 }]), uploadAudioFile);
+
+// ADMIN ONLY — Edit audio metadata and optionally replace files
+router.patch("/:id", auth, adminOnly, audioAssetUpload.fields([{ name: "audio", maxCount: 1 }, { name: "cover", maxCount: 1 }]), updateAudio);
 
 // ADMIN ONLY — Update audio status (draft / published)
 router.patch("/:id/status", auth, adminOnly, updateAudioStatus);

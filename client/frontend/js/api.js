@@ -28,6 +28,10 @@ async function request(path, options = {}, withAuth = false) {
     } catch {
       message = await response.text() || message;
     }
+    if (withAuth && response.status === 401) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    }
     throw new Error(message);
   }
 
@@ -51,10 +55,10 @@ export const api = {
   authLogout: () => request("/auth/logout", { method: "POST" }, true),
 
   // FormData upload (authenticated)
-  postFormData: async (path, formData, withAuth = false) => {
+  postFormData: async (path, formData, withAuth = false, method = "POST") => {
     const headers = withAuth ? getAuthHeaders() : {};
     const response = await fetch(`${API_BASE_URL}${path}`, {
-      method: "POST",
+      method,
       headers,
       body: formData,
     });
@@ -67,6 +71,10 @@ export const api = {
       } catch (e) {
         msg = resText || msg;
       }
+      if (withAuth && response.status === 401) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
       throw new Error(msg);
     }
     return response.json();
@@ -75,11 +83,12 @@ export const api = {
   put: (path, body) => request(path, { method: "PUT", body: JSON.stringify(body) }, true),
   delete: (path) => request(path, { method: "DELETE" }, true),
 
-  uploadAudio: async (audioFile, title, host) => {
+  uploadAudio: async (audioFile, title, host, coverFile) => {
     const formData = new FormData();
     formData.append("audio", audioFile);
     if (title) formData.append("title", title);
     if (host) formData.append("host", host);
+    if (coverFile) formData.append("cover", coverFile);
     return api.postFormData("/audio/upload", formData, true);
   },
 };

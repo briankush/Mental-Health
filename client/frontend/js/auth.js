@@ -133,11 +133,6 @@ export function initAuthForms() {
 }
 
 export function initProfileForm() {
-  if (!getStoredToken()) {
-    window.location.replace("./login.html");
-    return;
-  }
-
     let form = document.querySelector("[data-profile-form]");
     const settingsPanel = document.querySelector("[data-profile-panel='settings']");
     if (!form && settingsPanel) {
@@ -145,6 +140,11 @@ export function initProfileForm() {
       form = settingsPanel.querySelector("[data-profile-form]");
     }
     if (!form) return;
+
+    if (!getStoredToken()) {
+      window.location.replace("../pages/login.html");
+      return;
+    }
 
     const nameInput = form.querySelector("[name='name']");
     const emailInput = form.querySelector("[name='email']");

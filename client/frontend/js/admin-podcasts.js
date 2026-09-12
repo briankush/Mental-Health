@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("addPodcastForm");
   const formMessage = document.getElementById("podcastFormMessage");
   const submitBtn = document.getElementById("podcastSubmitBtn");
+  const modalTitle = document.getElementById("podcastModalTitle");
+  const audioFileInput = document.getElementById("audioFile");
+  const coverInput = document.getElementById("podcastCover");
+  const coverPreview = document.getElementById("podcastCoverPreview");
   const podcastsTableBody = document.getElementById("podcastsTableBody");
   const searchInput = document.getElementById("audioSearch");
   const statusFilter = document.getElementById("audioStatusFilter");
@@ -17,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.getElementById("sidebar");
 
   let loadedAudios = [];
+  let editingAudioId = null;
+  let selectedAudio = null;
 
   // Mobile sidebar toggle
   if (mobileMenu && sidebar) {
@@ -51,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .map((audio) => {
         const durationText = formatDuration(audio.duration);
         return `
-          <tr>
+          <tr data-audio-id="${audio._id}">
             <td>
               <div style="font-weight:600; color:#18221e;">${escapeHtml(audio.title)}</div>
               <div style="font-size:10px; color:#8b958f; margin-top:2px;">Format: ${(audio.format || "audio").toUpperCase()}</div>
@@ -71,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   : `<span style="color:#888;">No Audio Link</span>`
               }
             </td>
+            <td><button type="button" class="secondary-button edit-audio" data-audio-id="${audio._id}">Edit</button></td>
           </tr>
         `;
       })
@@ -89,6 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
           loadAudios();
         }
       });
+    });
+
+    document.querySelectorAll(".edit-audio").forEach((button) => {
+      button.addEventListener("click", () => openEditModal(loadedAudios.find((audio) => audio._id === button.dataset.audioId)));
     });
   }
 
@@ -131,10 +142,38 @@ document.addEventListener("DOMContentLoaded", () => {
   // Modal open/close controls
   function openModal() {
     if (modal) {
+      editingAudioId = null;
+      selectedAudio = null;
       modal.classList.add("open");
       if (formMessage) formMessage.textContent = "";
       if (form) form.reset();
+      audioFileInput?.setAttribute("required", "required");
+      if (modalTitle) modalTitle.textContent = "Upload Audio Episode";
+      if (submitBtn) submitBtn.textContent = "Upload Audio";
+      if (coverPreview) {
+        coverPreview.src = "";
+        coverPreview.hidden = true;
+      }
     }
+  }
+
+  function openEditModal(audio) {
+    if (!audio || !modal) return;
+    editingAudioId = audio._id;
+    selectedAudio = audio;
+    document.getElementById("podcastTitle").value = audio.title || "";
+    document.getElementById("podcastHost").value = audio.host || "";
+    audioFileInput.value = "";
+    audioFileInput.removeAttribute("required");
+    if (coverInput) coverInput.value = "";
+    if (coverPreview) {
+      coverPreview.src = audio.coverUrl || "";
+      coverPreview.hidden = !audio.coverUrl;
+    }
+    if (modalTitle) modalTitle.textContent = "Edit Audio Episode";
+    if (submitBtn) submitBtn.textContent = "Save Changes";
+    if (formMessage) formMessage.textContent = "";
+    modal.classList.add("open");
   }
 
   function closeModal() {
@@ -166,11 +205,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const podcastTitleInput = document.getElementById("podcastTitle");
       const podcastHostInput = document.getElementById("podcastHost");
-      const audioFileInput = document.getElementById("audioFile");
 
       const title = podcastTitleInput.value.trim();
       const host = podcastHostInput.value.trim() || "MindfulPath Team";
       const audioFile = audioFileInput.files[0];
+      const coverFile = coverInput?.files[0];
 
       if (!title) {
         formMessage.style.color = "red";
@@ -178,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      if (!audioFile) {
+      if (!editingAudioId && !audioFile) {
         formMessage.style.color = "red";
         formMessage.textContent = "Please select an audio file to upload.";
         return;
@@ -190,8 +229,15 @@ document.addEventListener("DOMContentLoaded", () => {
         formMessage.style.color = "#007bff";
         formMessage.textContent = "Uploading...";
 
-        // Call frontend API helper POST /api/audio/upload
-        const result = await api.uploadAudio(audioFile, title, host);
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("host", host);
+        if (audioFile) formData.append("audio", audioFile);
+        if (coverFile) formData.append("cover", coverFile);
+
+        const result = editingAudioId
+          ? await api.postFormData(`/audio/${editingAudioId}`, formData, true, "PATCH")
+          : await api.postFormData("/audio/upload", formData, true);
 
         formMessage.style.color = "green";
         formMessage.textContent = result.message || "Audio uploaded successfully!";
@@ -209,6 +255,19 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.disabled = false;
         submitBtn.textContent = "Upload Audio";
       }
+    });
+  }
+
+  if (coverInput && coverPreview) {
+    coverInput.addEventListener("change", () => {
+      const file = coverInput.files[0];
+      if (!file) {
+        coverPreview.src = "";
+        coverPreview.hidden = true;
+        return;
+      }
+      coverPreview.src = URL.createObjectURL(file);
+      coverPreview.hidden = false;
     });
   }
 
