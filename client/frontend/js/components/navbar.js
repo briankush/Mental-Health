@@ -5,6 +5,11 @@ function navLink(base, href, label, page, currentPage) {
   return `<a class="nav-link ${active}" href="${base}${href}">${label}</a>`;
 }
 
+function homeSectionLink(base, section, label, page, currentPage) {
+  const active = page === currentPage ? "is-active" : "";
+  return `<a class="nav-link ${active}" href="${base}index.html#${section}">${label}</a>`;
+}
+
 export function initNavbar({ mountId = "site-header", basePath = "./", currentPage = "home" } = {}) {
   const mount = document.getElementById(mountId);
   if (!mount) {
@@ -31,7 +36,7 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
 
         <nav class="nav-links" aria-label="Main navigation">
           <div class="nav-item">${navLink(basePath, "index.html", "Home", "home", currentPage)}</div>
-          <div class="nav-item">${navLink(basePath, "pages/about.html", "About", "about", currentPage)}</div>
+          <div class="nav-item">${homeSectionLink(basePath, "about", "About", "about", currentPage)}</div>
           <div class="nav-item">
             <a class="nav-link">Resources</a>
             <div class="dropdown" role="menu">
@@ -59,7 +64,7 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
               <a href="${basePath}pages/quizzes.html#qa">Q&A</a>
             </div>
           </div>
-          <div class="nav-item">${navLink(basePath, "pages/consultation.html", "Consultation", "consultation", currentPage)}</div>
+          <div class="nav-item">${homeSectionLink(basePath, "consultation", "Consultation", "consultation", currentPage)}</div>
           <div class="nav-item">${profileLink}</div>
         </nav>
 
@@ -74,7 +79,7 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
       <div class="mobile-panel" id="mobile-panel">
         <div class="container mobile-nav">
           <a href="${basePath}index.html">Home</a>
-          <a href="${basePath}pages/about.html">About</a>
+          <a href="${basePath}index.html#about">About</a>
           <details>
             <summary>Resources</summary>
             <a href="${basePath}pages/articles.html">Articles</a>
@@ -88,7 +93,7 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
           <a href="${basePath}pages/podcasts.html">Podcasts</a>
           <a href="${basePath}pages/training.html">Training</a>
           <a href="${basePath}pages/community.html">Community</a>
-          <a href="${basePath}pages/consultation.html">Consultation</a>
+          <a href="${basePath}index.html#consultation">Consultation</a>
           ${profileLink ? `<a href="${basePath}pages/profile.html">Profile</a>` : ""}
           ${logoutButton ? `<button type="button" data-logout>Log out</button>` : `<a href="${basePath}pages/login.html">Login</a>`}
           ${signupLink ? `<a href="${basePath}pages/register.html">Sign up</a>` : ""}
