@@ -4,7 +4,6 @@ const communityMessageSchema = new mongoose.Schema(
   {
     roomId: {
       type: String,
-      enum: ["general", "stress", "book-club", "training"],
       required: true,
       index: true,
     },

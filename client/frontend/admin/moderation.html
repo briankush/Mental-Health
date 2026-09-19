@@ -139,6 +139,41 @@
         </div>
       </div>
 
+      <div class="table-card community-room-admin">
+        <div class="table-toolbar">
+          <div>
+            <h2 class="section-title">Create community room</h2>
+            <p class="page-desc">Create a room, then share its generated ID with approved members.</p>
+          </div>
+        </div>
+        <form data-admin-room-form class="admin-room-form">
+          <input name="name" type="text" maxlength="100" placeholder="Room name" aria-label="Room name" required>
+          <button type="submit" class="action">Create room</button>
+        </form>
+        <div class="created-room-card" data-created-room hidden>
+          <span class="created-room-label">Room ready to share</span>
+          <strong data-created-room-name></strong>
+          <code data-created-room-id></code>
+          <button type="button" class="action" data-copy-room-id>Copy room ID</button>
+        </div>
+        <p class="settings-message" data-admin-room-status role="status"></p>
+      </div>
+
+      <div class="admin-modal" data-end-room-modal hidden>
+        <div class="admin-modal__panel" role="dialog" aria-modal="true" aria-labelledby="end-room-title">
+          <span class="created-room-label">Room control</span>
+          <h2 id="end-room-title">End this chatroom?</h2>
+          <p>Everyone will be removed immediately, and the room ID and message history will be permanently deleted.</p>
+          <div class="admin-modal__actions"><button type="button" class="action" data-cancel-end>Keep room</button><button type="button" class="action action--danger" data-confirm-end>End room</button></div>
+        </div>
+      </div>
+      <div class="admin-popup" data-admin-popup role="status" aria-live="polite"></div>
+
+      <div class="table-card community-room-admin">
+        <div class="table-toolbar"><div><h2 class="section-title">Active chatrooms</h2><p class="page-desc">Share room IDs with members or end a room immediately.</p></div><button type="button" class="action" data-refresh-rooms>Refresh</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Room name</th><th>Room ID</th><th>Created</th><th>Action</th></tr></thead><tbody data-admin-rooms><tr><td colspan="4" class="table-empty-state">Loading rooms...</td></tr></tbody></table></div>
+      </div>
+
       <!-- KPI METRICS GRID -->
       <div class="kpi-grid">
         <div class="kpi-card">
@@ -223,5 +258,6 @@
     }
   });
 </script>
+<script src="../js/admin-community.js"></script>
 </body>
 </html>

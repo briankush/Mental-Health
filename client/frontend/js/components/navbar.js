@@ -60,7 +60,7 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
             <a class="nav-link">Community</a>
             <div class="dropdown" role="menu">
               <a href="${basePath}pages/community.html">Discussion</a>
-              <a href="${basePath}pages/community.html">Chatroom</a>
+              <a href="${basePath}pages/chatroom.html">Chatroom</a>
               <a href="${basePath}pages/quizzes.html#qa">Q&A</a>
             </div>
           </div>

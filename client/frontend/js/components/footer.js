@@ -45,7 +45,7 @@ export function initFooter({ mountId = "site-footer", basePath = "./" } = {}) {
           <h4 class="footer-title">Community</h4>
           <div class="footer-links">
             <a href="${basePath}pages/community.html">Discussion</a>
-            <a href="${basePath}pages/community.html">Chatroom</a>
+            <a href="${basePath}pages/chatroom.html">Chatroom</a>
             <a href="${basePath}pages/quizzes.html#qa">Q&A</a>
           </div>
         </div>

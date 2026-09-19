@@ -3,3 +3,133 @@
    ========================================================= */
 
 @import "./admin-shared.css";
+
+.community-room-admin {
+   margin-bottom: 22px;
+}
+
+.admin-room-form {
+   display: flex;
+   gap: 12px;
+   padding: 0 22px 18px;
+}
+
+.admin-room-form input {
+   flex: 1;
+   min-width: 0;
+}
+
+.created-room-card {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   margin: 0 22px 18px;
+   padding: 16px 18px;
+   border: 1px solid #b7dccb;
+   border-radius: 10px;
+   background: #f0faf5;
+}
+
+.created-room-label {
+   color: #276749;
+   font-size: 11px;
+   font-weight: 700;
+   letter-spacing: .08em;
+   text-transform: uppercase;
+}
+
+.created-room-card code {
+   padding: 7px 10px;
+   border-radius: 6px;
+   background: #fff;
+   color: #173b2b;
+   font-size: 13px;
+   font-weight: 700;
+}
+
+.created-room-card .action {
+   margin-left: auto;
+}
+
+[data-admin-rooms] tr {
+   transition: background .18s ease;
+}
+
+[data-admin-rooms] tr:hover {
+   background: #f5fbf8;
+}
+
+[data-admin-rooms] td:nth-child(2) {
+   color: #276749;
+   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+   font-size: 12px;
+}
+
+.action--danger {
+   border-color: #b42318;
+   background: #b42318;
+   color: #fff;
+}
+
+.admin-modal[hidden],
+.admin-popup:empty {
+   display: none;
+}
+
+.admin-modal {
+   position: fixed;
+   inset: 0;
+   z-index: 20;
+   display: grid;
+   place-items: center;
+   padding: 20px;
+   background: rgba(15, 35, 27, .42);
+}
+
+.admin-modal__panel {
+   width: min(100%, 430px);
+   padding: 28px;
+   border: 1px solid #d9e6df;
+   border-radius: 14px;
+   background: #fff;
+   box-shadow: 0 22px 60px rgba(15, 35, 27, .2);
+}
+
+.admin-modal__panel h2 {
+   margin: 8px 0;
+}
+
+.admin-modal__actions {
+   display: flex;
+   justify-content: flex-end;
+   gap: 10px;
+   margin-top: 22px;
+}
+
+.admin-popup {
+   position: fixed;
+   right: 24px;
+   bottom: 24px;
+   z-index: 30;
+   max-width: 360px;
+   padding: 14px 18px;
+   border-left: 4px solid #2d6a4f;
+   border-radius: 8px;
+   background: #fff;
+   box-shadow: 0 12px 30px rgba(15, 35, 27, .18);
+   color: #173b2b;
+   font-weight: 600;
+}
+
+@media (max-width: 640px) {
+   .admin-room-form,
+   .created-room-card,
+   .admin-modal__actions {
+      flex-direction: column;
+      align-items: stretch;
+   }
+
+   .created-room-card .action {
+      margin-left: 0;
+   }
+}
