@@ -29,6 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
     roomToEnd = null;
   };
 
+  const resetCreatePanel = () => {
+    form.reset();
+    createdRoom.hidden = true;
+    createdRoomName.textContent = "";
+    createdRoomId.textContent = "";
+    status.textContent = "";
+  };
+
   const request = async (path, options = {}) => {
     const response = await fetch(`http://localhost:3000/api${path}`, {
       ...options,
@@ -86,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.message || "Unable to create room");
-      status.textContent = `Room created. Share this room ID: ${result.room.id}`;
+      status.textContent = "";
       createdRoomName.textContent = result.room.name;
       createdRoomId.textContent = result.room.id;
       createdRoom.hidden = false;
@@ -119,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await request(`/admin/community/rooms/${roomToEnd}`, { method: "DELETE" });
       closeModal();
+      resetCreatePanel();
       showPopup("Room ended. Its ID and message history were deleted.");
       await loadRooms();
     } catch (error) {
