@@ -17,20 +17,17 @@
       </aside>
       <section class="chat-main" aria-label="Chat panel">
         <header class="chat-header"><strong data-room-name>General Wellbeing</strong> <span class="meta ml-1">● 24 online</span></header>
-        <div class="chat-messages" data-chat-messages>
-          <article class="chat-msg"><strong>Amina</strong><p>Has anyone tried scheduling short recovery breaks during exam week?</p><p class="meta">10:14 · <button type="button" data-report>Report</button></p></article>
-          <article class="chat-msg"><strong>Victor</strong><p>Yes. 15-minute walks helped me reset focus.</p><p class="meta">10:18 · <button type="button" data-report>Report</button></p></article>
-        </div>
+        <div class="chat-messages" data-chat-messages></div>
         <form class="chat-input-wrap" data-chat-form>
           <label for="chat-message">Message</label>
           <div class="form-actions">
-            <input id="chat-message" data-chat-input type="text" placeholder="Write a respectful message" aria-label="Chat message input">
+            <input id="chat-message" data-chat-input type="text" maxlength="1000" placeholder="Write a respectful message" aria-label="Chat message input">
             <button class="btn" type="submit">Send</button>
           </div>
         </form>
       </section>
     </div>
-    <p class="meta mt-3">WebSocket integration point: Socket.IO client and moderation APIs are backend-dependent.</p>
+    <p class="meta mt-3" data-chat-status role="status"></p>
   </section>
 </main>
 <div id="site-footer"></div><script type="module" src="../js/app.js"></script></body></html>

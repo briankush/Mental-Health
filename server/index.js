@@ -16,6 +16,7 @@ app.use("/api/books", require('./routes/bookroutes'));
 app.use("/api/audio", require('./routes/audioroutes'));
 app.use("/api/articles", require('./routes/articleroutes'));
 app.use("/api/admin", require('./routes/adminroutes'));
+app.use("/api/community", require('./routes/communityroutes'));
 
 const PORT = process.env.PORT || 3000;
 
