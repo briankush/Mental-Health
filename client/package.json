@@ -1,0 +1,10 @@
+{
+  "name": "mental-health-client",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --dir frontendnew run dev",
+    "build": "pnpm --dir frontendnew run build",
+    "dev:new": "pnpm --dir frontendnew run dev",
+    "build:new": "pnpm --dir frontendnew run build"
+  }
+}

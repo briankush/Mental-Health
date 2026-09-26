@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <rect width="1200" height="800" fill="#E7EFE9"/>
+  <rect x="80" y="90" width="1040" height="620" rx="24" fill="#F7F8F6" stroke="#D5DDD7"/>
+  <circle cx="350" cy="360" r="120" fill="#9EB9A8"/>
+  <circle cx="590" cy="320" r="150" fill="#2F6D55"/>
+  <circle cx="820" cy="400" r="120" fill="#BCD0C2"/>
+  <rect x="210" y="520" width="760" height="80" rx="16" fill="#1D5A43"/>
+  <text x="240" y="570" fill="white" font-family="Georgia" font-size="34">Community learning and support</text>
+</svg>

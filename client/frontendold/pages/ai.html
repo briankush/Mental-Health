@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AI Assistant | MindfulPath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="../css/global.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/navbar.css"><link rel="stylesheet" href="../css/footer.css"><link rel="stylesheet" href="../css/forms.css"><link rel="stylesheet" href="../css/pages.css"><link rel="stylesheet" href="../css/responsive.css"></head>
+<body data-base="../" data-page="ai"><a class="skip-link" href="#main-content">Skip to content</a><div id="site-header"></div>
+<main id="main-content" class="section">
+  <section class="container editorial-block"><span class="kicker">Assistant</span><h1>How can we help you find the right resource?</h1><p>Ask for learning materials, course options, or podcast recommendations.</p></section>
+  <section class="container section--tight">
+    <div class="ai-shell">
+      <div class="ai-log" data-ai-log>
+        <article class="ai-message" data-role="assistant">Welcome. I can help you discover relevant resources across articles, podcasts, training and consultation services.</article>
+      </div>
+      <div class="divider divider--flush"></div>
+      <div class="stack panel--sm">
+        <div class="form-actions">
+          <button class="btn btn--secondary" type="button" data-ai-suggestion>Help me understand stress</button>
+          <button class="btn btn--secondary" type="button" data-ai-suggestion>Find resources about anxiety</button>
+          <button class="btn btn--secondary" type="button" data-ai-suggestion>What training courses are available?</button>
+          <button class="btn btn--secondary" type="button" data-ai-suggestion>Show me the latest podcasts</button>
+        </div>
+        <form data-ai-form class="form-actions">
+          <label for="ai-input" class="visually-hidden">Ask a question</label>
+          <input id="ai-input" data-ai-input type="text" placeholder="Ask a question" aria-label="Ask assistant">
+          <button class="btn" type="submit">Ask</button>
+        </form>
+        <p class="meta">API integration point: connect to backend assistant endpoint. Never expose AI provider keys in frontend JavaScript.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div><script type="module" src="../js/app.js"></script></body></html>

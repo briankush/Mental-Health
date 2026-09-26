@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | MindfulPath Admin</title>
+  <link rel="stylesheet" href="../css/admin-settings.css">
+  <script src="../js/admin-auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">Mindful<span>Path</span></div>
+        <div class="brand-subtitle">Admin Workspace</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <a class="nav-item" href="index.html">
+        <div class="nav-icon"></div>
+        Dashboard
+      </a>
+      <a class="nav-item" href="reports.html">
+        <div class="nav-icon"></div>
+        Analytics & Reports
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Content Library</div>
+      <a class="nav-item" href="books.html">
+        <div class="nav-icon"></div>
+        Books & PDFs
+      </a>
+      <a class="nav-item" href="podcasts.html">
+        <div class="nav-icon"></div>
+        Podcasts & Audio
+      </a>
+      <a class="nav-item" href="articles.html">
+        <div class="nav-icon"></div>
+        Articles & Guides
+      </a>
+      <a class="nav-item" href="quizzes.html">
+        <div class="nav-icon"></div>
+        Self-Assessments
+      </a>
+      <a class="nav-item" href="book-club.html">
+        <div class="nav-icon"></div>
+        Book Club
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Management</div>
+      <a class="nav-item" href="users.html">
+        <div class="nav-icon"></div>
+        Users & Roles
+      </a>
+      <a class="nav-item" href="appointments.html">
+        <div class="nav-icon"></div>
+        Appointments
+      </a>
+      <a class="nav-item" href="payments.html">
+        <div class="nav-icon"></div>
+        Payments & Revenue
+      </a>
+      <a class="nav-item" href="moderation.html">
+        <div class="nav-icon"></div>
+        Moderation
+      </a>
+      <a class="nav-item" href="training.html">
+        <div class="nav-icon"></div>
+        Training & Courses
+      </a>
+      <a class="nav-item" href="advertisements.html">
+        <div class="nav-icon"></div>
+        Advertisements
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">System</div>
+      <a class="nav-item active" href="settings.html">
+        <div class="nav-icon"></div>
+        Settings
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar">AD</div>
+        <div>
+          <div class="user-name">Admin Workspace</div>
+          <div class="user-role">Super Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobileMenu" type="button">≡</button>
+        <div class="global-search">
+          <span class="global-search-icon"></span>
+          <input type="text" placeholder="Search settings...">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="../../index.html" class="view-site" target="_blank">View Website ↗</a>
+        <div class="notification">
+          <span class="notification-dot"></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb">
+            <span>Admin</span> / <span>System</span> / <span>Settings</span>
+          </div>
+          <h1 class="page-title">System Settings</h1>
+          <p class="page-desc">Configure platform preferences, moderation controls, and operational defaults.</p>
+        </div>
+        <button class="primary-button" type="button">
+          <span>✓</span> Save Changes
+        </button>
+      </div>
+
+      <div class="settings-grid">
+        <div class="panel-card">
+          <div class="panel-header">
+            <h2>Administrator profile</h2>
+          </div>
+          <form class="form-stack" data-admin-profile-form>
+            <label class="field"><span>Full name</span><input name="name" type="text" required></label>
+            <label class="field"><span>Email</span><input name="email" type="email" required></label>
+            <label class="field"><span>Phone</span><input name="phone" type="tel"></label>
+            <p class="settings-message" data-admin-profile-message role="status"></p>
+            <button class="primary-button" type="submit">Save profile</button>
+          </form>
+        </div>
+        <div class="panel-card">
+          <div class="panel-header">
+            <h2>Communication preferences</h2>
+          </div>
+          <div class="form-stack">
+            <label class="field">
+              <span>Moderation notifications</span>
+              <select>
+                <option selected>Enabled</option>
+                <option>Disabled</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Timezone</span>
+              <select>
+                <option selected>Africa/Nairobi</option>
+                <option>UTC</option>
+                <option>East Africa Time</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-header">
+            <h2>Content controls</h2>
+          </div>
+          <div class="form-stack">
+            <label class="field">
+              <span>Default moderation level</span>
+              <select>
+                <option selected>Manual review</option>
+                <option>Automatic review</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Publishing workflow</span>
+              <select>
+                <option selected>Admin approval</option>
+                <option>Immediate publish</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="../js/admin-profile.js"></script>
+</body>
+</html>
+

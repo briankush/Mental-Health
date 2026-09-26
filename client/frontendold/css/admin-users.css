@@ -1,0 +1,91 @@
+/* =========================================================
+   USERS ADMIN PAGE STYLES
+   ========================================================= */
+
+@import "./admin-shared.css";
+
+/* USER ROLE BADGES */
+.role-badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.role-admin {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.role-therapist {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.role-client {
+    background: var(--sage-100);
+    color: var(--forest-800);
+}
+
+#userActionMessage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 16px 20px 0;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--danger);
+    border-radius: var(--radius-sm);
+    background: var(--danger-bg);
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+#userActionMessage[hidden] {
+    display: none;
+}
+
+#userActionMessage.is-success {
+    border-left-color: var(--success);
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+#userActionMessage.is-error {
+    border-left-color: var(--danger);
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+#userActionMessage .action {
+    width: auto;
+    min-width: 112px;
+    height: 34px;
+    padding: 0 12px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+#userActionMessage [data-cancel-delete] {
+    border-color: var(--border-dark);
+    background: white;
+    color: var(--text-secondary);
+}
+
+#userActionMessage [data-cancel-delete]:hover {
+    background: var(--sage-100);
+    color: var(--forest-950);
+}
+
+@media (max-width: 640px) {
+    #userActionMessage {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #userActionMessage .action {
+        width: 100%;
+    }
+}

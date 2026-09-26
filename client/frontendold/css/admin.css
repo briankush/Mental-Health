@@ -1,0 +1,125 @@
+.admin-shell {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  min-height: 100vh;
+}
+
+.admin-nav {
+  border-right: 1px solid var(--color-border);
+  background: #f2f6f3;
+  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.admin-nav a {
+  padding: 0.45rem 0.65rem;
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.admin-nav a:hover,
+.admin-nav a.is-active {
+  background: #e4eee7;
+  color: var(--color-primary-dark);
+}
+
+.admin-main {
+  padding: var(--space-6);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.stat {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  padding: var(--space-4);
+}
+
+.admin-toolbar {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.table-wrap {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: auto;
+  background: var(--color-surface);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.72rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--fs-meta);
+}
+
+th {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  background: #f7faf8;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  padding: 0.1rem 0.55rem;
+  font-size: var(--fs-caption);
+}
+
+.status--ok {
+  border-color: #9fc7b1;
+  color: var(--color-success);
+}
+
+.status--pending {
+  border-color: #d4c28f;
+  color: var(--color-warning);
+}
+
+.status--flagged {
+  border-color: #cd9797;
+  color: var(--color-danger);
+}
+
+.pagination {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-nav {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

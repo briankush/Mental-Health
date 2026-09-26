@@ -31,6 +31,16 @@ const getPublishedArticles = async (req, res) => {
   }
 };
 
+const getPublishedArticle = async (req, res) => {
+  try {
+    const article = await Article.findOne({ _id: req.params.id, status: "published" });
+    if (!article) return res.status(404).json({ success: false, message: "Article not found" });
+    return res.json({ success: true, data: publicArticle(article) });
+  } catch (error) {
+    return res.status(404).json({ success: false, message: "Article not found" });
+  }
+};
+
 const createArticle = async (req, res) => {
   try {
     const { title, author, category, excerpt, content, image, readingTime, status } = req.body || {};
@@ -98,4 +108,4 @@ const updateArticleStatus = async (req, res) => {
   }
 };
 
-module.exports = { getArticles, getPublishedArticles, createArticle, updateArticle, updateArticleStatus };
+module.exports = { getArticles, getPublishedArticles, getPublishedArticle, createArticle, updateArticle, updateArticleStatus };

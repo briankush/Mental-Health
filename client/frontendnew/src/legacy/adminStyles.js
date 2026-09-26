@@ -1,0 +1,16 @@
+import "../../css/admin.css";
+import "../../css/admin-shared.css";
+import "../../css/admin-dashboard.css";
+import "../../css/admin-articles.css";
+import "../../css/admin-books.css";
+import "../../css/admin-podcasts.css";
+import "../../css/admin-users.css";
+import "../../css/admin-moderation.css";
+import "../../css/admin-settings.css";
+import "../../css/admin-advertisements.css";
+import "../../css/admin-appointments.css";
+import "../../css/admin-book-club.css";
+import "../../css/admin-payments.css";
+import "../../css/admin-quizzes.css";
+import "../../css/admin-reports.css";
+import "../../css/admin-training.css";

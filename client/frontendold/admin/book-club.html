@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Club | MindfulPath Admin</title>
+  <link rel="stylesheet" href="../css/admin-book-club.css">
+  <script src="../js/admin-auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">Mindful<span>Path</span></div>
+        <div class="brand-subtitle">Admin Workspace</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <a class="nav-item" href="index.html">
+        <div class="nav-icon"></div>
+        Dashboard
+      </a>
+      <a class="nav-item" href="reports.html">
+        <div class="nav-icon"></div>
+        Analytics & Reports
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Content Library</div>
+      <a class="nav-item" href="books.html">
+        <div class="nav-icon"></div>
+        Books & PDFs
+      </a>
+      <a class="nav-item" href="podcasts.html">
+        <div class="nav-icon"></div>
+        Podcasts & Audio
+      </a>
+      <a class="nav-item" href="articles.html">
+        <div class="nav-icon"></div>
+        Articles & Guides
+      </a>
+      <a class="nav-item" href="quizzes.html">
+        <div class="nav-icon"></div>
+        Self-Assessments
+      </a>
+      <a class="nav-item active" href="book-club.html">
+        <div class="nav-icon"></div>
+        Book Club
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Management</div>
+      <a class="nav-item" href="users.html">
+        <div class="nav-icon"></div>
+        Users & Roles
+      </a>
+      <a class="nav-item" href="appointments.html">
+        <div class="nav-icon"></div>
+        Appointments
+      </a>
+      <a class="nav-item" href="payments.html">
+        <div class="nav-icon"></div>
+        Payments & Revenue
+      </a>
+      <a class="nav-item" href="moderation.html">
+        <div class="nav-icon"></div>
+        Moderation
+      </a>
+      <a class="nav-item" href="training.html">
+        <div class="nav-icon"></div>
+        Training & Courses
+      </a>
+      <a class="nav-item" href="advertisements.html">
+        <div class="nav-icon"></div>
+        Advertisements
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">System</div>
+      <a class="nav-item" href="settings.html">
+        <div class="nav-icon"></div>
+        Settings
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar">AD</div>
+        <div>
+          <div class="user-name">Admin Workspace</div>
+          <div class="user-role">Super Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobileMenu" type="button">≡</button>
+        <div class="global-search">
+          <span class="global-search-icon"></span>
+          <input type="text" placeholder="Search book club sessions...">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="../../index.html" class="view-site" target="_blank">View Website ↗</a>
+        <div class="notification">
+          <span class="notification-dot"></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb">
+            <span>Admin</span> / <span>Community</span> / <span>Book Club</span>
+          </div>
+          <h1 class="page-title">Book Club Management</h1>
+          <p class="page-desc">Track reading groups, active discussions, and weekly community engagement.</p>
+        </div>
+        <button class="primary-button" type="button">
+          <span>+</span> New Session
+        </button>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Active Clubs</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">6</div>
+          <div class="kpi-foot"><span class="growth">↑ 8%</span> this month</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Members</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">340</div>
+          <div class="kpi-foot">Community readers</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Discussion Posts</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">1,280</div>
+          <div class="kpi-foot">Across active groups</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Completion</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">82%</div>
+          <div class="kpi-foot">Reading goal success</div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <div class="table-search">
+              <span class="table-search-icon"></span>
+              <input type="search" placeholder="Search club or book...">
+            </div>
+          </div>
+          <div class="toolbar-right">
+            <span class="result-count">Live community data</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Book</th>
+                <th>Current Chapter</th>
+                <th>Members</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Conversations That Care</td>
+                <td>Chapter 6</td>
+                <td>86</td>
+                <td><span class="status-badge status-open">Open</span></td>
+              </tr>
+              <tr>
+                <td>Healing Through Stories</td>
+                <td>Chapter 3</td>
+                <td>62</td>
+                <td><span class="status-badge status-live">Live</span></td>
+              </tr>
+              <tr>
+                <td>Mindful Daily Practices</td>
+                <td>Chapter 8</td>
+                <td>74</td>
+                <td><span class="status-badge status-closed">Closed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
+

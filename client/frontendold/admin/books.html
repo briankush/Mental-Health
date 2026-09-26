@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Books | MindfulPath Admin</title>
+<link rel="stylesheet" href="../css/admin-books.css">
+<script src="../js/admin-auth.js"></script>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
+
+<div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                M
+            </div>
+
+            <div>
+
+                <div class="brand-name">
+                    Mindful<span>Path</span>
+                </div>
+
+                <div class="brand-subtitle">
+                    Admin Console
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-group">
+            <div class="nav-label">Overview</div>
+            <a class="nav-item" href="index.html">
+                <div class="nav-icon"></div>
+                Dashboard
+            </a>
+            <a class="nav-item" href="reports.html">
+                <div class="nav-icon"></div>
+                Analytics & Reports
+            </a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Content Library</div>
+            <a class="nav-item active" href="books.html">
+                <div class="nav-icon"></div>
+                Books & PDFs
+            </a>
+            <a class="nav-item" href="podcasts.html">
+                <div class="nav-icon"></div>
+                Podcasts & Audio
+            </a>
+            <a class="nav-item" href="articles.html">
+                <div class="nav-icon"></div>
+                Articles & Guides
+            </a>
+            <a class="nav-item" href="quizzes.html">
+                <div class="nav-icon"></div>
+                Self-Assessments
+            </a>
+            <a class="nav-item" href="book-club.html">
+                <div class="nav-icon"></div>
+                Book Club
+            </a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Management</div>
+            <a class="nav-item" href="users.html">
+                <div class="nav-icon"></div>
+                Users & Roles
+            </a>
+            <a class="nav-item" href="appointments.html">
+                <div class="nav-icon"></div>
+                Appointments
+            </a>
+            <a class="nav-item" href="payments.html">
+                <div class="nav-icon"></div>
+                Payments & Revenue
+            </a>
+            <a class="nav-item" href="moderation.html">
+                <div class="nav-icon"></div>
+                Moderation
+            </a>
+            <a class="nav-item" href="training.html">
+                <div class="nav-icon"></div>
+                Training & Courses
+            </a>
+            <a class="nav-item" href="advertisements.html">
+                <div class="nav-icon"></div>
+                Advertisements
+            </a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">System</div>
+            <a class="nav-item" href="settings.html">
+                <div class="nav-icon"></div>
+                Settings
+            </a>
+        </div>
+
+
+        <!-- BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <a class="nav-item" href="settings.html">
+
+                <span class="nav-icon"></span>
+
+                Settings
+
+            </a>
+
+
+            <div class="sidebar-user">
+
+                <div class="avatar">
+                    BM
+                </div>
+
+                <div>
+
+                    <div class="user-name">
+                        Admin User
+                    </div>
+
+                    <div class="user-role">
+                        Administrator
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+
+            <button
+                class="mobile-menu"
+                id="mobileMenu"
+            >
+                ≡
+            </button>
+
+
+            <div class="global-search">
+
+                <span class="global-search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="search"
+                    placeholder="Search anything..."
+                >
+
+            </div>
+
+
+            <div class="topbar-right">
+
+
+                <a
+                    class="view-site"
+                    href="../index.html"
+                    target="_blank"
+                >
+                    View website ↗
+                </a>
+
+
+                <button
+                    class="notification"
+                    title="Notifications"
+                >
+
+                    
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <div class="content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+
+                <div>
+
+                    <div class="breadcrumb">
+
+                        <span>
+                            Content
+                        </span>
+
+                        <span>
+                            /
+                        </span>
+
+                        <span>
+                            Books
+                        </span>
+
+                    </div>
+
+
+                    <h1 class="page-title">
+                        Books
+                    </h1>
+
+
+                    <p class="page-description">
+                        Build a thoughtful library of resources
+                        for the MindfulPath community.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-button"
+                    id="openModal"
+                >
+
+                    <span>
+                        +
+                    </span>
+
+                    Add new book
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 KPIs
+            ================================================== -->
+
+            <section class="kpis">
+
+
+                <div class="kpi">
+
+                    <div class="kpi-top">
+
+                        <span class="kpi-label">
+                            Total books
+                        </span>
+
+                        <span class="kpi-icon">
+                            
+                        </span>
+
+                    </div>
+
+                    <div class="kpi-number" id="totalBooks">
+                        24
+                    </div>
+
+                    <div class="kpi-meta">
+                        <span class="kpi-growth">
+                            ↑ 12%
+                        </span>
+                        &nbsp; vs last month
+                    </div>
+
+                </div>
+
+
+                <div class="kpi">
+
+                    <div class="kpi-top">
+
+                        <span class="kpi-label">
+                            Published
+                        </span>
+
+                        <span class="kpi-icon">
+                            ✓
+                        </span>
+
+                    </div>
+
+                    <div class="kpi-number">
+                        18
+                    </div>
+
+                    <div class="kpi-meta">
+                        75% of your library
+                    </div>
+
+                </div>
+
+
+                <div class="kpi">
+
+                    <div class="kpi-top">
+
+                        <span class="kpi-label">
+                            Free resources
+                        </span>
+
+                        <span class="kpi-icon">
+                            ○
+                        </span>
+
+                    </div>
+
+                    <div class="kpi-number">
+                        11
+                    </div>
+
+                    <div class="kpi-meta">
+                        46% of all books
+                    </div>
+
+                </div>
+
+
+                <div class="kpi">
+
+                    <div class="kpi-top">
+
+                        <span class="kpi-label">
+                            Paid resources
+                        </span>
+
+                        <span class="kpi-icon">
+                            ₭
+                        </span>
+
+                    </div>
+
+                    <div class="kpi-number">
+                        13
+                    </div>
+
+                    <div class="kpi-meta">
+                        KES 8,450 revenue this month
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 LIBRARY
+            ================================================== -->
+
+            <section class="library">
+
+
+                <div class="library-header">
+
+                    <div>
+
+                        <div class="library-title">
+                            Book library
+                        </div>
+
+                        <div class="library-subtitle">
+                            Manage titles, pricing,
+                            publication status and files.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TOOLBAR -->
+
+                <div class="toolbar">
+
+
+                    <div class="toolbar-left">
+
+
+                        <div class="search-books">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                type="search"
+                                id="bookSearch"
+                                placeholder="Search books..."
+                            >
+
+                        </div>
+
+
+                        <select
+                            class="filter"
+                            id="typeFilter"
+                        >
+
+                            <option value="">
+                                All types
+                            </option>
+
+                            <option value="free">
+                                Free
+                            </option>
+
+                            <option value="paid">
+                                Paid
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            class="filter"
+                            id="statusFilter"
+                        >
+
+                            <option value="">
+                                All statuses
+                            </option>
+
+                            <option value="published">
+                                Published
+                            </option>
+
+                            <option value="draft">
+                                Draft
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="toolbar-actions">
+
+                        <button
+                            class="secondary-button"
+                            onclick="showToast('Export feature will connect to the backend.')"
+                        >
+                            Export
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TABLE -->
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Book
+                                </th>
+
+                                <th>
+                                    Category
+                                </th>
+
+                                <th>
+                                    Price
+                                </th>
+
+                                <th>
+                                    Type
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    File
+                                </th>
+
+                                <th>
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="booksTable">
+
+
+                            <!-- BOOK 1 -->
+
+                            <tr
+                                data-title="Understanding Mental Wellness"
+                                data-type="free"
+                                data-status="published"
+                                data-book="Understanding Mental Wellness"
+                                data-author="MindfulPath Editorial"
+                                data-category="Mental Health"
+                                data-price="Free"
+                            >
+
+                                <td>
+
+                                    <div class="book-cell">
+
+                                        <div class="book-cover">
+                                            
+                                        </div>
+
+                                        <div>
+
+                                            <div class="book-name">
+                                                Understanding Mental Wellness
+                                            </div>
+
+                                            <div class="book-author">
+                                                MindfulPath Editorial
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Mental Health
+                                </td>
+
+
+                                <td>
+                                    Free
+                                </td>
+
+
+                                <td>
+
+                                    <span class="badge badge-free">
+                                        Free
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="status status-published">
+
+                                        <span class="status-dot"></span>
+
+                                        Published
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="pdf"
+                                    >
+                                        PDF ↗
+                                    </a>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        class="action preview-book"
+                                    >
+                                        ⋯
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- BOOK 2 -->
+
+                            <tr
+                                data-title="Building Healthy Relationships"
+                                data-type="paid"
+                                data-status="published"
+                                data-book="Building Healthy Relationships"
+                                data-author="MindfulPath Editorial"
+                                data-category="Relationships"
+                                data-price="KES 450"
+                            >
+
+                                <td>
+
+                                    <div class="book-cell">
+
+                                        <div class="book-cover">
+                                            
+                                        </div>
+
+                                        <div>
+
+                                            <div class="book-name">
+                                                Building Healthy Relationships
+                                            </div>
+
+                                            <div class="book-author">
+                                                MindfulPath Editorial
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Relationships
+                                </td>
+
+
+                                <td>
+                                    KES 450
+                                </td>
+
+
+                                <td>
+
+                                    <span class="badge badge-paid">
+                                        Paid
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="status status-published">
+
+                                        <span class="status-dot"></span>
+
+                                        Published
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="pdf"
+                                    >
+                                        PDF ↗
+                                    </a>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        class="action preview-book"
+                                    >
+                                        ⋯
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- BOOK 3 -->
+
+                            <tr
+                                data-title="Coping With Academic Pressure"
+                                data-type="paid"
+                                data-status="draft"
+                                data-book="Coping With Academic Pressure"
+                                data-author="MindfulPath Editorial"
+                                data-category="Academic Wellbeing"
+                                data-price="KES 300"
+                            >
+
+                                <td>
+
+                                    <div class="book-cell">
+
+                                        <div class="book-cover">
+                                            
+                                        </div>
+
+                                        <div>
+
+                                            <div class="book-name">
+                                                Coping With Academic Pressure
+                                            </div>
+
+                                            <div class="book-author">
+                                                MindfulPath Editorial
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Academic Wellbeing
+                                </td>
+
+
+                                <td>
+                                    KES 300
+                                </td>
+
+
+                                <td>
+
+                                    <span class="badge badge-paid">
+                                        Paid
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="status status-draft">
+
+                                        <span class="status-dot"></span>
+
+                                        Draft
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="pdf"
+                                    >
+                                        PDF ↗
+                                    </a>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        class="action preview-book"
+                                    >
+                                        ⋯
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="library-footer">
+
+                    <span id="resultCount">
+                        Showing 1–3 of 24 books
+                    </span>
+
+
+                    <div class="pagination">
+
+                        <button
+                            class="page"
+                            disabled
+                        >
+                            ‹
+                        </button>
+
+                        <button
+                            class="page active"
+                        >
+                            1
+                        </button>
+
+                        <button class="page">
+                            2
+                        </button>
+
+                        <button class="page">
+                            3
+                        </button>
+
+                        <button class="page">
+                            ›
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     ADD BOOK MODAL
+========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="bookModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <div class="modal-title" id="bookModalTitle">
+                    Add new book
+                </div>
+
+                <div class="modal-description" id="bookModalDescription">
+                    Add a resource to the MindfulPath library.
+                </div>
+
+            </div>
+
+
+            <button
+                class="close"
+                id="closeModal"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+
+        <form id="bookForm">
+
+
+            <div class="modal-body">
+
+
+                <div class="form-layout">
+
+
+                    <!-- LEFT -->
+
+                    <div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Book title
+                            </label>
+
+                            <input
+                                class="form-input"
+                                id="bookTitle"
+                                type="text"
+                                placeholder="e.g. Understanding Mental Wellness"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-row">
+
+
+                            <div class="form-group">
+
+                                <label class="form-label">
+                                    Author
+                                    <span>Optional</span>
+                                </label>
+
+                                <input
+                                    class="form-input"
+                                    id="bookAuthor"
+                                    type="text"
+                                    placeholder="Author name"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label class="form-label">
+                                    Category
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="bookCategory"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select
+                                    </option>
+
+                                    <option>
+                                        Mental Health
+                                    </option>
+
+                                    <option>
+                                        Relationships
+                                    </option>
+
+                                    <option>
+                                        Academic Wellbeing
+                                    </option>
+
+                                    <option>
+                                        Personal Development
+                                    </option>
+
+                                    <option>
+                                        Social Issues
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Description
+                                <span>Optional</span>
+                            </label>
+
+                            <textarea
+                                class="form-textarea"
+                                id="bookDescription"
+                                placeholder="Briefly describe this resource..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Pricing
+                            </label>
+
+
+                            <div class="pricing">
+
+
+                                <input
+                                    class="form-input price-input"
+                                    id="bookPrice"
+                                    type="number"
+                                    min="0"
+                                    placeholder="Price in KES"
+                                >
+
+
+                                <label class="free-option">
+
+                                    <input
+                                        type="checkbox"
+                                        id="freeBook"
+                                    >
+
+                                    Free book
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Book PDF
+                            </label>
+
+
+                            <div
+                                class="upload-zone"
+                                id="pdfZone"
+                            >
+
+                                <div class="upload-icon">
+                                    ↑
+                                </div>
+
+                                <div class="upload-title">
+                                    Drop your PDF here
+                                </div>
+
+                                <div class="upload-text">
+                                    <strong>Browse files</strong>
+                                    or drag and drop
+                                </div>
+
+
+                                <input
+                                    type="file"
+                                    id="pdfFile"
+                                    accept="application/pdf"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- RIGHT -->
+
+                    <div>
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Book cover
+                                <span>Optional</span>
+                            </label>
+
+
+                            <div class="cover-area">
+
+
+                                <div
+                                    class="cover-preview"
+                                    id="coverPreview"
+                                >
+                                    
+                                </div>
+
+
+                                <label class="cover-button">
+
+                                    Choose cover image
+
+                                    <input
+                                        type="file"
+                                        id="coverFile"
+                                        accept="image/png,image/jpeg,image/webp"
+                                    >
+
+                                </label>
+
+
+                                <div class="upload-text">
+                                    PNG, JPG or WEBP
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="cancel"
+                    id="cancelModal"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="submit"
+                >
+                    Upload book
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     BOOK PREVIEW DRAWER
+========================================================= -->
+
+<div
+    class="drawer-overlay"
+    id="drawerOverlay"
+></div>
+
+
+<aside
+    class="drawer"
+    id="bookDrawer"
+>
+
+
+    <div class="drawer-header">
+
+        <div class="drawer-title">
+            Book details
+        </div>
+
+
+        <button
+            class="close"
+            id="closeDrawer"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="drawer-body">
+
+
+        <div
+            class="drawer-cover"
+            id="drawerCover"
+        >
+            
+        </div>
+
+
+        <div
+            class="drawer-book-title"
+            id="drawerTitle"
+        >
+            Understanding Mental Wellness
+        </div>
+
+
+        <div
+            class="drawer-author"
+            id="drawerAuthor"
+        >
+            MindfulPath Editorial
+        </div>
+
+
+        <div class="drawer-meta">
+
+
+            <div class="meta-box">
+
+                <div class="meta-label">
+                    Category
+                </div>
+
+                <div
+                    class="meta-value"
+                    id="drawerCategory"
+                >
+                    Mental Health
+                </div>
+
+            </div>
+
+
+            <div class="meta-box">
+
+                <div class="meta-label">
+                    Price
+                </div>
+
+                <div
+                    class="meta-value"
+                    id="drawerPrice"
+                >
+                    Free
+                </div>
+
+            </div>
+
+
+            <div class="meta-box">
+
+                <div class="meta-label">
+                    Format
+                </div>
+
+                <div class="meta-value">
+                    PDF
+                </div>
+
+            </div>
+
+
+            <div class="meta-box">
+
+                <div class="meta-label">
+                    Status
+                </div>
+
+                <div class="meta-value">
+                    Published
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p class="drawer-description">
+
+            A practical resource designed to help readers
+            better understand mental wellness, emotional
+            wellbeing and healthy everyday habits.
+
+        </p>
+
+
+        <div class="drawer-actions">
+
+            <button class="edit-btn" id="editBookBtn" type="button">
+                Edit book
+            </button>
+
+            <button
+                class="view-btn"
+                onclick="showToast('PDF viewer will connect to the stored file.')"
+            >
+                View PDF
+            </button>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<script type="module" src="../js/admin-books.js"></script>
+
+</body>
+</html>

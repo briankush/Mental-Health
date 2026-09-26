@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Podcasts & Audio | MindfulPath Admin</title>
+<link rel="stylesheet" href="../css/admin-podcasts.css">
+<script src="../js/admin-auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-name">Mindful<span>Path</span></div>
+        <div class="brand-subtitle">Admin Workspace</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <a class="nav-item" href="index.html">
+        <div class="nav-icon"></div>
+        Dashboard
+      </a>
+      <a class="nav-item" href="reports.html">
+        <div class="nav-icon"></div>
+        Analytics & Reports
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Content Library</div>
+      <a class="nav-item" href="books.html">
+        <div class="nav-icon"></div>
+        Books & PDFs
+      </a>
+      <a class="nav-item active" href="podcasts.html">
+        <div class="nav-icon"></div>
+        Podcasts & Audio
+      </a>
+      <a class="nav-item" href="articles.html">
+        <div class="nav-icon"></div>
+        Articles & Guides
+      </a>
+      <a class="nav-item" href="quizzes.html">
+        <div class="nav-icon"></div>
+        Self-Assessments
+      </a>
+      <a class="nav-item" href="book-club.html">
+        <div class="nav-icon"></div>
+        Book Club
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Management</div>
+      <a class="nav-item" href="users.html">
+        <div class="nav-icon"></div>
+        Users & Roles
+      </a>
+      <a class="nav-item" href="appointments.html">
+        <div class="nav-icon"></div>
+        Appointments
+      </a>
+      <a class="nav-item" href="payments.html">
+        <div class="nav-icon"></div>
+        Payments & Revenue
+      </a>
+      <a class="nav-item" href="moderation.html">
+        <div class="nav-icon"></div>
+        Moderation
+      </a>
+      <a class="nav-item" href="training.html">
+        <div class="nav-icon"></div>
+        Training & Courses
+      </a>
+      <a class="nav-item" href="advertisements.html">
+        <div class="nav-icon"></div>
+        Advertisements
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">System</div>
+      <a class="nav-item" href="settings.html">
+        <div class="nav-icon"></div>
+        Settings
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar">AD</div>
+        <div>
+          <div class="user-name">Admin Workspace</div>
+          <div class="user-role">Super Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobileMenu" type="button">≡</button>
+        <div class="global-search">
+          <span class="global-search-icon"></span>
+          <input type="text" placeholder="Search podcasts, hosts, topics...">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="../../index.html" class="view-site" target="_blank">View Website ↗</a>
+        <div class="notification">
+          
+          <span class="notification-dot"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="breadcrumb">
+            <span>Admin</span> / <span>Content</span> / <span>Podcasts</span>
+          </div>
+          <h1 class="page-title">Podcasts & Audio Episodes</h1>
+          <p class="page-desc">Manage, upload, stream, and publish mental health audio sessions and podcast episodes.</p>
+        </div>
+        <button class="primary-button" id="addEpisodeBtn" type="button">
+          <span>+</span> Upload Audio Episode
+        </button>
+      </div>
+
+      <!-- KPI METRICS GRID -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Total Episodes</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value" id="totalAudioKpi">--</div>
+          <div class="kpi-foot"><span class="growth">↑ 14%</span> active audio stream library</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Total Listeners</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">1,420</div>
+          <div class="kpi-foot"><span class="growth">↑ 22%</span> monthly active listeners</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Hours Streamed</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">340 hrs</div>
+          <div class="kpi-foot">Cloudinary streaming node</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-title">Avg. Rating</div>
+            <div class="kpi-icon"></div>
+          </div>
+          <div class="kpi-value">4.9 / 5</div>
+          <div class="kpi-foot">Community feedback</div>
+        </div>
+      </div>
+
+      <!-- TABLE SECTION -->
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <div class="table-search">
+              <span class="table-search-icon"></span>
+              <input type="search" id="audioSearch" placeholder="Search episode title or host...">
+            </div>
+            <select class="filter-select" id="audioStatusFilter">
+              <option value="">All Statuses</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+          <div class="toolbar-right">
+            <span class="result-count" id="audioResultCount">Loading library...</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Episode</th>
+                <th>Host</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Audio Player</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="podcastsTableBody">
+              <tr>
+                <td colspan="6" class="table-empty-state">Loading audio episodes...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<!-- ADD PODCAST / AUDIO MODAL -->
+<div class="modal-overlay" id="addPodcastModal">
+  <div class="modal modal-centered">
+    <div class="modal-header">
+      <div class="modal-title" id="podcastModalTitle">Upload Audio Episode</div>
+      <button type="button" class="close-modal" id="closePodcastModalBtn">×</button>
+    </div>
+
+    <form id="addPodcastForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="podcastTitle">Episode Title</label>
+          <input type="text" class="form-input" id="podcastTitle" required placeholder="e.g. Understanding Everyday Anxiety">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="podcastHost">Host / Speaker Name</label>
+          <input type="text" class="form-input" id="podcastHost" placeholder="e.g. Dr. M. Achieng">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="podcastCover">Cover Image <span>(Optional)</span></label>
+          <input type="file" class="form-input" id="podcastCover" accept="image/png,image/jpeg,image/webp">
+          <div class="upload-text">PNG, JPG, or WEBP up to 50MB</div>
+          <img id="podcastCoverPreview" class="cover-preview" alt="Cover preview" hidden>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="audioFile">Audio File (MP3, WAV, M4A, AAC, OGG)</label>
+          <div class="upload-zone" onclick="document.getElementById('audioFile').click()">
+            <div class="upload-icon"></div>
+            <div class="upload-title">Click or drag audio file here</div>
+            <div class="upload-text">MP3, WAV, M4A, AAC, or OGG file up to 50MB</div>
+            <input type="file" id="audioFile" accept="audio/*" required class="file-input-hidden">
+          </div>
+        </div>
+
+        <div id="podcastFormMessage" class="form-message"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="cancel" id="cancelPodcastBtn">Cancel</button>
+        <button type="submit" class="submit" id="podcastSubmitBtn">Upload Audio</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="../js/admin-podcasts.js"></script>
+</body>
+</html>

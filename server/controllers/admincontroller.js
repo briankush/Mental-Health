@@ -62,6 +62,9 @@ const deleteUser = async (req, res) => {
     return res.json({ success: true, message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user:", error);
+    if (error.name === "CastError") {
+      return res.status(400).json({ success: false, message: "Invalid user ID" });
+    }
     return res.status(500).json({ success: false, message: error.message });
   }
 };
