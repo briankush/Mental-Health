@@ -76,7 +76,7 @@ async function loadMessages(list, status) {
   }
 }
 
-function disconnectRoom({ clearStoredRoom = true, layout, entry, input, roomName, roomIdDisplay, onlineCount, typingStatus, status }) {
+function disconnectRoom({ clearStoredRoom = true, gate, layout, entry, input, roomName, roomIdDisplay, onlineCount, typingStatus, status }) {
   if (typingTimer) window.clearTimeout(typingTimer);
   if (socket) {
     const activeSocket = socket;
