@@ -117,7 +117,7 @@ export function initAuthForms() {
         const role = result.user?.role;
         if (role === "admin") {
           // Redirect to admin dashboard
-          window.location.href = "../admin/index.html";
+          window.location.href = "/admin";
         } else {
           // Redirect to normal user homepage
           window.location.href = "../index.html";
