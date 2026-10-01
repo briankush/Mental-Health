@@ -14,14 +14,16 @@ function extractDocument(html) {
   };
 }
 
-function routeFromLegacyHref(href) {
+function routeFromLegacyHref(href, admin) {
   if (!href || href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:")) return null;
   const url = new URL(href, window.location.href);
   const filename = url.pathname.split("/").pop();
-  if (filename === "index.html" || filename === "") return `/${url.hash}`;
+  if (filename === "index.html" || filename === "") {
+    return admin && !href.startsWith("../") ? `/admin${url.hash}` : `/${url.hash}`;
+  }
   if (!filename.endsWith(".html")) return null;
   const route = filename.replace(/\.html$/, "");
-  return `/${route}${url.search}${url.hash}`;
+  return `${admin ? "/admin" : ""}/${route}${url.search}${url.hash}`;
 }
 
 export function LegacyPage({ filename, admin = false }) {
@@ -44,7 +46,7 @@ export function LegacyPage({ filename, admin = false }) {
     const handleClick = (event) => {
       const link = event.target.closest("a[href]");
       if (!link) return;
-      const nextRoute = routeFromLegacyHref(link.getAttribute("href"));
+      const nextRoute = routeFromLegacyHref(link.getAttribute("href"), admin);
       if (!nextRoute) return;
       event.preventDefault();
       navigate(nextRoute || "/");

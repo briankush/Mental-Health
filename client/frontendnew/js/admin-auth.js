@@ -10,7 +10,7 @@
 
   const hasToken = Boolean(localStorage.getItem("token"));
   if (!hasToken || user?.role !== "admin") {
-    const destination = hasToken ? "../index.html" : "../pages/login.html";
+    const destination = hasToken ? "/" : "/login";
     window.location.replace(destination);
     return;
   }
@@ -35,7 +35,7 @@
       } finally {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-        window.location.replace("../pages/login.html");
+        window.location.replace("/login");
       }
     });
   });
