@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "@vitejs/plugin-react": "latest",
     "lucide-react": "latest",
     "react": "latest",
@@ -16,6 +17,5 @@
     "react-router-dom": "latest",
     "socket.io-client": "latest",
     "vite": "latest"
-  },
-  "devDependencies": {}
+  }
 }
