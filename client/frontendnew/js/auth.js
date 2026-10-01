@@ -101,6 +101,7 @@ export function initAuthForms() {
           if (result.token && result.user) {
             storeAuthData(result.token, result.user);
           }
+          sessionStorage.setItem("authNotice", result.message || "Account created successfully.");
           showToast(result.message || "Account created", "success");
           window.location.href = "../index.html";
           return;

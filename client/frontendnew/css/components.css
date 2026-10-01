@@ -112,7 +112,7 @@
 .toast-root {
   position: fixed;
   right: 1rem;
-  bottom: 1rem;
+  top: 1rem;
   z-index: 1100;
   display: grid;
   gap: var(--space-2);

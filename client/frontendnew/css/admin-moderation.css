@@ -182,7 +182,7 @@
 .admin-popup {
    position: fixed;
    right: 24px;
-   bottom: 24px;
+   top: 24px;
    z-index: 30;
    max-width: 360px;
    padding: 14px 18px;

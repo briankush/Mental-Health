@@ -7,6 +7,7 @@ import { initChat } from "./chat.js";
 import { initPayments } from "./payments.js";
 import { initConsultationBooking } from "./consultation.js";
 import { initDynamicCollections } from "./page-loaders.js";
+import { showToast } from "./components/toast.js";
 
 function initStaticCards() {
   const now = document.getElementById("year-now");
@@ -32,4 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initConsultationBooking();
   initDynamicCollections();
   initStaticCards();
+
+  const authNotice = sessionStorage.getItem("authNotice");
+  if (authNotice) {
+    sessionStorage.removeItem("authNotice");
+    showToast(authNotice, "success");
+  }
 });

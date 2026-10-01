@@ -1,6 +1,7 @@
 import { api } from "./api.js";
 import { getStoredToken, getStoredUser } from "./auth.js";
 import { showToast } from "./components/toast.js";
+import { io } from "socket.io-client";
 
 let socket = null;
 let currentRoomId = null;
@@ -75,7 +76,7 @@ async function loadMessages(list, status) {
   }
 }
 
-function disconnectRoom({ clearStoredRoom = true, layout, entry, input, roomName, onlineCount, typingStatus, status }) {
+function disconnectRoom({ clearStoredRoom = true, layout, entry, input, roomName, roomIdDisplay, onlineCount, typingStatus, status }) {
   if (typingTimer) window.clearTimeout(typingTimer);
   if (socket) {
     const activeSocket = socket;
@@ -89,7 +90,7 @@ function disconnectRoom({ clearStoredRoom = true, layout, entry, input, roomName
   entry.hidden = false;
   input.value = clearStoredRoom ? "" : input.value;
   roomName.textContent = "Join a room to begin";
-  elements.roomIdDisplay.textContent = "";
+  roomIdDisplay.textContent = "";
   onlineCount.textContent = "";
   typingStatus.textContent = "";
   status.textContent = clearStoredRoom ? "You left the room." : "";
@@ -97,7 +98,11 @@ function disconnectRoom({ clearStoredRoom = true, layout, entry, input, roomName
 
 function connectSocket(elements) {
   const { roomName, roomIdDisplay, onlineCount, typingStatus, status, list } = elements;
-  socket = window.io("https://mental-health-pgtw.onrender.com", { auth: { token: getStoredToken() } });
+  status.textContent = "Connecting to live chat...";
+  socket = io("https://mental-health-pgtw.onrender.com", {
+    transports: ["websocket", "polling"],
+    auth: { token: getStoredToken() },
+  });
   socket.on("connect", () => {
     socket.emit("room:join", currentRoomId, (result) => {
       if (!result.ok) {
@@ -112,6 +117,7 @@ function connectSocket(elements) {
   });
   socket.on("connect_error", (error) => {
     status.textContent = error.message || "Unable to connect to live chat.";
+    onlineCount.textContent = "Offline";
   });
   socket.on("message:new", (message) => appendMessage(list, message));
   socket.on("room:presence", ({ count }) => { onlineCount.textContent = `${count} online`; });

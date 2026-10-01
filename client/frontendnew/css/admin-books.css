@@ -1999,7 +1999,7 @@ tbody tr:last-child td {
 
     right: 25px;
 
-    bottom: 25px;
+    top: 25px;
 
     padding: 12px 15px;
 
@@ -2013,7 +2013,7 @@ tbody tr:last-child td {
 
     box-shadow: var(--shadow-md);
 
-    transform: translateY(20px);
+    transform: translateY(-20px);
 
     opacity: 0;
 
