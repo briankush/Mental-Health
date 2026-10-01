@@ -40,13 +40,13 @@ export function SiteLayout() {
           </Link>
           <nav className="nav-links" aria-label="Main navigation">
             <div className="nav-item"><NavLink to="/" label="Home" active={location.pathname === "/"} /></div>
-            <div className="nav-item"><NavLink to="/#about" label="About" active={location.pathname === "/about"} /></div>
+            <div className="nav-item"><NavLink to="/about" label="About" active={location.pathname === "/about"} /></div>
             <div className="nav-item"><a className="nav-link">Resources</a><div className="dropdown" role="menu"><Link to="/articles">Articles</Link><Link to="/articles#mental-health">Mental Health</Link><Link to="/articles#social-issues">Social Issues</Link><Link to="/quizzes">Quizzes</Link></div></div>
             <div className="nav-item"><a className="nav-link">Library</a><div className="dropdown" role="menu"><Link to="/ebooks">E-books</Link><Link to="/book-club">Book Club</Link><Link to="/book-club#weekly-chapter">Weekly Chapter</Link></div></div>
             <div className="nav-item"><NavLink to="/podcasts" label="Podcasts" active={location.pathname === "/podcasts"} /></div>
             <div className="nav-item"><NavLink to="/training" label="Training" active={location.pathname === "/training"} /></div>
             <div className="nav-item"><a className="nav-link">Community</a><div className="dropdown" role="menu"><Link to="/community">Discussion</Link><Link to="/chatroom">Chatroom</Link><Link to="/quizzes#qa">Q&amp;A</Link></div></div>
-            <div className="nav-item"><NavLink to="/#consultation" label="Consultation" active={location.pathname === "/consultation"} /></div>
+            <div className="nav-item"><NavLink to="/consultation" label="Consultation" active={location.pathname === "/consultation"} /></div>
             {authenticated && <div className="nav-item"><NavLink to="/profile" label="Profile" active={location.pathname === "/profile"} /></div>}
           </nav>
           <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
@@ -55,7 +55,7 @@ export function SiteLayout() {
             <button className="nav-toggle" type="button" aria-expanded={menuOpen} aria-controls="mobile-panel" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen((isOpen) => !isOpen)}><span aria-hidden="true">{menuOpen ? "×" : "☰"}</span></button>
           </div>
         </div>
-        <div className={`mobile-panel ${menuOpen ? "is-open" : ""}`} id="mobile-panel"><div className="container mobile-nav"><Link to="/">Home</Link><Link to="/#about">About</Link><details><summary>Resources</summary><Link to="/articles">Articles</Link><Link to="/articles#mental-health">Mental Health</Link><Link to="/articles#social-issues">Social Issues</Link><Link to="/quizzes">Quizzes</Link></details><details><summary>Library</summary><Link to="/ebooks">E-books</Link><Link to="/book-club">Book Club</Link><Link to="/book-club#weekly-chapter">Weekly Chapter</Link></details><Link to="/podcasts">Podcasts</Link><Link to="/training">Training</Link><Link to="/community">Community</Link><Link to="/chatroom">Chatroom</Link><Link to="/quizzes#qa">Q&amp;A</Link><Link to="/#consultation">Consultation</Link>{authenticated && <Link to="/profile">Profile</Link>}{authenticated ? <button type="button" onClick={handleLogout}>Log out</button> : <Link to="/login">Login</Link>}{!authenticated && <Link to="/register">Sign up</Link>}</div></div>
+        <div className={`mobile-panel ${menuOpen ? "is-open" : ""}`} id="mobile-panel"><div className="container mobile-nav"><Link to="/">Home</Link><Link to="/about">About</Link><details><summary>Resources</summary><Link to="/articles">Articles</Link><Link to="/articles#mental-health">Mental Health</Link><Link to="/articles#social-issues">Social Issues</Link><Link to="/quizzes">Quizzes</Link></details><details><summary>Library</summary><Link to="/ebooks">E-books</Link><Link to="/book-club">Book Club</Link><Link to="/book-club#weekly-chapter">Weekly Chapter</Link></details><Link to="/podcasts">Podcasts</Link><Link to="/training">Training</Link><Link to="/community">Community</Link><Link to="/chatroom">Chatroom</Link><Link to="/quizzes#qa">Q&amp;A</Link><Link to="/consultation">Consultation</Link>{authenticated && <Link to="/profile">Profile</Link>}{authenticated ? <button type="button" onClick={handleLogout}>Log out</button> : <Link to="/login">Login</Link>}{!authenticated && <Link to="/register">Sign up</Link>}</div></div>
       </header>
       <Outlet />
       <footer className="site-footer">
