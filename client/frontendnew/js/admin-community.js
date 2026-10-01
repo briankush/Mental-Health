@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const request = async (path, options = {}) => {
-    const response = await fetch(`http://localhost:3000/api${path}`, {
+    const response = await fetch(`https://mental-health-pgtw.onrender.com/api${path}`, {
       ...options,
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}`, ...(options.headers || {}) },
     });
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submit.disabled = true;
     status.textContent = "Creating room...";
     try {
-      const response = await fetch("http://localhost:3000/api/admin/community/rooms", {
+      const response = await fetch("https://mental-health-pgtw.onrender.com/api/admin/community/rooms", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

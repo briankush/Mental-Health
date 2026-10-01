@@ -28,7 +28,7 @@
     logout.addEventListener("click", async () => {
       logout.disabled = true;
       try {
-        await fetch("http://localhost:3000/api/auth/logout", {
+        await fetch("https://mental-health-pgtw.onrender.com/api/auth/logout", {
           method: "POST",
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });

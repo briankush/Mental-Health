@@ -97,7 +97,7 @@ function disconnectRoom({ clearStoredRoom = true, layout, entry, input, roomName
 
 function connectSocket(elements) {
   const { roomName, roomIdDisplay, onlineCount, typingStatus, status, list } = elements;
-  socket = window.io("http://localhost:3000", { auth: { token: getStoredToken() } });
+  socket = window.io("https://mental-health-pgtw.onrender.com", { auth: { token: getStoredToken() } });
   socket.on("connect", () => {
     socket.emit("room:join", currentRoomId, (result) => {
       if (!result.ok) {

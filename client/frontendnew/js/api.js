@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://localhost:3000/api";
+export const API_BASE_URL = "https://mental-health-pgtw.onrender.com/api";
 
 /**
  * Returns Authorization header object if a token exists in localStorage.
