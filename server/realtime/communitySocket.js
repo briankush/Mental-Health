@@ -75,6 +75,9 @@ function registerCommunitySocket(io) {
       if (!cleanText || cleanText.length > 1000) {
         return callback({ ok: false, message: "Message must be between 1 and 1000 characters" });
       }
+      if (cleanText === String(activeRoomId)) {
+        return callback({ ok: false, message: "Please enter a message, not the room ID" });
+      }
 
       try {
         const room = await CommunityRoom.exists({ _id: activeRoomId, endedAt: null });

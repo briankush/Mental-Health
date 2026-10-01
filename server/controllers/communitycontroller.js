@@ -29,7 +29,10 @@ const getMessages = async (req, res) => {
 
     return res.json({
       success: true,
-      messages: messages.reverse().map(serializeMessage),
+      messages: messages
+        .reverse()
+        .filter((message) => String(message.text).trim() !== roomId)
+        .map(serializeMessage),
     });
   } catch (error) {
     console.error("Load community messages error:", error);
@@ -49,6 +52,9 @@ const createMessage = async (req, res) => {
       success: false,
       message: "Message must be between 1 and 1000 characters",
     });
+  }
+  if (text === roomId) {
+    return res.status(400).json({ success: false, message: "Please enter a message, not the room ID" });
   }
 
   try {

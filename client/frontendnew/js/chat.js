@@ -17,6 +17,7 @@ function formatTime(value) {
 
 function renderMessages(list, messages) {
   list.replaceChildren();
+  messages = messages.filter((message) => String(message.text).trim() !== String(message.roomId));
   if (!messages.length) {
     const empty = document.createElement("p");
     empty.className = "meta";
@@ -48,6 +49,7 @@ function renderMessages(list, messages) {
 }
 
 function appendMessage(list, message) {
+  if (String(message.text).trim() === String(message.roomId)) return;
   if (list.querySelector(`[data-message-id="${String(message.id)}"]`)) return;
   if (list.querySelector("[data-empty-state]")) list.replaceChildren();
   const item = document.createElement("article");
