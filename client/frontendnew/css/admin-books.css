@@ -2089,7 +2089,9 @@ tbody tr:last-child td {
     }
 
     .mobile-menu {
-        display: block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .topbar {
@@ -2111,7 +2113,11 @@ tbody tr:last-child td {
     }
 
     .view-site {
-        display: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 8px;
+        font-size: 0;
     }
 
     .page-header {

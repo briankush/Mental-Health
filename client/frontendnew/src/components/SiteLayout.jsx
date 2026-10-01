@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { LogIn, LogOut, Menu, UserPlus, X } from "lucide-react";
 
 function NavLink({ to, label, active }) {
   return <Link className={`nav-link ${active ? "is-active" : ""}`} to={to}>{label}</Link>;
@@ -50,9 +51,9 @@ export function SiteLayout() {
             {authenticated && <div className="nav-item"><NavLink to="/profile" label="Profile" active={location.pathname === "/profile"} /></div>}
           </nav>
           <div className="nav-actions">
-            {authenticated ? <button className="btn btn--secondary" type="button" onClick={handleLogout}>Log out</button> : <Link className="btn btn--secondary" to="/login">Login</Link>}
-            {!authenticated && <Link className="btn" to="/register">Sign up</Link>}
-            <button className="nav-toggle" type="button" aria-expanded={menuOpen} aria-controls="mobile-panel" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen((isOpen) => !isOpen)}><span aria-hidden="true">{menuOpen ? "×" : "☰"}</span></button>
+            {authenticated ? <button className="btn btn--secondary" type="button" onClick={handleLogout}><LogOut aria-hidden="true" /> Log out</button> : <Link className="btn btn--secondary" to="/login"><LogIn aria-hidden="true" /> Login</Link>}
+            {!authenticated && <Link className="btn" to="/register"><UserPlus aria-hidden="true" /> Sign up</Link>}
+            <button className="nav-toggle" type="button" aria-expanded={menuOpen} aria-controls="mobile-panel" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen((isOpen) => !isOpen)}>{menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
           </div>
         </div>
         <div className={`mobile-panel ${menuOpen ? "is-open" : ""}`} id="mobile-panel"><div className="container mobile-nav"><Link to="/">Home</Link><Link to="/about">About</Link><details><summary>Resources</summary><Link to="/articles">Articles</Link><Link to="/articles#mental-health">Mental Health</Link><Link to="/articles#social-issues">Social Issues</Link><Link to="/quizzes">Quizzes</Link></details><details><summary>Library</summary><Link to="/ebooks">E-books</Link><Link to="/book-club">Book Club</Link><Link to="/book-club#weekly-chapter">Weekly Chapter</Link></details><Link to="/podcasts">Podcasts</Link><Link to="/training">Training</Link><Link to="/community">Community</Link><Link to="/chatroom">Chatroom</Link><Link to="/quizzes#qa">Q&amp;A</Link><Link to="/consultation">Consultation</Link>{authenticated && <Link to="/profile">Profile</Link>}{authenticated ? <button type="button" onClick={handleLogout}>Log out</button> : <Link to="/login">Login</Link>}{!authenticated && <Link to="/register">Sign up</Link>}</div></div>

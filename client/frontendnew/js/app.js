@@ -8,6 +8,7 @@ import { initPayments } from "./payments.js";
 import { initConsultationBooking } from "./consultation.js";
 import { initDynamicCollections } from "./page-loaders.js";
 import { showToast } from "./components/toast.js";
+import { initSiteIcons } from "./site-icons.js";
 
 function initStaticCards() {
   const now = document.getElementById("year-now");
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initNavbar({ basePath, currentPage: page });
   initFooter({ basePath });
+  initSiteIcons();
 
   initAuthForms();
   initProfileTabs();

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight, BookOpen, HeartHandshake, LockKeyhole, MessageCircle, ShieldCheck, UsersRound } from "lucide-react";
 import { initConsultationBooking } from "../../js/consultation.js";
 
 export function HomePage() {
@@ -17,14 +18,14 @@ export function HomePage() {
           <span className="kicker">A calmer way forward</span>
           <h1>Feel more like yourself again.</h1>
           <p>Thoughtful support for your mental wellbeing through compassionate care, practical guidance, and a community that understands.</p>
-          <div className="home-actions"><Link className="btn" to="/consultation">Find support <span aria-hidden="true">&rarr;</span></Link><Link className="btn btn--hero-outline" to="/articles">Explore resources</Link></div>
+          <div className="home-actions"><Link className="btn" to="/consultation">Find support <ArrowRight aria-hidden="true" /></Link><Link className="btn btn--hero-outline" to="/articles"><BookOpen aria-hidden="true" /> Explore resources</Link></div>
         </div>
       </section>
       <section className="home-trust" aria-label="Why MindfulPath">
         <div className="container home-trust__inner">
-          <div className="home-trust__item"><span className="home-trust__icon" aria-hidden="true" /><div><strong>Qualified guidance</strong><span>Care shaped by trusted professionals</span></div></div>
-          <div className="home-trust__item"><span className="home-trust__icon" aria-hidden="true" /><div><strong>Private by design</strong><span>A secure space for your wellbeing</span></div></div>
-          <div className="home-trust__item"><span className="home-trust__icon" aria-hidden="true" /><div><strong>Support that fits</strong><span>Move forward at your own pace</span></div></div>
+          <div className="home-trust__item"><span className="home-trust__icon" aria-hidden="true"><ShieldCheck /></span><div><strong>Qualified guidance</strong><span>Care shaped by trusted professionals</span></div></div>
+          <div className="home-trust__item"><span className="home-trust__icon" aria-hidden="true"><LockKeyhole /></span><div><strong>Private by design</strong><span>A secure space for your wellbeing</span></div></div>
+          <div className="home-trust__item"><span className="home-trust__icon" aria-hidden="true"><HeartHandshake /></span><div><strong>Support that fits</strong><span>Move forward at your own pace</span></div></div>
         </div>
       </section>
       <section className="home-section" id="about">
@@ -37,9 +38,9 @@ export function HomePage() {
         <div className="container home-section--split">
           <div className="home-section__intro"><span className="kicker">Your next step</span><h2>Support should meet you where you are.</h2><p>Whether you want to talk, learn, or simply feel understood, there is a place to begin.</p></div>
           <div className="home-paths">
-            <Link className="home-path" to="/consultation"><div><span className="home-path__number">01</span><div className="home-path__icon" aria-hidden="true">&#9825;</div></div><div><h3>Talk to someone</h3><p>Connect with a qualified practitioner who listens, understands, and meets you where you are.</p></div><span className="home-path__link">Find a practitioner <span aria-hidden="true">&rarr;</span></span></Link>
-            <Link className="home-path" to="/articles"><div><span className="home-path__number">02</span><div className="home-path__icon" aria-hidden="true">&#9634;</div></div><div><h3>Learn at your pace</h3><p>Explore practical articles, guided exercises, and expert insight for the moments that matter.</p></div><span className="home-path__link">Explore resources <span aria-hidden="true">&rarr;</span></span></Link>
-            <Link className="home-path" to="/community"><div><span className="home-path__number">03</span><div className="home-path__icon" aria-hidden="true">&#9829;</div></div><div><h3>Feel less alone</h3><p>Join thoughtful conversations and find steady encouragement from people who understand.</p></div><span className="home-path__link">Visit the community <span aria-hidden="true">&rarr;</span></span></Link>
+            <Link className="home-path" to="/consultation"><div><span className="home-path__number">01</span><div className="home-path__icon" aria-hidden="true"><MessageCircle /></div></div><div><h3>Talk to someone</h3><p>Connect with a qualified practitioner who listens, understands, and meets you where you are.</p></div><span className="home-path__link">Find a practitioner <ArrowRight aria-hidden="true" /></span></Link>
+            <Link className="home-path" to="/articles"><div><span className="home-path__number">02</span><div className="home-path__icon" aria-hidden="true"><BookOpen /></div></div><div><h3>Learn at your pace</h3><p>Explore practical articles, guided exercises, and expert insight for the moments that matter.</p></div><span className="home-path__link">Explore resources <ArrowRight aria-hidden="true" /></span></Link>
+            <Link className="home-path" to="/community"><div><span className="home-path__number">03</span><div className="home-path__icon" aria-hidden="true"><UsersRound /></div></div><div><h3>Feel less alone</h3><p>Join thoughtful conversations and find steady encouragement from people who understand.</p></div><span className="home-path__link">Visit the community <ArrowRight aria-hidden="true" /></span></Link>
           </div>
         </div>
       </section>

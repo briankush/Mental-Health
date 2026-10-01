@@ -1,5 +1,6 @@
 const publicScripts = import("../../js/app.js");
 const adminModules = import.meta.glob("../../js/admin-*.js");
+const adminIcons = import("../../js/admin-icons.js");
 
 const adminScripts = {
   "index.html": ["../../js/admin-auth.js", "../../js/admin-dashboard.js"],
@@ -16,6 +17,7 @@ export async function runLegacyScripts(filename, admin = false) {
     await publicScripts;
   } else {
     await Promise.all((adminScripts[filename] || ["../../js/admin-auth.js"]).map((path) => adminModules[path]?.()));
+    (await adminIcons).initAdminIcons();
   }
 
   document.dispatchEvent(new Event("DOMContentLoaded"));

@@ -11,6 +11,7 @@
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
     "@vitejs/plugin-react": "latest",
+    "lucide": "^1.49.0",
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",

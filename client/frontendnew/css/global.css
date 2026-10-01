@@ -84,6 +84,18 @@ p {
   transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
+.btn svg,
+.nav-toggle svg,
+.home-trust__icon svg,
+.home-path__icon svg,
+.home-path__link svg,
+.home-care__check svg {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  stroke-width: 1.8;
+}
+
 .btn:hover,
 .btn:focus-visible {
   background: var(--color-primary-dark);

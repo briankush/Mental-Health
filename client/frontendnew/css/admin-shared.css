@@ -311,6 +311,23 @@ a {
     color: var(--text-secondary);
     font-size: 10px;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.view-site svg,
+.notification svg,
+.mobile-menu svg,
+.nav-icon svg {
+    width: 15px;
+    height: 15px;
+    stroke-width: 1.8;
+}
+
+.notification svg {
+    width: 16px;
+    height: 16px;
 }
 
 .view-site:hover {
@@ -744,7 +761,13 @@ tr:hover td {
         gap: 8px;
     }
     .view-site {
-        display: none;
+        display: inline-flex;
+        padding: 7px 8px;
+        font-size: 0;
+    }
+    .view-site svg {
+        width: 17px;
+        height: 17px;
     }
     .content {
         padding: 24px 16px 44px;
