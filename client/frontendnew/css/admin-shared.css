@@ -720,6 +720,10 @@ tr:hover td {
     display: none;
 }
 
+.sidebar-close {
+    display: none;
+}
+
 @media (max-width: 1024px) {
     .kpi-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -738,6 +742,25 @@ tr:hover td {
     }
     .sidebar.open {
         transform: translateX(0);
+    }
+    .sidebar-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-end;
+        width: 32px;
+        height: 32px;
+        margin: -8px 2px 8px 0;
+        border: 1px solid rgba(255, 255, 255, .16);
+        border-radius: 7px;
+        background: rgba(255, 255, 255, .08);
+        color: #fff;
+        font-size: 22px;
+        line-height: 1;
+        cursor: pointer;
+    }
+    .sidebar-close:hover {
+        background: rgba(255, 255, 255, .16);
     }
     .main {
         margin-left: 0;
