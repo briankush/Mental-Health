@@ -77,7 +77,7 @@ async function loadMessages(list, status) {
   }
 }
 
-function disconnectRoom({ clearStoredRoom = true, gate, layout, entry, input, roomName, roomIdDisplay, onlineCount, typingStatus, status }) {
+function disconnectRoom({ clearStoredRoom = true, gate, layout, entry, roomInput, roomName, roomIdDisplay, onlineCount, typingStatus, status }) {
   if (typingTimer) window.clearTimeout(typingTimer);
   if (socket) {
     const activeSocket = socket;
@@ -90,7 +90,7 @@ function disconnectRoom({ clearStoredRoom = true, gate, layout, entry, input, ro
   layout.dataset.hidden = "true";
   gate.hidden = false;
   entry.hidden = false;
-  input.value = clearStoredRoom ? "" : input.value;
+  roomInput.value = clearStoredRoom ? "" : roomInput.value;
   roomName.textContent = "Join a room to begin";
   roomIdDisplay.textContent = "";
   onlineCount.textContent = "";
@@ -143,10 +143,10 @@ function connectSocket(elements) {
 }
 
 function attachMessaging(elements) {
-  const { form, input, list, status } = elements;
+  const { form, messageInput, list, status } = elements;
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const text = input.value.trim();
+    const text = messageInput.value.trim();
     if (!text) return;
     const submit = form.querySelector("button[type='submit']");
     submit.disabled = true;
@@ -160,7 +160,7 @@ function attachMessaging(elements) {
           else reject(new Error(result?.message || "Unable to send message."));
         });
       });
-      input.value = "";
+      messageInput.value = "";
       socket.emit("typing:stop");
     } catch (error) {
       showToast(error.message || "Unable to send message.", "error");
@@ -169,7 +169,7 @@ function attachMessaging(elements) {
       submit.disabled = false;
     }
   });
-  input.addEventListener("input", () => {
+  messageInput.addEventListener("input", () => {
     if (!socket?.connected) return;
     socket.emit("typing:start");
     window.clearTimeout(typingTimer);
@@ -208,7 +208,7 @@ export function initChat() {
   const elements = {
     gate: root.querySelector("[data-room-gate]"),
     entry: root.querySelector("[data-room-entry]"),
-    input: root.querySelector("[data-room-id-input]"),
+    roomInput: root.querySelector("[data-room-id-input]"),
     entryStatus: root.querySelector("[data-room-entry-status]"),
     layout: root.querySelector(".chat-layout"),
     list: root.querySelector("[data-chat-messages]"),
@@ -218,12 +218,13 @@ export function initChat() {
     onlineCount: root.querySelector("[data-online-count]"),
     typingStatus: root.querySelector("[data-typing-status]"),
     form: root.querySelector("[data-chat-form]"),
+    messageInput: root.querySelector("[data-chat-input]"),
     leave: root.querySelector("[data-leave-room]"),
   };
 
   elements.entry.addEventListener("submit", (event) => {
     event.preventDefault();
-    const roomId = elements.input.value.trim();
+    const roomId = elements.roomInput.value.trim();
     if (roomId) joinRoom(roomId, elements);
   });
   elements.leave.addEventListener("click", () => disconnectRoom({ ...elements }));
