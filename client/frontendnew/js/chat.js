@@ -67,9 +67,10 @@ function appendMessage(list, message) {
 
 async function loadMessages(list, status) {
   try {
+    status.textContent = "Loading messages...";
     const result = await api.authGet(`/community/messages?roomId=${encodeURIComponent(currentRoomId)}`);
     renderMessages(list, result.messages || []);
-    status.textContent = "Live updates are active.";
+    if (!socket?.connected) status.textContent = "Messages loaded. Connecting to live chat...";
   } catch (error) {
     status.textContent = error.message || "Unable to load messages.";
     if (!getStoredToken()) window.location.replace("login.html");
@@ -105,16 +106,22 @@ function connectSocket(elements) {
     auth: { token: getStoredToken() },
   });
   socket.on("connect", () => {
+    onlineCount.textContent = "Connected";
     socket.emit("room:join", currentRoomId, (result) => {
       if (!result.ok) {
         localStorage.removeItem(storedRoomKey());
         status.textContent = result.message;
+        onlineCount.textContent = "Offline";
         return;
       }
       roomName.textContent = result.room.name;
       roomIdDisplay.textContent = result.room.id;
       status.textContent = "Live updates are active.";
     });
+  });
+  socket.on("disconnect", () => {
+    onlineCount.textContent = "Offline";
+    status.textContent = "Live chat disconnected. Reconnecting...";
   });
   socket.on("connect_error", (error) => {
     status.textContent = error.message || "Unable to connect to live chat.";
@@ -146,7 +153,12 @@ function attachMessaging(elements) {
     try {
       if (!socket?.connected) throw new Error("Live chat is not connected yet.");
       await new Promise((resolve, reject) => {
-        socket.emit("message:send", { text }, (result) => result.ok ? resolve() : reject(new Error(result.message)));
+        const timeout = window.setTimeout(() => reject(new Error("Message send timed out. Please try again.")), 8000);
+        socket.emit("message:send", { text }, (result) => {
+          window.clearTimeout(timeout);
+          if (result?.ok) resolve();
+          else reject(new Error(result?.message || "Unable to send message."));
+        });
       });
       input.value = "";
       socket.emit("typing:stop");
@@ -171,12 +183,12 @@ async function joinRoom(roomId, elements) {
     const result = await api.authGet(`/community/rooms/${encodeURIComponent(roomId)}`);
     currentRoomId = result.room.id;
     localStorage.setItem(storedRoomKey(), currentRoomId);
-    await loadMessages(elements.list, elements.status);
     elements.layout.dataset.hidden = "false";
     elements.gate.hidden = true;
     elements.entry.hidden = true;
     elements.entryStatus.textContent = "";
     connectSocket(elements);
+    await loadMessages(elements.list, elements.status);
   } catch (error) {
     localStorage.removeItem(storedRoomKey());
     elements.entryStatus.textContent = error.message || "Room not found.";
