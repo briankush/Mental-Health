@@ -68,7 +68,7 @@ export function initNavbar({ mountId = "site-header", basePath = "./", currentPa
           <div class="nav-item">${profileLink}</div>
         </nav>
 
-        <div style="display:flex; gap: 0.5rem; align-items:center;">
+        <div class="nav-actions">
           ${logoutButton || `<a class="btn btn--secondary" href="${basePath}pages/login.html">Login</a>`}
           ${signupLink}
           <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-panel" aria-label="Open menu">

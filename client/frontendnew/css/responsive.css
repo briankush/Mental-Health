@@ -69,8 +69,16 @@
     flex: 0 0 40px;
   }
 
-  .navbar > div:last-child .btn {
-    display: none;
+  .nav-actions {
+    gap: 0.35rem;
+  }
+
+  .nav-actions .btn {
+    display: inline-flex;
+    width: auto;
+    min-height: 36px;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.75rem;
   }
 
   .section {

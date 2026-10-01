@@ -49,7 +49,7 @@ export function SiteLayout() {
             <div className="nav-item"><NavLink to="/consultation" label="Consultation" active={location.pathname === "/consultation"} /></div>
             {authenticated && <div className="nav-item"><NavLink to="/profile" label="Profile" active={location.pathname === "/profile"} /></div>}
           </nav>
-          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+          <div className="nav-actions">
             {authenticated ? <button className="btn btn--secondary" type="button" onClick={handleLogout}>Log out</button> : <Link className="btn btn--secondary" to="/login">Login</Link>}
             {!authenticated && <Link className="btn" to="/register">Sign up</Link>}
             <button className="nav-toggle" type="button" aria-expanded={menuOpen} aria-controls="mobile-panel" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen((isOpen) => !isOpen)}><span aria-hidden="true">{menuOpen ? "×" : "☰"}</span></button>

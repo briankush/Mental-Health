@@ -4,9 +4,9 @@ const CommunityRoom = require("../models/communityRoom");
 const User = require("../models/user");
 
 const serializeMessage = (message) => ({
-  id: message._id,
-  roomId: message.roomId,
-  userId: message.userId,
+  id: String(message._id),
+  roomId: String(message.roomId),
+  userId: String(message.userId),
   username: message.username,
   text: message.text,
   createdAt: message.createdAt,

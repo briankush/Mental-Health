@@ -30,7 +30,7 @@ function renderMessages(list, messages) {
   messages.forEach((message) => {
     const item = document.createElement("article");
     item.className = "chat-msg";
-    item.dataset.messageId = message.id;
+    item.dataset.messageId = String(message.id);
     const username = document.createElement("strong");
     username.textContent = message.username;
     const text = document.createElement("p");
@@ -48,11 +48,11 @@ function renderMessages(list, messages) {
 }
 
 function appendMessage(list, message) {
-  if (list.querySelector(`[data-message-id="${message.id}"]`)) return;
+  if (list.querySelector(`[data-message-id="${String(message.id)}"]`)) return;
   if (list.querySelector("[data-empty-state]")) list.replaceChildren();
   const item = document.createElement("article");
   item.className = "chat-msg";
-  item.dataset.messageId = message.id;
+  item.dataset.messageId = String(message.id);
   const username = document.createElement("strong");
   username.textContent = message.username;
   const text = document.createElement("p");
@@ -87,6 +87,7 @@ function disconnectRoom({ clearStoredRoom = true, layout, entry, input, roomName
   currentRoomId = null;
   if (clearStoredRoom) localStorage.removeItem(storedRoomKey());
   layout.dataset.hidden = "true";
+  gate.hidden = false;
   entry.hidden = false;
   input.value = clearStoredRoom ? "" : input.value;
   roomName.textContent = "Join a room to begin";
@@ -172,6 +173,7 @@ async function joinRoom(roomId, elements) {
     localStorage.setItem(storedRoomKey(), currentRoomId);
     await loadMessages(elements.list, elements.status);
     elements.layout.dataset.hidden = "false";
+    elements.gate.hidden = true;
     elements.entry.hidden = true;
     elements.entryStatus.textContent = "";
     connectSocket(elements);
